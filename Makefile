@@ -15,11 +15,12 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_strdup.c\
 			Libft/ft_strjoin.c\
 			Libft/ft_split.c\
+			Libft/ft_strncmp.c\
 
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -fsanitize=address -g3
+CFLAGS	= -Wall -Werror -Wextra -ggdb -fsanitize=address -g3
 # CFLAGS1	= -lmlx -framework OpenGL -framework AppKit
 
 all:		${NAME}

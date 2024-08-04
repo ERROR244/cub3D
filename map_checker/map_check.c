@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:26 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 14:54:17 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 15:26:41 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,3 +14,10 @@
 
 // check texture
 
+void	map_check(t_map *map, char **str)
+{
+	int			i;
+
+	i = 0;
+	check_texture_and_color(map, str);
+}
