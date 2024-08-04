@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -65,7 +65,7 @@ static int	function(int *k, int i, const char *str, va_list lst)
 	return (i);
 }
 
-int	ft_printf(const char *str, ...)
+int	printf(const char *str, ...)
 {
 	int		return_len;
 	int		i;

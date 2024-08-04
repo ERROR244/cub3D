@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:39:24 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/05/21 14:35:16 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:35:08 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,13 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-
 int		print_ch(char c);
 int		print_str(char *str);
 int		print_i_d(long long i);
 int		print_u(unsigned int i);
 int		print_x(unsigned int n, char c);
 int		print_p(void *ptr);
-int		ft_printf(const char *str, ...);
+int		printf(const char *str, ...);
 char	*get_next_line(int fd);
 char	*my_line(char *line, char *buf);
 int		check(char *buf);

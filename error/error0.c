@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tmp1.c                                             :+:      :+:    :+:   */
+/*   error0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 14:19:34 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 14:43:34 by ksohail-         ###   ########.fr       */
+/*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
+/*   Updated: 2024/08/04 14:35:27 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-void print_array(char **str)
+void	invalid_arg(void)
 {
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        printf("%s \n", str[i]);
-        i++;
-    }
+	printf("Error\n		the number of argument is not 2\n");
+	exit(EXIT_FAILURE);
 }
 
-void free_array(char **str)
+void	the_map_is_invalid(void)
 {
-    int i;
+	printf("Error\n		The map is invalid\n");
+	exit(EXIT_FAILURE);
+}
 
-    i = 0;
-    while (str[i])
-    {
-        free(str[i]);
-        i++;
-    }
-    free(str);
+void	invalid_file_name1(void)
+{
+	printf("Error\n		invalid file name\n");
+	exit(EXIT_FAILURE);
 }

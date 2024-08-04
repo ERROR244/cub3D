@@ -6,13 +6,13 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:25:07 by jlebre            #+#    #+#             */
-/*   Updated: 2024/08/04 13:40:50 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:36:26 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+int	ft_str_line(char *str)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ char	*my_line(char *line, char *buf)
 
 	i = 0;
 	tmp = line;
-	line = ft_calloc((ft_strlen(buf) + ft_strlen(line) + 1), sizeof(char));
+	line = ft_calloc((ft_str_line(buf) + ft_str_line(line) + 1), sizeof(char));
 	if (line == NULL)
 		return (NULL);
 	while (tmp && tmp[i])

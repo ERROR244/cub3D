@@ -6,12 +6,32 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:39:39 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/07/13 11:57:07 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:23:05 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../include/minishell.h"
+
+char	*ndup(const char *s, size_t n)
+{
+	char	*dup;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	dup = (char *)malloc((n + 1) * sizeof(char));
+	if (dup != NULL)
+	{
+		i = 0;
+		while (i < n)
+		{
+			dup[i] = s[i];
+			i++;
+		}
+		dup[n] = '\0';
+	}
+	return (dup);
+}
 
 static int	count(char const *s, char c)
 {
