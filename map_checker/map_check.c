@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:26 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 15:26:41 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:59:21 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 
 void	map_check(t_map *map, char **str)
 {
+	char		**lines;
 	int			i;
 
 	i = 0;
+	lines = str + 6;
+	check_characters(lines);
+	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
 }

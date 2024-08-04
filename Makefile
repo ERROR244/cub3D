@@ -15,6 +15,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_strdup.c\
 			Libft/ft_strjoin.c\
 			Libft/ft_split.c\
+			Libft/ft_atoi.c\
 			Libft/ft_strncmp.c\
 
 OBJM	= ${SRCM:.c=.o}
@@ -32,10 +33,10 @@ ${NAME}:	${LIBFT} ${printf} ${OBJM}
 	${CC} ${CFLAGS} ${LIBFT} ${printf} ${OBJM} -o ${NAME}
 	
 clean:
-	rm -f ${OBJM}
+	@rm -f ${OBJM}
 
 fclean:		clean
-	rm -f ${NAME}
+	@rm -f ${NAME}
 
 re:			fclean all
 

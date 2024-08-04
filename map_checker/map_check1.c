@@ -6,72 +6,112 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 15:47:26 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:20:30 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-int	array_size(char **str)
+void	check_characters(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] != '1' && map[i][j] != '0' &&
+					map[i][j] != 'N' && map[i][j] != ' ')
+				the_map_is_invalid();
+			j++;
+		}
+		i++;
+	}
+}
+
+int longest_line_size_func(char **map)
 {
 	int i;
+	int size;
+	int line_size;
 	
+	size = -1;
 	i = 0;
-	while (str[i])
+	while (map[i])
+	{
+		line_size = ft_strlen(map[i]);
+		if (size < line_size)
+			size = line_size;
 		i++;
-	return (i);
+	}
+	return (size);
 }
 
-char	*get_texture(char *str, char *texture)
+char	*get_line_bigger(char *line, int size)
 {
-    if (ft_strncmp(str, texture, 3) != 0)
-        the_map_is_invalid();
-    str += 3;
-    while (*str == ' ' || *str == '	')
-        str++;
-    return (ft_strdup(str));
-}
-
-char	**get_color(char *str, char color)
-{
-	if (str[0] != color)
-        the_map_is_invalid();
-	str++;
-	while (*str == ' ' || *str == '	')
-        str++;
-	return (ft_split(str, ','));
-}
-
-char **get_map(char **str)
-{
-	char	**map;
-	int		len;
+	char	*ret_line;
+	char	c;
 	int		i;
 
 	i = 0;
-	len = array_size(str);
-	map = malloc(sizeof(char *) * (len + 1));
-	while (str[i])
+	ret_line = malloc(sizeof(char) * (size + 1));
+	while (line[i])
 	{
-		map[i] = ft_strdup(str[i]);
+		ret_line[i] = line[i];
+		c = line[i];
+		i++;
+	}
+	while (i < size)
+	{
+		ret_line[i] = c;
+		i++;
+	}
+	ret_line[i] = '\0';
+	return (ret_line);
+}
+
+char **get_map_updated(char **ptr)
+{
+	char	**map;
+	size_t	longest_line_size;
+	int		i;
+
+	i = 0;
+	longest_line_size = longest_line_size_func(ptr);
+	map = malloc(sizeof(char *) * (array_size(ptr) + 1));
+	while (ptr[i])
+	{
+		if (ft_strlen(ptr[i]) < longest_line_size)
+			map[i] = get_line_bigger(ptr[i], longest_line_size);
+		else
+			map[i] = ft_strdup(ptr[i]);
 		i++;
 	}
 	map[i] = NULL;
 	return (map);
 }
 
-void	check_texture_and_color(t_map *map, char **str)
+void	is_the_map_surrounded_by_walls(char **ptr)
 {
-	if (array_size(str) < 9)
-        the_map_is_invalid();
-	
-    map->texture_no = get_texture(str[0], "NO ");
-    map->texture_so = get_texture(str[1], "SO ");
-    map->texture_we = get_texture(str[2], "WE ");
-    map->texture_ea = get_texture(str[3], "EA ");
+	char	**map;
+	int		x;
+	int		y;
 
-	map->floor_color = get_color(str[4], 'F');
-	map->ceiling_color = get_color(str[5], 'C');
-
-	map->map = get_map(str + 6);
+	x = 0;
+	map = get_map_updated(ptr);
+	while (map[x])
+	{
+		y = 0;
+		while (map[x][y])
+		{
+			if (map[x][y] == ' ' && surrounded_with_only_spaces_and_walls(map, x, y) == false)
+				the_map_is_invalid();
+			y++;
+		}
+		x++;
+	}
+	free_and_check(map);
 }

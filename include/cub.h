@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/04 15:40:50 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:20:59 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_map
 {
@@ -28,8 +29,8 @@ typedef struct s_map
     char *texture_we;
     char *texture_ea;
     
-    char **floor_color;
-    char **ceiling_color;
+    int *floor_color;
+    int *ceiling_color;
 
     char **map;
 }   t_map;
@@ -38,6 +39,7 @@ typedef struct s_map
 void    print_array(char **str);
 void    free_array(char **str);
 void    print_array_in_one_line(char **str);
+void    print_array_of_int(int *color);
 // error
 void	the_map_is_invalid(void);
 void	invalid_file_name1(void);
@@ -52,7 +54,12 @@ void	invalid_file_name1(void);
 // map check
 void	map_check(t_map *map, char **str);
 void    check_texture_and_color(t_map *map, char **str);
-char    **get_color(char *str, char color);
 int     array_size(char **str);
+void	check_characters(char **map);
+void	is_the_map_surrounded_by_walls(char **map);
+bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y);
+void    free_and_check(char **map);
+
+
 
 #endif
