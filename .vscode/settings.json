@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.c": "c",
+        "get_next_line.h": "c",
+        "libft.h": "c"
+    }
+}
