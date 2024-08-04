@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:25:07 by jlebre            #+#    #+#             */
-/*   Updated: 2023/12/10 20:58:31 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 13:39:42 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "get_next_line.h"
 
@@ -54,13 +53,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	ptr = (void *)malloc(nmemb * size);
 	if (ptr == NULL)
-		return (NULL);
-	else
-	{
-		i = 0;
-		while (i < nmemb * size)
-		{
-			*((char *)ptr + i) = 0;
+		return (NULL);*buf
 			i++;
 		}
 	}
@@ -84,7 +77,8 @@ char	*my_line(char *line, char *buf)
 	}
 	while (*buf)
 	{
-		line[i++] = *buf;
+		if (*buf != '\n')
+			line[i++] = *buf;
 		if (*buf++ == '\n')
 			break ;
 	}

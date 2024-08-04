@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:45:12 by ksohail-          #+#    #+#             */
-/*   Updated: 2023/12/10 21:01:06 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 13:39:52 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE];
+	static char	buf[BUFFER_SIZE + 1];
 	char		*line;
 	ssize_t		readed;
 
@@ -34,21 +34,22 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-///int main() {
-   //  int fd = open("test.txt", O_RDONLY);
-//     if (fd == -1) {
- //        perror("open");
-   //      return (1);
-    // }
 
-//   char *ptr;
- //	ptr = get_next_line(fd);
-   //   while ((ptr = get_next_line(fd)) != NULL) {
-     //    printf("%s", ptr);
-       //  free(ptr);
-//      }
-  //    printf("\ndone \n");
-    //  printf("%s \n", ptr);
- //	 system("leaks a.out");
-   //  close(fd);
- //}
+// int main()
+// {
+//     int fd = open("test.txt", O_RDONLY);
+//     if (fd == -1)
+// 	{
+//         perror("open");
+//         return (1);
+//     }
+
+// 	char *ptr;
+//     while ((ptr = get_next_line(fd)) != NULL)
+// 	{
+//        printf(":%s:\n", ptr);
+//        free(ptr);
+//     }
+//  	system("leaks a.out");
+//     close(fd);
+// }

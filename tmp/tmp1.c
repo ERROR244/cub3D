@@ -8,3 +8,16 @@ void print_array(char **str)
         str++;
     }
 }
+
+void free_array(char **str)
+{
+    int i;
+
+    i = 0;
+    while (str)
+    {
+        free(str[i]);
+        i++;
+    }
+    free(str);
+}

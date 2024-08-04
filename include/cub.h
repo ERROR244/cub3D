@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/04 12:25:37 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 12:27:39 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 
 void print_array(char **str);
+void free_array(char **str);
 //
 static void	fill(char const *s1, char const *s2, char *ptr);
 char	*fft_strjoin(char const *s1, char const *s2);
