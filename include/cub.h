@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/04 15:26:33 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 15:40:50 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	invalid_file_name1(void);
 void	map_check(t_map *map, char **str);
 void    check_texture_and_color(t_map *map, char **str);
 char    **get_color(char *str, char color);
+int     array_size(char **str);
 
 #endif

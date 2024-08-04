@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 15:35:21 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/04 15:47:26 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ char **get_map(char **str)
 
 void	check_texture_and_color(t_map *map, char **str)
 {
+	if (array_size(str) < 9)
+        the_map_is_invalid();
+	
     map->texture_no = get_texture(str[0], "NO ");
     map->texture_so = get_texture(str[1], "SO ");
     map->texture_we = get_texture(str[2], "WE ");
