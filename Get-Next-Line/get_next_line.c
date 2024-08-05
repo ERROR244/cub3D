@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:45:12 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 14:11:14 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 10:06:02 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_next_line(int fd)
 
 // int main()
 // {
-//     int fd = open("test.txt", O_RDONLY);
+//     int fd = open("../file.cub", O_RDONLY);
 //     if (fd == -1)
 // 	{
 //         perror("open");

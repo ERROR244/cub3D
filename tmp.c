@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tmp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 10:20:17 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 10:15:51 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,25 @@ char	**return_map(char *map_file)
 	ptr = get_next_line(fd);
 	if (ptr == NULL)
 		the_map_is_invalid();
+	i++;
 	str = ptr;
+	while (ptr != NULL && i < 6)
+	{
+		ptr = get_next_line(fd);
+		if (ptr && ptr[0] != '\0')
+			i++;
+		str = ft_strjoin3(str, '\n', ptr);
+	}
+	ptr = get_next_line(fd);
+	while (ptr && ptr[0] == '\0')
+	{
+		free(ptr);
+		ptr = get_next_line(fd);
+	}
 	while (ptr != NULL)
 	{
 		ptr = get_next_line(fd);
-		if (i > 5 && ptr && ptr[0] == '\0')
+		if (ptr && ptr[0] == '\0')
 		{
 			while (ptr && ptr[0] == '\0')
 			{
@@ -80,8 +94,6 @@ char	**return_map(char *map_file)
 			else
 				break ;
 		}
-		if (ptr && ptr[0] != '\0')
-			i++;
 		str = ft_strjoin3(str, '\n', ptr);
 	}
 	close(fd);
