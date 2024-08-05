@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 13:30:52 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:30:07 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,65 +31,32 @@
 
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines)
 {
-	//		  -  
+	//		- - -
 	//		- . -
-	//		  -  
-
-	if (map[x][y + 1] != '1' && map[x][y + 1] != ' ' && map[x][y + 1] != '\0')
-	{
-		printf("->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
+	//		- - -
+	if (map[x][y + 1] != '0' && map[x][y + 1] != '1' && map[x][y + 1] != 'N')
 		return (false);
-	}
-	if (y - 1 >= 0 && map[x][y - 1] != '1' && map[x][y - 1] != ' ' && map[x][y - 1] != '\0')
-	{
-		printf("-->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
+	if (y - 1 >= 0 && map[x][y - 1] != '0' && map[x][y - 1] != '1' && map[x][y - 1] != 'N')
 		return (false);
-	}
-	if (x + 1 < lines && map[x + 1][y] != '1' && map[x + 1][y] != ' ' && map[x + 1][y] != '\0')
-	{
-		printf("--->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
+	if (x + 1 < lines && map[x + 1][y] != '0' && map[x + 1][y] != '1' && map[x + 1][y] != 'N')
 		return (false);
-	}
-	if (x - 1 >= 0 && map[x - 1][y] != '1' && map[x - 1][y] != ' ' && map[x - 1][y] != '\0')
-	{
-		printf("---->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
+	if (x - 1 >= 0 && map[x - 1][y] != '0' && map[x - 1][y] != '1' && map[x - 1][y] != 'N')
 		return (false);
-	}
-	if (x + 1 >= lines && map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')
-	{
-		printf("----->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
+	if (x + 1 >= lines && (map[x][y] == '0' || map[x][y] == 'N'))
 		return (false);
-	}
-	if (x - 1 < 0 && map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')
-	{
-		printf("------>x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
+	if (x - 1 < 0 && (map[x][y] == '0' || map[x][y] == 'N'))
 		return (false);
-	}
-
 	//		-   -
 	//		  .  
 	//		-   -
-	
-	if (x + 1 < lines && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != ' ')// && map[x + 1][y + 1] != '\0')
-	{
-		printf("------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
-		return (false);
-	}
-	if (y - 1 >= 0 && x - 1 >= 0 && map[x - 1][y - 1] != '1' && map[x - 1][y - 1] != ' ' && map[x - 1][y - 1] != '\0')
-	{
-		printf("-------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
-		return (false);
-	}
-	if (x - 1 >= 0 && map[x - 1][y + 1] != '1' && map[x - 1][y + 1] != ' ' && map[x - 1][y + 1] != '\0')
-	{
-		printf("--------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
-		return (false);
-	}
-	if (x + 1 < lines && y - 1 >= 0 && map[x + 1][y - 1] != '1' && map[x + 1][y - 1] != ' ' && map[x + 1][y - 1] != '\0')
-	{
-		printf("---------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
-		return (false);
-	}
+	// if (x + 1 < lines && map[x + 1][y + 1] != '0' && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != 'N')
+	// 	return (false);
+	// if (y - 1 >= 0 && x - 1 >= 0 && map[x - 1][y - 1] != '0' && map[x - 1][y - 1] != '1' && map[x - 1][y - 1] != 'N')
+	// 	return (false);
+	// if (x - 1 >= 0 && map[x - 1][y + 1] != '0' && map[x - 1][y + 1] != '1' && map[x - 1][y + 1] != 'N')
+	// 	return (false);
+	// if (x + 1 < lines && y - 1 >= 0 && map[x + 1][y - 1] != '0' && map[x + 1][y - 1] != '1' && map[x + 1][y - 1] != 'N')
+	// 	return (false);
 	return (true);
 }
 
