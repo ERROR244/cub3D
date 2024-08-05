@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 12:09:04 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:30:52 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 //		- - -
 //		- . -
 //		- - -
-
-//		-1 ↑ x ↓ +1
-//		-1 ← y → +1
 
 //	so this is all the  possible cases
 // (x) (y + 1)
@@ -29,6 +26,9 @@
 // (x - 1) (y + 1)
 // (x + 1) (y - 1)
 
+//		-1 ↑ x ↓ +1
+//		-1 ← y → +1
+
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines)
 {
 	//		  -  
@@ -36,30 +36,60 @@ bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines)
 	//		  -  
 
 	if (map[x][y + 1] != '1' && map[x][y + 1] != ' ' && map[x][y + 1] != '\0')
+	{
+		printf("->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (y - 1 >= 0 && map[x][y - 1] != '1' && map[x][y - 1] != ' ' && map[x][y - 1] != '\0')
+	{
+		printf("-->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (x + 1 < lines && map[x + 1][y] != '1' && map[x + 1][y] != ' ' && map[x + 1][y] != '\0')
+	{
+		printf("--->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (x - 1 >= 0 && map[x - 1][y] != '1' && map[x - 1][y] != ' ' && map[x - 1][y] != '\0')
+	{
+		printf("---->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (x + 1 >= lines && map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')
+	{
+		printf("----->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (x - 1 < 0 && map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')
+	{
+		printf("------>x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 
 	//		-   -
 	//		  .  
 	//		-   -
 	
-	if (x + 1 < lines && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != ' ' && map[x + 1][y + 1] != '\0')
+	if (x + 1 < lines && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != ' ')// && map[x + 1][y + 1] != '\0')
+	{
+		printf("------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (y - 1 >= 0 && x - 1 >= 0 && map[x - 1][y - 1] != '1' && map[x - 1][y - 1] != ' ' && map[x - 1][y - 1] != '\0')
+	{
+		printf("-------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (x - 1 >= 0 && map[x - 1][y + 1] != '1' && map[x - 1][y + 1] != ' ' && map[x - 1][y + 1] != '\0')
+	{
+		printf("--------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	if (x + 1 < lines && y - 1 >= 0 && map[x + 1][y - 1] != '1' && map[x + 1][y - 1] != ' ' && map[x + 1][y - 1] != '\0')
+	{
+		printf("---------->x = %d,y = %d, map[x][y] = %c\n", x, y, map[x][y]);
 		return (false);
+	}
 	return (true);
 }
 
@@ -79,10 +109,8 @@ void    free_and_check(char **map)
             printf(":%c:\n", map[i][size]);
         	flag = false;
         }
-        free(map[i]);
         i++;
     }
-    free(map);
 	if (flag == false)
 		the_map_is_invalid();
 }

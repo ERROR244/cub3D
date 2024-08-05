@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 12:50:29 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:20:23 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int main(int ac, char **av)
     // print_array_of_int(map.ceiling_color);
     // print_array_of_int(map.floor_color);
     
-    // print_array(map.map);
+    print_array(map.map);
 
 
     free(map.texture_no);
