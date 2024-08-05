@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 14:35:27 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:21:06 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,11 @@ void	the_map_is_invalid(void)
 void	invalid_file_name1(void)
 {
 	printf("Error\n		invalid file name\n");
+	exit(EXIT_FAILURE);
+}
+
+void	invalid_file(void)
+{
+	printf("Error\n		invalid file\n");
 	exit(EXIT_FAILURE);
 }

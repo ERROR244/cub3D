@@ -3,6 +3,7 @@
         "*.c": "c",
         "get_next_line.h": "c",
         "libft.h": "c",
-        "cub.h": "c"
+        "cub.h": "c",
+        "stdbool.h": "c"
     }
 }

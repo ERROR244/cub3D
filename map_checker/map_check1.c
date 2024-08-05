@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 18:20:30 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:50:19 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,26 @@ char **get_map_updated(char **ptr)
 void	is_the_map_surrounded_by_walls(char **ptr)
 {
 	char	**map;
+	int		lines;
 	int		x;
 	int		y;
 
 	x = 0;
 	map = get_map_updated(ptr);
+	lines = array_size(map);
 	while (map[x])
 	{
 		y = 0;
 		while (map[x][y])
 		{
-			if (map[x][y] == ' ' && surrounded_with_only_spaces_and_walls(map, x, y) == false)
+			if ((map[x][y] == ' ' || ((x + 1 >= lines || x - 1 < 0) &&
+					map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')) &&
+					surrounded_with_only_spaces_and_walls(map, x, y, lines) == false)
 				the_map_is_invalid();
 			y++;
 		}
 		x++;
 	}
 	free_and_check(map);
+	printf("Suc\n");
 }

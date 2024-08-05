@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 18:23:41 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:09:04 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,12 @@
 // (x - 1) (y + 1)
 // (x + 1) (y - 1)
 
-bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y)
+bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines)
 {
-	int		lines;
-
 	//		  -  
 	//		- . -
 	//		  -  
 
-	lines = array_size(map);	
 	if (map[x][y + 1] != '1' && map[x][y + 1] != ' ' && map[x][y + 1] != '\0')
 		return (false);
 	if (y - 1 >= 0 && map[x][y - 1] != '1' && map[x][y - 1] != ' ' && map[x][y - 1] != '\0')
@@ -46,7 +43,11 @@ bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y)
 		return (false);
 	if (x - 1 >= 0 && map[x - 1][y] != '1' && map[x - 1][y] != ' ' && map[x - 1][y] != '\0')
 		return (false);
-	
+	if (x + 1 >= lines && map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')
+		return (false);
+	if (x - 1 < 0 && map[x][y] != '1' && map[x][y] != ' ' && map[x][y] != '\0')
+		return (false);
+
 	//		-   -
 	//		  .  
 	//		-   -

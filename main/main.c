@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 10:20:17 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:50:29 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,12 @@ char	*ft_strjoin3(char const *s1, char c, char const *s2)
 	return (ptr);
 }
 
-char	**return_map(char *map_file)
+char	**return_map(int fd, int i)
 {
 	char	*ptr;
 	char	*str;
 	char	**sptr;
-	int		fd;
-	int		i;
 
-	i = 0;
-	fd = open(map_file, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error\n		invalid file\n");
-		exit(EXIT_FAILURE);
-	}
 	ptr = get_next_line(fd);
 	if (ptr == NULL)
 		the_map_is_invalid();
@@ -75,6 +66,7 @@ char	**return_map(char *map_file)
 			if (ptr)
 			{
 				free(ptr);
+				printf("HERE\n");
 				the_map_is_invalid();
 			}
 			else
@@ -95,7 +87,7 @@ char	**name_check(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i + 1])
+	while (str[0] && str[i + 1])
 		i++;
 	if (str[i--] != 'b')
 		invalid_file_name1();
@@ -105,7 +97,10 @@ char	**name_check(char *str)
 		invalid_file_name1();
 	if (str[i--] != '.')
 		invalid_file_name1();
-	return (return_map(str));
+	i = open(str, O_RDONLY);
+	if (i == -1)
+		invalid_file_name1();
+	return (return_map(i, 0));
 }
 
 int main(int ac, char **av)
@@ -121,17 +116,17 @@ int main(int ac, char **av)
 		the_map_is_invalid();
     }
     map_check(&map, str);
-    printf("------------------------------>%s\n", map.texture_no);
-	printf("------------------------------>%s\n", map.texture_so);
-	printf("------------------------------>%s\n", map.texture_we);
-	printf("------------------------------>%s\n", map.texture_ea);
+    // printf("------------------------------>%s\n", map.texture_no);
+	// printf("------------------------------>%s\n", map.texture_so);
+	// printf("------------------------------>%s\n", map.texture_we);
+	// printf("------------------------------>%s\n", map.texture_ea);
     
-    print_array_of_int(map.ceiling_color);
-    print_array_of_int(map.floor_color);
+    // print_array_of_int(map.ceiling_color);
+    // print_array_of_int(map.floor_color);
     
-    print_array(map.map);
-    
-    
+    // print_array(map.map);
+
+
     free(map.texture_no);
 	free(map.texture_so);
 	free(map.texture_we);
