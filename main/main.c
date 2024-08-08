@@ -6,7 +6,7 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 13:20:23 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/08 23:11:48 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	**return_map(int fd, int i)
 			if (ptr)
 			{
 				free(ptr);
-				printf("HERE\n");
 				the_map_is_invalid();
 			}
 			else
@@ -116,13 +115,13 @@ int main(int ac, char **av)
 		the_map_is_invalid();
     }
     map_check(&map, str);
-    // printf("------------------------------>%s\n", map.texture_no);
-	// printf("------------------------------>%s\n", map.texture_so);
-	// printf("------------------------------>%s\n", map.texture_we);
-	// printf("------------------------------>%s\n", map.texture_ea);
+     printf("------------------------------>%s\n", map.texture_no);
+	 printf("------------------------------>%s\n", map.texture_so);
+	 printf("------------------------------>%s\n", map.texture_we);
+	 printf("------------------------------>%s\n", map.texture_ea);
     
-    // print_array_of_int(map.ceiling_color);
-    // print_array_of_int(map.floor_color);
+     print_array_of_int(map.ceiling_color);
+     print_array_of_int(map.floor_color);
     
     print_array(map.map);
 
