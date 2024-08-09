@@ -4,6 +4,10 @@
         "get_next_line.h": "c",
         "libft.h": "c",
         "cub.h": "c",
-        "stdbool.h": "c"
-    }
+        "stdbool.h": "c",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "iomanip": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

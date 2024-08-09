@@ -1,4 +1,5 @@
 NAME	= cub3D
+TESTER	= tester
 
 SRCM	=	Get-Next-Line/get_next_line.c\
 			Get-Next-Line/get_next_line_utils.c\
@@ -26,19 +27,22 @@ CFLAGS	= -Wall -Werror -Wextra -ggdb -fsanitize=address -g3
 
 all:		${NAME}
 
-${LIBFT} : 
-	make -C Libft
+${NAME}:	${OBJM}
+	${CC} ${CFLAGS} ${OBJM} -o ${NAME}
 
-${NAME}:	${LIBFT} ${printf} ${OBJM}
-	${CC} ${CFLAGS} ${LIBFT} ${printf} ${OBJM} -o ${NAME}
+TESTER : ${NAME}
+	g++ ${CFLAGS} Unit-Tests/main.cpp -o ${TESTER}
 	
 clean:
 	@rm -f ${OBJM}
 
-fclean:		clean
+remove:
+	@rm -rf ${TESTER}
+
+fclean:		clean remove
 	@rm -f ${NAME}
 
-re:			fclean all
+re:		fclean all
 
 .SECONDARY : ${OBJM}
 .PHONY: all clean fclean re
