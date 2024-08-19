@@ -12,27 +12,59 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char    *ft_strjoin_gcl(char *remains, char *buffer)
 {
-	static char	buf[BUFFER_SIZE + 1];
-	char		*line;
-	ssize_t		readed;
+    char *array;
+    unsigned int size;
+    int i;
+    int j;
 
-	if (BUFFER_SIZE < 1 || fd < 0 || read(fd, 0, 0) == -1
-		|| BUFFER_SIZE > 0x7fffffff)
-		return (NULL);
-	line = NULL;
-	readed = 1;
-	while (readed > 0)
-	{
-		if (buf[0] == 0)
-			readed = read(fd, buf, BUFFER_SIZE);
-		if (readed > 0)
-			line = my_line(line, buf);
-		if (is_it_nline(buf))
-			break ;
-	}
-	return (line);
+    if (!remains && !buffer)
+        return (NULL);
+    size = ft_strlen(remains) + ft_strlen(buffer);
+    if (!(array = (char *)malloc(sizeof(char) * (size + 1))))
+        return (NULL);
+    i = 0;
+    j = 0;
+    if (remains)
+    {
+        while (remains[i])
+            array[j++] = remains[i++];
+        i = 0;
+    }
+    while (buffer[i])
+        array[j++] = buffer[i++];
+    array[size] = '\0';
+    free((void *)remains);
+    return (array);
+}
+
+char     *get_next_line(int fd)
+{
+    if (fd < 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE <= 0)
+        return (NULL);
+    char buffer[BUFFER_SIZE + 1];
+    buffer[0] = '\0';
+    static char *remains;
+	char *line;
+    int count;
+
+    count = 1;
+    while (!find_new_line(buffer) && count != 0)
+    {
+        if ((count = read(fd, buffer, BUFFER_SIZE)) == (-1))
+            return (NULL);
+        buffer[count] = '\0';
+        remains = ft_strjoin_gcl(remains, buffer);
+    }
+    line = push_line(remains);
+    remains = cut_next_line(remains);
+	if (line[0] == '\0')
+    {
+        free(line);
+        return (NULL);
+    }
+    return (line);
 }
 
 // int main()

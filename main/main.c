@@ -6,42 +6,11 @@
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/09 01:11:37 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/11 12:01:31 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-char	*ft_strjoin3(char const *s1, char c, char const *s2)
-{
-	char	*ptr;
-	int		i;
-	int		j;
-
-	if (s1 == NULL && s2 != NULL)
-		return ((char *)s2);
-	if (s2 == NULL && s1 != NULL)
-		return ((char *)s1);
-	if (s1 == NULL && s2 == NULL)
-		return (NULL);
-	ptr = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
-	if (ptr == 0)
-		return (0);
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	ptr[i++] = c;
-	while (s2[j])
-		ptr[i++] = s2[j++];
-	ptr[i] = '\0';
-    free((char *)s1);
-    free((char *)s2);
-	return (ptr);
-}
 
 char	**return_map(int fd, int i)
 {
@@ -56,9 +25,9 @@ char	**return_map(int fd, int i)
 	while (ptr != NULL)
 	{
 		ptr = get_next_line(fd);
-		if (i > 5 && ptr && ptr[0] == '\0')
+		if (i > 5 && ptr && ptr[0] == '\n')
 		{
-			while (ptr && ptr[0] == '\0')
+			while (ptr && ptr[0] == '\n')
 			{
 				free(ptr);
 				ptr = get_next_line(fd);
@@ -71,9 +40,9 @@ char	**return_map(int fd, int i)
 			else
 				break ;
 		}
-		if (ptr && ptr[0] != '\0')
+		if (ptr && ptr[0] != '\n')
 			i++;
-		str = ft_strjoin3(str, '\n', ptr);
+		str = ft_strjoin(str, ptr);
 	}
 	close(fd);
 	sptr = ft_split(str, '\n');
@@ -117,15 +86,15 @@ int main(int ac, char **av)
     map_check(&map, str);
 
 
-	// printf("------------------------------>%s\n", map.texture_no);
-	// printf("------------------------------>%s\n", map.texture_so);
-	// printf("------------------------------>%s\n", map.texture_we);
-	// printf("------------------------------>%s\n", map.texture_ea);
+	printf("------------------------------>%s\n", map.texture_no);
+	printf("------------------------------>%s\n", map.texture_so);
+	printf("------------------------------>%s\n", map.texture_we);
+	printf("------------------------------>%s\n", map.texture_ea);
 
-    // print_array_of_int(map.ceiling_color);
-    // print_array_of_int(map.floor_color);
-    
-    // print_array(map.map);
+    print_array_of_int(map.ceiling_color);
+    print_array_of_int(map.floor_color);
+
+    print_array(map.map);
 
 
     free(map.texture_no);

@@ -16,8 +16,8 @@
 
 void	map_check(t_map *map, char **str)
 {
-	char		**lines;
-	int			i;
+	char	**lines;
+	int		i;
 
 	i = 0;
 	lines = str + 6;

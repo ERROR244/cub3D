@@ -13,19 +13,20 @@
 #ifndef GIT_NEXT_LINE_H
 # define GIT_NEXT_LINE_H
 
-# include <fcntl.h>
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "../Libft/libft.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
-char	*get_next_line(int fd);
-void	*ft_calloc(size_t nmemb, size_t size);
-int		is_it_nline(char *buf);
-char	*my_line(char *line, char *buf);
+
+char    *push_line(char *remains);
+char    *cut_next_line(char *remains);
+bool    find_new_line(char *line);
+char    *get_next_line(int fd);
 
 #endif

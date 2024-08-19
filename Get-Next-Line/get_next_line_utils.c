@@ -12,84 +12,72 @@
 
 #include "get_next_line.h"
 
-int	ft_str_line(char *str)
+char    *push_line(char *remains)
 {
-	int	i;
+    int i;
+    char *array;
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] != '\n')
+    i = 0;
+    while (remains[i] && remains[i] != '\n')
+        i++;
+    if (remains[i] == '\n')
 		i++;
-	return (i + (str[i] == '\n'));
+    if (!(array = (char *)malloc(sizeof(char) * (i + 1))))
+        return (NULL);
+    i = 0;
+    while (remains[i] && remains[i] != '\n')
+    {
+        array[i] = remains[i];
+        i++;
+    }
+	if (remains[i] == '\n')
+	{
+		array[i] = '\n';
+		array[i + 1] = '\0';
+		return (array);
+	}
+    array[i] = '\0';
+    return (array);
 }
 
-int	is_it_nline(char *buf)
+char    *cut_next_line(char *remains)
 {
-	int	i;
-	int	j;
-	int	k;
+    int i;
+    int j;
+    char *array;
 
-	i = 0;
-	j = 0;
-	k = 0;
-	while (buf[j])
-	{
-		if (i)
-			buf[k++] = buf[j];
-		if (buf[j] == '\n')
-			i = 1;
-		buf[j++] = 0;
-	}
-	return (i);
+    i = 0;
+    j = 0;
+    while (remains[i] && remains[i] != '\n')
+        i++;
+    if (!remains[i])
+    {
+        free(remains);
+        return (NULL);
+    }
+    if (!(array = (char *)malloc(sizeof(char) * (ft_strlen(remains) - i + 1))))
+        return (NULL);
+    i++;
+    while (remains[i])
+    {
+        array[j] = remains[i];
+        i++;
+        j++;
+    }
+    array[j] = '\0';
+    free(remains);
+    return (array);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+bool find_new_line(char *line)
 {
-	size_t	i;
-	void	*ptr;
+	int i = 0;
 
-	if (size != 0 && nmemb > ((size_t)-1 / size))
-		return (NULL);
-	ptr = (void *)malloc(nmemb * size);
-	if (ptr == NULL)
-		return (NULL);
-	else
+	while (line[i])
 	{
-		i = 0;
-		while (i < nmemb * size)
-		{
-			*((char *)ptr + i) = 0;
-			i++;
-		}
+		if (line[i] == '\n')
+			return (true);
+		i += 1;
 	}
-	return (ptr);
-}
-
-char	*my_line(char *line, char *buf)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = line;
-	line = ft_calloc((ft_str_line(buf) + ft_str_line(line) + 1), sizeof(char));
-	if (line == NULL)
-		return (NULL);
-	while (tmp && tmp[i])
-	{
-		line[i] = tmp[i];
-		i++;
-	}
-	while (*buf)
-	{
-		if (*buf != '\n')
-			line[i++] = *buf;
-		if (*buf++ == '\n')
-			break ;
-	}
-	line[i] = '\0';
-	if (tmp != NULL)
-		free(tmp);
-	return (line);
+	return (false);
 }
