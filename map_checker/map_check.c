@@ -24,4 +24,5 @@ void	map_check(t_map *map, char **str)
 	check_characters(lines);
 	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
+	free_array(str);
 }

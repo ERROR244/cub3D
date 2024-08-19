@@ -23,18 +23,27 @@
 # include <stdbool.h>
 # include <time.h>
 
+# include <mlx.h>
+
 typedef struct s_map
 {
     char *texture_no;
     char *texture_so;
     char *texture_we;
     char *texture_ea;
-    
+
     int *floor_color;
     int *ceiling_color;
 
     char **map;
 }   t_map;
+
+typedef struct window
+{
+    t_map   *map;
+	void	*mlx;
+	void	*window;
+}			t_window;
 
 // tmp
 void    print_array(char **str);
@@ -42,7 +51,9 @@ void    free_array(char **str);
 void    print_array_in_one_line(char **str);
 void    modify_and_restore(char **map, int rows, int cols);
 void    print_array_of_int(int *color);
-char** copy_array(char** original, int rows, int cols);
+char**  copy_array(char** original, int rows, int cols);
+void    exit_game(t_window *window);
+
 // error
 void	the_map_is_invalid(void);
 void	invalid_file_name1(void);
@@ -64,6 +75,10 @@ void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
 void    free_and_check(char **map);
 char    **get_map_updated(char **ptr);
+
+// graphic_management
+void	graphic_management(t_window *w);
+int     close_window(t_window *window);
 
 
 

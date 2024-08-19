@@ -37,7 +37,7 @@ int longest_line_size_func(char **map)
 	int i;
 	int size;
 	int line_size;
-	
+
 	size = -1;
 	i = 0;
 	while (map[i])
@@ -117,5 +117,4 @@ void	is_the_map_surrounded_by_walls(char **ptr)
 		x++;
 	}
 	free_and_check(map);
-	printf("Suc\n");
 }

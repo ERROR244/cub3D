@@ -71,8 +71,23 @@ char	**name_check(char *str)
 	return (return_map(i, 0));
 }
 
+void exit_game(t_window *window)
+{
+	t_map *map;
+
+	map = window->map;
+    free(map->texture_no);
+	free(map->texture_so);
+	free(map->texture_we);
+	free(map->texture_ea);
+    free(map->floor_color);
+    free(map->ceiling_color);
+    free_array(map->map);
+}
+
 int main(int ac, char **av)
 {
+	t_window	window;
     t_map       map;
     char		**str;
 
@@ -84,26 +99,23 @@ int main(int ac, char **av)
 		the_map_is_invalid();
     }
     map_check(&map, str);
+	window.map = &map;
+	graphic_management(&window);
 
 
-	printf("------------------------------>%s\n", map.texture_no);
-	printf("------------------------------>%s\n", map.texture_so);
-	printf("------------------------------>%s\n", map.texture_we);
-	printf("------------------------------>%s\n", map.texture_ea);
-
-    print_array_of_int(map.ceiling_color);
-    print_array_of_int(map.floor_color);
-
-    print_array(map.map);
 
 
-    free(map.texture_no);
-	free(map.texture_so);
-	free(map.texture_we);
-	free(map.texture_ea);
-    free(map.floor_color);
-    free(map.ceiling_color);
-    free_array(map.map);
-    free_array(str);
+	// printf("------------------------------>%s\n", map.texture_no);
+	// printf("------------------------------>%s\n", map.texture_so);
+	// printf("------------------------------>%s\n", map.texture_we);
+	// printf("------------------------------>%s\n", map.texture_ea);
+	//
+    // print_array_of_int(map.ceiling_color);
+    // print_array_of_int(map.floor_color);
+	//
+    // print_array(map.map);
+
+	// exit_game(&window);
+
     return (0);
 }

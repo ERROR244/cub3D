@@ -18,21 +18,23 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_split.c\
 			Libft/ft_atoi.c\
 			Libft/ft_strncmp.c\
+			graphic_management/graphic_management.c\
 
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -ggdb -fsanitize=address -g3
-# CFLAGS1	= -lmlx -framework OpenGL -framework AppKit
+CFLAGS1	= -Imlx_linux -O3
+LDFLAGS	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 all:		${NAME}
 
 ${NAME}:	${OBJM}
-	${CC} ${CFLAGS} ${OBJM} -o ${NAME}
+	${CC} ${CFLAGS} ${CFLAGS} ${OBJM} $(LDFLAGS) -o ${NAME}
 
 TESTER : ${NAME}
 	g++ ${CFLAGS} Unit-Tests/main.cpp -o ${TESTER}
-	
+
 clean:
 	@rm -f ${OBJM}
 
