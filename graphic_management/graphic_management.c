@@ -100,7 +100,7 @@ int	key_hook(int keycode, t_window *window)
 
 	event = get_event(keycode);
 	ret = handle_event(event, window);
-	// print_array(window->map->map);
+	print_array(window->map->map);
 	return (ret);
 }
 
