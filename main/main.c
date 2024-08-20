@@ -98,10 +98,9 @@ int main(int ac, char **av)
     {
 		the_map_is_invalid();
     }
-    map_check(&map, str);
+    map_check(&map, str, &window);
 	window.map = &map;
 	graphic_management(&window);
-
 
 
 

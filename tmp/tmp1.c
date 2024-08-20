@@ -29,11 +29,21 @@ void print_array_in_one_line(char **str)
 void print_array(char **str)
 {
     int i;
+    int j;
 
     i = 0;
     while (str && *str && str[i])
     {
-        printf("%s \n", str[i]);
+        j = 0;
+        while (str[i][j])
+        {
+            if (str[i][j] == 'N')
+                printf("*");
+            else
+                printf("%c", str[i][j]);
+            j++;
+        }
+        printf("\n");
         i++;
     }
 }

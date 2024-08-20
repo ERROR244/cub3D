@@ -14,14 +14,14 @@
 
 // check texture
 
-void	map_check(t_map *map, char **str)
+void	map_check(t_map *map, char **str, t_window *window)
 {
 	char	**lines;
 	int		i;
 
 	i = 0;
 	lines = str + 6;
-	check_characters(lines);
+	check_characters(lines, window);
 	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
 	free_array(str);

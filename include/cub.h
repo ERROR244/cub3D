@@ -13,7 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-// # include <mlx.h>
+# include <mlx.h>
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
 # include <fcntl.h>
@@ -23,7 +23,13 @@
 # include <stdbool.h>
 # include <time.h>
 
-# include <mlx.h>
+typedef enum {
+    moveForWard, moveBackward,
+    moveRight, moveLeft,
+    escExit, viewUp,
+    viewDown, viewRight,
+    viewLeft,none
+}   events;
 
 typedef struct s_map
 {
@@ -41,6 +47,8 @@ typedef struct s_map
 typedef struct window
 {
     t_map   *map;
+    int     player_x;
+    int     player_y;
 	void	*mlx;
 	void	*window;
 }			t_window;
@@ -67,10 +75,10 @@ void	the_map_is_invalid(void);
 void	invalid_file_name1(void);
 
 // map check
-void	map_check(t_map *map, char **str);
+void	map_check(t_map *map, char **str, t_window *window);
 void    check_texture_and_color(t_map *map, char **str);
 int     array_size(char **str);
-void	check_characters(char **map);
+void	check_characters(char **map, t_window *window);
 void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
 void    free_and_check(char **map);

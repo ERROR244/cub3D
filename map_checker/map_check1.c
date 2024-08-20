@@ -12,10 +12,11 @@
 
 #include "../include/cub.h"
 
-void	check_characters(char **map)
+void	check_characters(char **map, t_window *window)
 {
 	int	i;
 	int	j;
+	int k = 0;
 
 	i = 0;
 	while (map[i])
@@ -26,10 +27,18 @@ void	check_characters(char **map)
 			if (map[i][j] != '1' && map[i][j] != '0' &&
 					map[i][j] != 'N' && map[i][j] != ' ')
 				the_map_is_invalid();
+			if (map[i][j] == 'N')
+			{
+				k++;
+				window->player_x = i;
+				window->player_y = j;
+			}
 			j++;
 		}
 		i++;
 	}
+	if (k != 1)
+		the_map_is_invalid();
 }
 
 int longest_line_size_func(char **map)
