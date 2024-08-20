@@ -50,7 +50,7 @@ push :
 	@make fclean
 	@git add .
 	@git commit -m "cub3D"
-	@git push -f
+	@git push origin Sfayga
 
 .SECONDARY : ${OBJM}
 .PHONY: all clean fclean re
