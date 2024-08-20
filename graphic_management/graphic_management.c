@@ -123,6 +123,8 @@ void	graphic_management(t_window *window)
 
 
 
+
+
 	mlx_key_hook(window->window, key_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);
