@@ -46,5 +46,11 @@ fclean:		clean remove
 
 re:		fclean all
 
+push :
+	@make fclean
+	@git add .
+	@git commit -m "cub3D"
+	@git push -f
+
 .SECONDARY : ${OBJM}
 .PHONY: all clean fclean re
