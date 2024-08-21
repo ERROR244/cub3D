@@ -19,11 +19,12 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_atoi.c\
 			Libft/ft_strncmp.c\
 			graphic_management/graphic_management.c\
+			graphic_management/event.c\
 
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -ggdb -fsanitize=address -g3
+CFLAGS	= -Wall -Werror -ggdb -fsanitize=address -g3
 CFLAGS1	= -Imlx_linux -O3
 LDFLAGS	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 

@@ -47,10 +47,18 @@ typedef struct s_map
 typedef struct window
 {
     t_map   *map;
+    void	*free_space;
+    void	*wall;
+    void	*img2;
+    void	*player;
+    void	*mlx;
+    void	*window;
+    // int     x;
+    // int     y;
+    int     i;
+    int     k;
     int     player_x;
     int     player_y;
-	void	*mlx;
-	void	*window;
 }			t_window;
 
 // tmp
@@ -87,6 +95,13 @@ char    **get_map_updated(char **ptr);
 // graphic_management
 void	graphic_management(t_window *w);
 int     close_window(t_window *window);
+
+// events
+int	key_hook(int keycode, t_window *window);
+int handle_event(events event, t_window *window);
+int move(t_window *window, int i, int j);
+int	p_in_the_map(char **map);
+events get_event(int keycode);
 
 
 

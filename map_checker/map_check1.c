@@ -30,15 +30,18 @@ void	check_characters(char **map, t_window *window)
 			if (map[i][j] == 'N')
 			{
 				k++;
-				window->player_x = i;
-				window->player_y = j;
+				window->player_x = j * 71;
+				window->player_y = i * 69;
 			}
 			j++;
+			if (window->i < j - 1)
+				window->i = j;
 		}
 		i++;
 	}
 	if (k != 1)
 		the_map_is_invalid();
+	window->k = i;
 }
 
 int longest_line_size_func(char **map)
