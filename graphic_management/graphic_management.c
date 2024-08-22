@@ -8,14 +8,32 @@ char *eventstr[] = {
 
 int	close_window(t_window *window)
 {
-	int	i;
-
-	i = 0;
 	printf("Good game\n");
     exit_game(window);
 	mlx_destroy_window(window->mlx, window->window);
 	exit(EXIT_SUCCESS);
 	return (0);
+}
+
+int abs(int n) { return ((n > 0) ? n : (n * (-1))); }
+
+void DDA(int X0, int Y0, int X1, int Y1, t_window *window)
+{
+	int dx = X1 - X0;
+	int dy = Y1 - Y0;
+
+	int steps = 20;
+	float Xinc = dx / (float)steps;
+	float Yinc = dy / (float)steps;
+
+	float X = X0;
+	float Y = Y0;
+	for (int i = 0; i <= 100; i++) {
+		mlx_pixel_put(window->mlx, window->window, round(X), round(Y), 0x808080);
+		Y -= Yinc;
+		X -= Xinc;
+		// X += Xinc;
+	}
 }
 
 int draw_squar(t_window *window, int y, int x, int color)
@@ -24,19 +42,23 @@ int draw_squar(t_window *window, int y, int x, int color)
 	int j;
 	int ret;
 
-	i = 2;
+	i = 0;
 	ret = 0;
 	while (i < 64 && ret == 0)
 	{
-		j = 2;
+		j = 0;
 		while (j < 64 && ret == 0)
 		{
+			if (j < 2 || i < 2)
+				ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, 0x808080);
+			else
 				ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, color);
 			j++;
 		}
 		i++;
 	}
 	i = 0;
+	DDA(window->player_x + 5, window->player_y + 5, window->player_x + 10, window->player_y + 10, window);
 	while (i < 10 && ret == 0)
 	{
 		j = 0;

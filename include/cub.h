@@ -22,6 +22,8 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <time.h>
+# include <math.h> 
+
 
 typedef enum {
     moveForWard, moveBackward,
