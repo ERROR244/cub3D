@@ -9,6 +9,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			map_checker/map_check3.c\
 			map_checker/map_check4.c\
 			map_checker/map_check5.c\
+			main/map2D.c\
 			main/main.c\
 			tmp/tmp1.c\
 			error/error0.c\
@@ -24,14 +25,13 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Werror -ggdb -fsanitize=address -g3
-CFLAGS1	= -Imlx_linux -O3
-LDFLAGS	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+CFLAGS	= -Wall -Wextra -ggdb -fsanitize=address -g3
+MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}
 
 ${NAME}:	${OBJM}
-	${CC} ${CFLAGS} ${CFLAGS} ${OBJM} $(LDFLAGS) -o ${NAME}
+	${CC} ${CFLAGS} ${OBJM} $(MLX_LIB) -o ${NAME}
 
 TESTER : ${NAME}
 	g++ ${CFLAGS} Unit-Tests/main.cpp -o ${TESTER}

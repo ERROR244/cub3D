@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/21 15:39:30 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:22:01 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-# define CUB_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-# include <mlx.h>
+#define PI 3.141592
+
+
+# include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
 # include <fcntl.h>
@@ -45,6 +48,11 @@ typedef struct s_map
     char **map;
 }   t_map;
 
+typedef struct s_ray
+{
+    double ray_a;
+}   t_ray;
+
 typedef struct window
 {
     t_map   *map;
@@ -54,12 +62,23 @@ typedef struct window
     void	*player;
     void	*mlx;
     void	*window;
-    // int     x;
-    // int     y;
-    int     i;
-    int     k;
-    int     player_x;
-    int     player_y;
+   
+    double  player_x;
+    double  player_y;
+    double  dirX, dirY;          // direction vector
+    double  planeX, planeY;      // the 2d raycaster version of camera plane
+    double  pa;
+    double  ray_a;
+    int     wall_wigth;
+    int     rays;
+
+    long    xfirststep;
+    long    yfirststep;
+    long    xstep;
+    long    ystep;
+
+    int     i;             // width
+    int     k;             // 
 }			t_window;
 
 // tmp
@@ -96,12 +115,19 @@ char    **get_map_updated(char **ptr);
 // graphic_management
 void	graphic_management(t_window *w);
 int     close_window(t_window *window);
+double to_rad(double deg);
+double to_deg(double rad);
+
+// 2D
+int	close_window(t_window *window);
+int draw_squar(t_window *window, int y, int x, int color);
+int draw_map(t_window *window);
+void draw_2D_map(t_window *window);
+
 
 // events
 int	key_hook(int keycode, t_window *window);
 int handle_event(events event, t_window *window);
-int move(t_window *window, int i, int j);
-int	p_in_the_map(char **map);
 events get_event(int keycode);
 
 

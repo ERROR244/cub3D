@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/09 02:34:39 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:05:21 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines)
 	if (x - 1 < 0 && (map[x][y] == '0' || map[x][y] == 'N'))
 		return (false);
 	//		-   -
-	//		  .  
+	//		  .
 	//		-   -
-	if (x + 1 < lines && map[x + 1][y + 1] != '0' && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != 'N')
-		return (false);
-	if (y - 1 >= 0 && x - 1 >= 0 && map[x - 1][y - 1] != '0' && map[x - 1][y - 1] != '1' && map[x - 1][y - 1] != 'N')
-		return (false);
-	if (x - 1 >= 0 && map[x - 1][y + 1] != '0' && map[x - 1][y + 1] != '1' && map[x - 1][y + 1] != 'N')
-		return (false);
-	if (x + 1 < lines && y - 1 >= 0 && map[x + 1][y - 1] != '0' && map[x + 1][y - 1] != '1' && map[x + 1][y - 1] != 'N')
-		return (false);
+	// if (x + 1 < lines && map[x + 1][y + 1] != '0' && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != 'N')
+	// 	return (false);
+	// if (y - 1 >= 0 && x - 1 >= 0 && map[x - 1][y - 1] != '0' && map[x - 1][y - 1] != '1' && map[x - 1][y - 1] != 'N')
+	// 	return (false);
+	// if (x - 1 >= 0 && map[x - 1][y + 1] != '0' && map[x - 1][y + 1] != '1' && map[x - 1][y + 1] != 'N')
+	// 	return (false);
+	// if (x + 1 < lines && y - 1 >= 0 && map[x + 1][y - 1] != '0' && map[x + 1][y - 1] != '1' && map[x + 1][y - 1] != 'N')
+	// 	return (false);
 	return (true);
 }
 
