@@ -13,6 +13,10 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# ifndef PI
+#define PI 3.141592
+#endif
+
 # include <mlx.h>
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
@@ -22,7 +26,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <time.h>
-# include <math.h> 
+# include <math.h>
 
 
 typedef enum {
@@ -55,8 +59,8 @@ typedef struct window
     void	*player;
     void	*mlx;
     void	*window;
-    // int     x;
-    // int     y;
+    double dirX, dirY;          // direction vector
+    double planeX, planeY;      // the 2d raycaster version of camera plane
     int     i;
     int     k;
     int     player_x;
@@ -97,6 +101,13 @@ char    **get_map_updated(char **ptr);
 // graphic_management
 void	graphic_management(t_window *w);
 int     close_window(t_window *window);
+
+// 2D
+int	close_window(t_window *window);
+int draw_squar(t_window *window, int y, int x, int color);
+int draw_map(t_window *window);
+void draw_2D_map(t_window *window);
+
 
 // events
 int	key_hook(int keycode, t_window *window);

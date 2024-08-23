@@ -9,6 +9,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			map_checker/map_check3.c\
 			map_checker/map_check4.c\
 			map_checker/map_check5.c\
+			main/map2D.c\
 			main/main.c\
 			tmp/tmp1.c\
 			error/error0.c\
