@@ -116,7 +116,7 @@ int main(int ac, char **av)
 	//
     // print_array(map.map);
 
-	// exit_game(&window);
+	exit_game(&window);
 
     return (0);
 }

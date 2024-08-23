@@ -30,8 +30,8 @@ void	check_characters(char **map, t_window *window)
 			if (map[i][j] == 'N')
 			{
 				k++;
-				window->player_x = j * 71;
-				window->player_y = i * 69;
+				window->player_x = j * 32.5;
+				window->player_y = i * 33;
 			}
 			j++;
 			if (window->i < j - 1)

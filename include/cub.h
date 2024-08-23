@@ -28,7 +28,6 @@
 # include <time.h>
 # include <math.h>
 
-
 typedef enum {
     moveForWard, moveBackward,
     moveRight, moveLeft,
@@ -59,12 +58,16 @@ typedef struct window
     void	*player;
     void	*mlx;
     void	*window;
-    double dirX, dirY;          // direction vector
-    double planeX, planeY;      // the 2d raycaster version of camera plane
+   
+    double  player_x;
+    double  player_y;
+    double  dirX, dirY;          // direction vector
+    double  planeX, planeY;      // the 2d raycaster version of camera plane
+    double  pdx;
+    double  pdy;
+    double  pa;
     int     i;
     int     k;
-    int     player_x;
-    int     player_y;
 }			t_window;
 
 // tmp
@@ -101,6 +104,8 @@ char    **get_map_updated(char **ptr);
 // graphic_management
 void	graphic_management(t_window *w);
 int     close_window(t_window *window);
+double to_rad(double deg);
+double to_deg(double rad);
 
 // 2D
 int	close_window(t_window *window);
@@ -112,8 +117,6 @@ void draw_2D_map(t_window *window);
 // events
 int	key_hook(int keycode, t_window *window);
 int handle_event(events event, t_window *window);
-int move(t_window *window, int i, int j);
-int	p_in_the_map(char **map);
 events get_event(int keycode);
 
 

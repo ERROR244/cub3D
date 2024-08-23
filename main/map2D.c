@@ -15,6 +15,28 @@ int	close_window(t_window *window)
 	return (0);
 }
 
+void draw_line_dda(t_window *window, int x0, int y0)
+{
+    double dx = window->pdx;
+    double dy = window->pdy;
+
+    double steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+    double x_inc = dx / (double)steps;
+    double y_inc = dy / (double)steps;
+
+    double x = x0 + 3;
+    double y = y0 + 3;
+
+    for (int i = 0; i <= 50; i++)
+	{
+		printf("%f %f \n", x, y);
+        mlx_pixel_put(window->mlx, window->window, round(x), round(y), 0xFF0000);
+        x += x_inc;
+        y += y_inc;
+    }
+}
+
 int draw_squar(t_window *window, int y, int x, int color)
 {
 	int i;
@@ -37,6 +59,7 @@ int draw_squar(t_window *window, int y, int x, int color)
 		i++;
 	}
 	i = 0;
+	draw_line_dda(window, window->player_x, window->player_y);
 	while (i < 8 && ret == 0)
 	{
 		j = 0;
@@ -47,6 +70,7 @@ int draw_squar(t_window *window, int y, int x, int color)
 		}
 		i++;
 	}
+	draw_line_dda(window, window->player_x, window->player_y);
 	return (ret);
 }
 
@@ -85,13 +109,17 @@ int draw_map(t_window *window)
 
 void draw_2D_map(t_window *window)
 {
+
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->i * 32, window->k * 32, "cub3D");
 
-	window->dirX = -1;
-	window->dirY = 0;
-	window->planeX = 0;
-	window->planeY = 0.66;
+	window->pdx = cos(window->pa) * 5;
+	window->pdy = sin(window->pa) * 5;
+
+	// window->dirX = -1;
+	// window->dirY = 0;
+	// window->planeX = 0;
+	// window->planeY = 0.66;
 
 	mlx_loop_hook(window->mlx, draw_map, window);
 

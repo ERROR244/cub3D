@@ -15,37 +15,16 @@ events get_event(int keycode)
 		event = moveLeft;
 	else if (keycode == 100)
 		event = viewRight;
-	else if (keycode == 119)
-		event = viewUp;
-	else if (keycode == 115)
-		event = viewDown;
 	else if (keycode == 97)
 		event = viewLeft;
+	// else if (keycode == 119)
+	// 	event = viewUp;
+	// else if (keycode == 115)
+	// 	event = viewDown;
 	else if (keycode == 65307)
 		event = escExit;
 	return (event);
 }
-
-// int	p_in_the_map(char **map)
-// {
-// 	int	x;
-// 	int	y;
-//
-// 	x = 0;
-// 	y = 0;
-// 	while (map[x])
-// 	{
-// 		y = 0;
-// 		while (map[x][y])
-// 		{
-// 			if (map[x][y] == 'N')
-// 				return (1);
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// 	return (0);
-// }
 
 int handle_event(events event, t_window *window)
 {
@@ -57,7 +36,23 @@ int handle_event(events event, t_window *window)
 		window->player_x += 10;
 	else if (event == moveLeft)
 		window->player_x -= 10;
-	if (event == escExit)
+	else if (event == viewRight)
+	{
+		window->pa += 0.1;
+		if (window->pa > 0)
+			window->pa -= 2*PI;
+		window->pdx = cos(window->pa) * 5;
+		window->pdy = sin(window->pa) * 5;
+	}
+	else if (event == viewLeft)
+	{
+		window->pa -= 0.1;
+		if (window->pa < 0)
+			window->pa += 2*PI;
+		window->pdx = cos(window->pa) * 5;
+		window->pdy = sin(window->pa) * 5;
+	}
+	else if (event == escExit)
 		return (close_window(window));
 	return (0);
 }
