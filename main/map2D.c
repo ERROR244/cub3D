@@ -17,24 +17,25 @@ int	close_window(t_window *window)
 
 void draw_line_dda(t_window *window, int x0, int y0)
 {
-    double dx = window->pdx;
-    double dy = window->pdy;
+    double steps = abs(window->pdx) > abs(window->pdy) ? abs(window->pdx) : abs(window->pdy);
 
-    double steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-
-    double x_inc = dx / (double)steps;
-    double y_inc = dy / (double)steps;
+    double x_inc = window->pdx / (double)steps;
+    double y_inc = window->pdy / (double)steps;
 
     double x = x0 + 3;
     double y = y0 + 3;
 
-    for (int i = 0; i <= 50; i++)
+    for (int i = 0; i <= 200; i++)
 	{
-		printf("%f %f \n", x, y);
         mlx_pixel_put(window->mlx, window->window, round(x), round(y), 0xFF0000);
         x += x_inc;
         y += y_inc;
     }
+}
+
+void draw_the_rays3D(t_window *window)
+{
+	
 }
 
 int draw_squar(t_window *window, int y, int x, int color)
@@ -59,7 +60,6 @@ int draw_squar(t_window *window, int y, int x, int color)
 		i++;
 	}
 	i = 0;
-	draw_line_dda(window, window->player_x, window->player_y);
 	while (i < 8 && ret == 0)
 	{
 		j = 0;
@@ -70,7 +70,6 @@ int draw_squar(t_window *window, int y, int x, int color)
 		}
 		i++;
 	}
-	draw_line_dda(window, window->player_x, window->player_y);
 	return (ret);
 }
 
@@ -86,6 +85,8 @@ int draw_map(t_window *window)
 	i = 0;
 	ret = 0;
 	map = window->map->map;
+	draw_the_rays3D(window);
+	draw_line_dda(window, window->player_x, window->player_y);
 	while (map[i] && ret == 0)
 	{
 		j = 0;
