@@ -30,6 +30,7 @@ int handle_event(events event, t_window *window)
 {
 	int x;
 	int y;
+	printf("here--->%f \n", window->pa);
 	if (event == moveForWard)
 	{
 		x = (window->player_x) / 32;
@@ -79,7 +80,6 @@ int handle_event(events event, t_window *window)
 	}
 	else if (event == escExit)
 		return (close_window(window));
-	printf("%d %d \n", x, y);
 	return (0);
 }
 

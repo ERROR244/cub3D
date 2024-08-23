@@ -27,7 +27,7 @@ void draw_line_dda(t_window *window, int x0, int y0)
     double x = x0 + 3;
     double y = y0 + 3;
 
-    for (int i = 0; i <= 20; i++)
+    for (int i = 0; i <= steps + 10; i++)
 	{
         mlx_pixel_put(window->mlx, window->window, round(x), round(y), 0xFF0000);
         x += x_inc;
@@ -35,9 +35,48 @@ void draw_line_dda(t_window *window, int x0, int y0)
     }
 }
 
+void dda_for_line(int X0, int Y0, int X1, int Y1, t_window *window) 
+{ 
+    double dx = X1 - X0; 
+    double dy = Y1 - Y0; 
+  
+    double steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy); 
+  
+    double Xinc = dx / (double)steps; 
+    double Yinc = dy / (double)steps; 
+  
+    double X = X0; 
+    double Y = Y0; 
+    for (int i = 0; i <= steps + 10; i++)
+	{
+        mlx_pixel_put(window->mlx, window->window, round(X), round(Y), 0xFF0000);
+        X += Xinc;
+        Y += Yinc;
+    } 
+} 
+
 void draw_the_rays3D(t_window *window)
 {
-	(void)window;
+	int colid;
+	int i;
+
+	i = 0;
+	colid = 0;
+	window->ray_a = window->pa - to_rad(30);
+	while (i < window->rays)
+	{
+
+
+		dda_for_line(	window->player_x,
+						window->player_y,
+						window->player_x + cos(window->ray_a) * 30,
+						window->player_y + sin(window->ray_a) * 30,
+						window
+					);
+		window->ray_a += to_rad(60) / window->rays;
+		colid++;
+		i++;
+	}
 }
 
 int draw_squar(t_window *window, int y, int x, int color)
@@ -61,11 +100,11 @@ int draw_squar(t_window *window, int y, int x, int color)
 		}
 		i++;
 	}
-	i = 0;
-	while (i < 8 && ret == 0)
+	i = -4;
+	while (i < 4 && ret == 0)
 	{
-		j = 0;
-		while (j < 8 && ret == 0)
+		j = -4;
+		while (j < 4 && ret == 0)
 		{
 			ret = mlx_pixel_put(window->mlx, window->window, window->player_x + i, window->player_y + j, 0x808080);
 			j++;
@@ -87,8 +126,8 @@ int draw_map(t_window *window)
 	i = 0;
 	ret = 0;
 	map = window->map->map;
-	draw_the_rays3D(window);
-	draw_line_dda(window, window->player_x, window->player_y);
+	draw_the_rays3D(window);											// rays
+	draw_line_dda(window, window->player_x, window->player_y);			// direction
 	while (map[i] && ret == 0)
 	{
 		j = 0;
@@ -103,7 +142,7 @@ int draw_map(t_window *window)
 				ret = draw_squar(window, x, y, 0xFFFFFF);
 			if (map[i][j + 1] == '\0')
 			{
-				while (j < window->i)
+				while (j <= window->i)
 				{
 					ret = draw_squar(window, x, y, 0x000000);
 					y += 32;
@@ -135,7 +174,6 @@ void draw_2D_map(t_window *window)
 	// window->planeY = 0.66;
 
 	mlx_loop_hook(window->mlx, draw_map, window);
-
 	mlx_key_hook(window->window, key_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);

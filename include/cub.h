@@ -13,9 +13,8 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# ifndef PI
 #define PI 3.141592
-#endif
+
 
 # include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"
@@ -49,6 +48,11 @@ typedef struct s_map
     char **map;
 }   t_map;
 
+typedef struct s_ray
+{
+    double ray_a;
+}   t_ray;
+
 typedef struct window
 {
     t_map   *map;
@@ -66,8 +70,12 @@ typedef struct window
     double  pdx;
     double  pdy;
     double  pa;
-    int     i;
-    int     k;
+    double  ray_a;
+    int     wall_wigth;
+    int     rays;
+
+    int     i;             // width
+    int     k;             // 
 }			t_window;
 
 // tmp
