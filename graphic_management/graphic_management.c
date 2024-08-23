@@ -100,7 +100,6 @@ int	key_hook(int keycode, t_window *window)
 
 	event = get_event(keycode);
 	ret = handle_event(event, window);
-	// print_array(window->map->map);
 	return (ret);
 }
 
@@ -117,7 +116,7 @@ int	close_window(t_window *window)
 void	graphic_management(t_window *window)
 {
 	window->mlx = mlx_init();
-	window->window = mlx_new_window(window->mlx, 140, 90, "cub3D");
+	window->window = mlx_new_window(window->mlx, 1400, 900, "cub3D");
 
 
 
