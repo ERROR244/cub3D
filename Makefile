@@ -24,13 +24,12 @@ OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -ggdb -fsanitize=address -g3
-CFLAGS1	= -Imlx_linux -O3
-LDFLAGS	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}
 
 ${NAME}:	${OBJM}
-	${CC} ${CFLAGS} ${CFLAGS} ${OBJM} $(LDFLAGS) -o ${NAME}
+	${CC} ${CFLAGS} ${OBJM} $(MLX_LIB) -o ${NAME}
 
 TESTER : ${NAME}
 	g++ ${CFLAGS} Unit-Tests/main.cpp -o ${TESTER}

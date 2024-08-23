@@ -106,11 +106,9 @@ int	key_hook(int keycode, t_window *window)
 
 int	close_window(t_window *window)
 {
-	int	i;
 
-	i = 0;
 	printf("Good game\n");
-    exit_game(window);
+  exit_game(window);
 	mlx_destroy_window(window->mlx, window->window);
 	exit(EXIT_SUCCESS);
 	return (0);
