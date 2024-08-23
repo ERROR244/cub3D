@@ -15,9 +15,11 @@ int	close_window(t_window *window)
 	return (0);
 }
 
+double fabs(double n) { return ((n > 0) ? n : (n * (-1))); } ;
+
 void draw_line_dda(t_window *window, int x0, int y0)
 {
-    double steps = abs(window->pdx) > abs(window->pdy) ? abs(window->pdx) : abs(window->pdy);
+    double steps = fabs(window->pdx) > fabs(window->pdy) ? fabs(window->pdx) : fabs(window->pdy);
 
     double x_inc = window->pdx / (double)steps;
     double y_inc = window->pdy / (double)steps;
@@ -25,7 +27,7 @@ void draw_line_dda(t_window *window, int x0, int y0)
     double x = x0 + 3;
     double y = y0 + 3;
 
-    for (int i = 0; i <= 200; i++)
+    for (int i = 0; i <= 20; i++)
 	{
         mlx_pixel_put(window->mlx, window->window, round(x), round(y), 0xFF0000);
         x += x_inc;
@@ -35,7 +37,7 @@ void draw_line_dda(t_window *window, int x0, int y0)
 
 void draw_the_rays3D(t_window *window)
 {
-	
+	(void)window;
 }
 
 int draw_squar(t_window *window, int y, int x, int color)
@@ -99,6 +101,16 @@ int draw_map(t_window *window)
 				ret = draw_squar(window, x, y, 0x000000);
 			else if (map[i][j] == 'N')
 				ret = draw_squar(window, x, y, 0xFFFFFF);
+			if (map[i][j + 1] == '\0')
+			{
+				while (j < window->i)
+				{
+					ret = draw_squar(window, x, y, 0x000000);
+					y += 32;
+					j++;
+				}
+				break ;
+			}
 			j++;
 			y += 32;
 		}

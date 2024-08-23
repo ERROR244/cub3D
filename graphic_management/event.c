@@ -28,14 +28,39 @@ events get_event(int keycode)
 
 int handle_event(events event, t_window *window)
 {
+	int x;
+	int y;
 	if (event == moveForWard)
-		window->player_y -= 10;
+	{
+		x = (window->player_x) / 32;
+		y = (window->player_y - 10) / 32;
+		if (window->map->map[y][x] != '1')
+			window->player_y -= 10;
+	}
 	else if (event == moveBackward)
-		window->player_y += 10;
+	{
+		x = (window->player_x) / 32;
+		y = (window->player_y + 10) / 32;
+		if (window->map->map[y][x] != '1')
+			window->player_y += 10;
+	}
 	else if (event == moveRight)
-		window->player_x += 10;
+	{
+		x = (window->player_x + 10) / 32;
+		y = (window->player_y) / 32;
+		if (window->map->map[y][x] != '1')
+		{
+			printf("HERE   %c \n", window->map->map[y][x + 1]);
+			window->player_x += 10;
+		}
+	}
 	else if (event == moveLeft)
-		window->player_x -= 10;
+	{
+		x = (window->player_x - 10) / 32;
+		y = (window->player_y) / 32;
+		if (window->map->map[y][x] != '1')
+			window->player_x -= 10;
+	}
 	else if (event == viewRight)
 	{
 		window->pa += 0.1;
@@ -54,6 +79,7 @@ int handle_event(events event, t_window *window)
 	}
 	else if (event == escExit)
 		return (close_window(window));
+	printf("%d %d \n", x, y);
 	return (0);
 }
 
