@@ -67,12 +67,15 @@ typedef struct window
     double  player_y;
     double  dirX, dirY;          // direction vector
     double  planeX, planeY;      // the 2d raycaster version of camera plane
-    double  pdx;
-    double  pdy;
     double  pa;
     double  ray_a;
     int     wall_wigth;
     int     rays;
+
+    long    xfirststep;
+    long    yfirststep;
+    long    xstep;
+    long    ystep;
 
     int     i;             // width
     int     k;             // 

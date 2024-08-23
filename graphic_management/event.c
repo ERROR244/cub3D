@@ -50,10 +50,7 @@ int handle_event(events event, t_window *window)
 		x = (window->player_x + 10) / 32;
 		y = (window->player_y) / 32;
 		if (window->map->map[y][x] != '1')
-		{
-			printf("HERE   %c \n", window->map->map[y][x + 1]);
 			window->player_x += 10;
-		}
 	}
 	else if (event == moveLeft)
 	{
@@ -67,16 +64,12 @@ int handle_event(events event, t_window *window)
 		window->pa += 0.1;
 		if (window->pa > 0)
 			window->pa -= 2*PI;
-		window->pdx = cos(window->pa) * 5;
-		window->pdy = sin(window->pa) * 5;
 	}
 	else if (event == viewLeft)
 	{
 		window->pa -= 0.1;
 		if (window->pa < 0)
 			window->pa += 2*PI;
-		window->pdx = cos(window->pa) * 5;
-		window->pdy = sin(window->pa) * 5;
 	}
 	else if (event == escExit)
 		return (close_window(window));

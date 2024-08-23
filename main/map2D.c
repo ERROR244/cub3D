@@ -1,5 +1,7 @@
 #include "../include/cub.h"
 
+int plus = 1000;
+
 char *eventstr[] = {
 	"moveForWard", "moveBackward", "moveRight", "moveLeft",
 	"viewUp", "viewDown", "viewRight", "viewLeft",
@@ -17,24 +19,6 @@ int	close_window(t_window *window)
 
 double fabs(double n) { return ((n > 0) ? n : (n * (-1))); } ;
 
-void draw_line_dda(t_window *window, int x0, int y0)
-{
-    double steps = fabs(window->pdx) > fabs(window->pdy) ? fabs(window->pdx) : fabs(window->pdy);
-
-    double x_inc = window->pdx / (double)steps;
-    double y_inc = window->pdy / (double)steps;
-
-    double x = x0 + 3;
-    double y = y0 + 3;
-
-    for (int i = 0; i <= steps + 10; i++)
-	{
-        mlx_pixel_put(window->mlx, window->window, round(x), round(y), 0xFF0000);
-        x += x_inc;
-        y += y_inc;
-    }
-}
-
 void dda_for_line(int X0, int Y0, int X1, int Y1, t_window *window) 
 { 
     double dx = X1 - X0; 
@@ -47,7 +31,7 @@ void dda_for_line(int X0, int Y0, int X1, int Y1, t_window *window)
   
     double X = X0; 
     double Y = Y0; 
-    for (int i = 0; i <= steps + 10; i++)
+    for (int i = 0; i <= steps + plus && window->map->map[(int)Y/32][(int)X/32] != '1'; i++)
 	{
         mlx_pixel_put(window->mlx, window->window, round(X), round(Y), 0xFF0000);
         X += Xinc;
@@ -64,15 +48,16 @@ void draw_the_rays3D(t_window *window)
 	colid = 0;
 	window->ray_a = window->pa - to_rad(30);
 	while (i < window->rays)
+	// while (i < 1)
 	{
 
-
-		dda_for_line(	window->player_x,
-						window->player_y,
-						window->player_x + cos(window->ray_a) * 30,
-						window->player_y + sin(window->ray_a) * 30,
-						window
-					);
+		// if (i == 0 || i == window->rays - 1)
+			dda_for_line(	window->player_x,
+							window->player_y,
+							window->player_x + cos(window->ray_a) * 30,
+							window->player_y + sin(window->ray_a) * 30,
+							window
+						);
 		window->ray_a += to_rad(60) / window->rays;
 		colid++;
 		i++;
@@ -127,7 +112,12 @@ int draw_map(t_window *window)
 	ret = 0;
 	map = window->map->map;
 	draw_the_rays3D(window);											// rays
-	draw_line_dda(window, window->player_x, window->player_y);			// direction
+	dda_for_line(	window->player_x,
+					window->player_y,
+					window->player_x + cos(window->pa) * 30,
+					window->player_y + sin(window->pa) * 30,
+					window
+				);			// direction
 	while (map[i] && ret == 0)
 	{
 		j = 0;
@@ -164,9 +154,6 @@ void draw_2D_map(t_window *window)
 
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->i * 32, window->k * 32, "cub3D");
-
-	window->pdx = cos(window->pa) * 5;
-	window->pdy = sin(window->pa) * 5;
 
 	// window->dirX = -1;
 	// window->dirY = 0;

@@ -14,11 +14,9 @@ void	graphic_management(t_window *window)
 {
 	// window->mlx = mlx_init();
 	// window->window = mlx_new_window(window->mlx, 1400, 900, "cub3D");
-	window->wall_wigth = 2;
+	
+	window->wall_wigth = 1.5;
 	window->rays = window->i / window->wall_wigth;
-
-	// window->pdx = cos(window->pa) * 5;
-	// window->pdy = sin(window->pa) * 5;
 
 	// // window->dirX = -1;
 	// // window->dirY = 0;

@@ -34,7 +34,7 @@ void	check_characters(char **map, t_window *window)
 				window->player_y = i * 33;
 			}
 			j++;
-			if (window->i < j - 1)
+			if (window->i < j)
 				window->i = j;
 		}
 		i++;
@@ -42,6 +42,7 @@ void	check_characters(char **map, t_window *window)
 	if (k != 1)
 		the_map_is_invalid();
 	window->k = i;
+	printf("%d \n", j);
 }
 
 int longest_line_size_func(char **map)
