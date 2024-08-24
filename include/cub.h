@@ -55,6 +55,8 @@ typedef struct s_ray
     double ray_hit_y;
     double distance;
 
+    bool    washitver;
+
     bool is_ray_looking_down;
     bool is_ray_looking_up;
     bool is_ray_looking_right;
@@ -75,8 +77,6 @@ typedef struct window
    
     double  player_x;
     double  player_y;
-    double  dirX, dirY;          // direction vector
-    double  planeX, planeY;      // the 2d raycaster version of camera plane
     double  pa;
     double  ray_a;
 

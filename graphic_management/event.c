@@ -60,19 +60,19 @@ int handle_event(events event, t_window *window)
 	}
 	else if (event == viewRight)
 	{
-		window->pa += 0.1;
+		window->pa += 0.5;
 		if (window->pa > 2*PI)
-			window->pa = 0.0;
+			window->pa -= 2*PI;
 	}
 	else if (event == viewLeft)
 	{
-		window->pa -= 0.1;
+		window->pa -= 0.5;
 		if (window->pa < 0)
-			window->pa = 2*PI;
+			window->pa += 2*PI;
 	}
 	else if (event == escExit)
 		return (close_window(window));
-	// printf("here--->%f \n", window->pa);
+	printf("here--->%f \n", window->pa);
 	return (0);
 }
 

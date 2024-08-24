@@ -2,10 +2,10 @@
 
 int plus = 1000;
 
-bool haswallAt(long x, long y, t_window *window) {
-    if (x < 0 || x > window->i * 32 || y < 0 || y > window->k *32) {
-        return true;
-    }
+bool haswallAt(long x, long y, t_window *window)
+{
+    if (x < 0 || x > window->i * 32 || y < 0 || y > window->k *32)
+			return true;
 	int i;
 	int j;
     int mapGridIndexX = round(x / 32);
@@ -17,7 +17,21 @@ bool haswallAt(long x, long y, t_window *window) {
 		j++;
 	if (j != mapGridIndexX)
 		return (true);
-    return (window->map->map[mapGridIndexY][mapGridIndexX] != '0');
+    return (window->map->map[mapGridIndexY][mapGridIndexX] != '0' &&
+			window->map->map[mapGridIndexY][mapGridIndexX] != 'N');
+}
+
+double normalizeAngle(double angle) 
+{
+    angle = fmod(angle, (2 * PI));
+    if (angle < 0)
+        angle += 2 * PI;
+    return (angle);
+}
+
+double	dis(double x0, double y0, double x1, double y1)
+{
+	return (sqrt((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));
 }
 
 char *eventstr[] = {
@@ -63,11 +77,11 @@ void cast_rays(t_window *window, int colid)
 	/////////////////////////////////////////
 	// horizontal RAY-GRIND intersection code
 	/////////////////////////////////////////
-	bool wallhit;
-	long wallx;
-	long wally;
+	bool Hwallhit;
+	long Hwallx;
+	long Hwally;
 
-	wallhit = false;
+	Hwallhit = false;
 
 	// find the closest (x, y)cordinate horizontal GRIND
 	window->yfirststep = round(window->player_y / 32) * 32;
@@ -94,7 +108,7 @@ void cast_rays(t_window *window, int colid)
 	if (window->ray[colid].is_ray_looking_up == true)
 		nexthorztouchy--;
 
-	// printf("%ld %ld \n", nexthorztouchy/32, nexthorztouchx/32);
+	// printf("%f %f %ld %ld %f \n", window->player_y/32, window->player_x/32, nexthorztouchy/32, nexthorztouchx/32, window->ray[colid].ray_a);
 	while (nexthorztouchx >= 0 && nexthorztouchy >= 0 &&
 			nexthorztouchx < window->i * 32 && nexthorztouchy < window->k * 32)
 	{
@@ -102,9 +116,9 @@ void cast_rays(t_window *window, int colid)
 		// printf("%c \n", window->map->map[nexthorztouchy/32][nexthorztouchx/32]);
 		if (haswallAt(nexthorztouchx, nexthorztouchy, window))
 		{
-			wallhit = true;
-			wallx = nexthorztouchx;
-			wally = nexthorztouchy;
+			Hwallhit = true;
+			Hwallx = nexthorztouchx;
+			Hwally = nexthorztouchy;
 			break;
 		}
 		else
@@ -113,13 +127,86 @@ void cast_rays(t_window *window, int colid)
 			nexthorztouchy += window->ystep;
 		}
 	}
-	if (wallhit == true)
-		dda_for_line(	window->player_x,
-						window->player_y,
-						wallx,
-						wally,
-						window
-					);
+
+
+	/////////////////////////////////////////
+	// vertical RAY-GRIND intersection code
+	/////////////////////////////////////////
+	bool Vwallhit;
+	long Vwallx;
+	long Vwally;
+
+	Vwallhit = false;
+
+	// find the closest (x, y)cordinate vertical GRIND
+	window->xfirststep = round(window->player_x / 32) * 32;
+	if (window->ray[colid].is_ray_looking_down == true)
+		window->xfirststep += 32;
+
+
+	window->yfirststep = window->player_y + (window->xfirststep - window->player_x) * tan(window->ray[colid].ray_a);
+
+	// xstep and ystep
+	window->xstep = 32;
+	if (window->ray[colid].is_ray_looking_left == true)
+		window->xstep *= -1;
+
+	window->ystep = 32 * tan(window->ray[colid].ray_a);
+	if (window->ray[colid].is_ray_looking_up == true && window->ystep > 0)
+		window->ystep *= -1;
+	if (window->ray[colid].is_ray_looking_down == true && window->ystep < 0)
+		window->ystep *= -1;
+
+	long nextvertouchx = window->xfirststep;
+	long nextvertouchy = window->yfirststep;
+
+	if (window->ray[colid].is_ray_looking_left == true)
+		nextvertouchx--;
+
+	// printf("%f %f %ld %ld %f \n", window->player_y/32, window->player_x/32, nextvertouchy/32, nextvertouchx/32, window->ray[colid].ray_a);
+	while (nextvertouchx >= 0 && nextvertouchy >= 0 &&
+			nextvertouchx < window->i * 32 && nextvertouchy < window->k * 32)
+	{
+		// printf("%ld %ld \n", window->map->map[nextvertouchy/32][nextvertouchx/32]);
+		// printf("%c \n", window->map->map[nextvertouchy/32][nextvertouchx/32]);
+		if (haswallAt(nextvertouchx, nextvertouchy, window))
+		{
+			Vwallhit = true;
+			Vwallx = nextvertouchx;
+			Vwally = nextvertouchy;
+			break;
+		}
+		else
+		{
+			nextvertouchx += window->xstep;
+			nextvertouchy += window->ystep;
+		}
+	}
+
+	double hordis = 2147483647;
+	double verdis = 2147483647;
+
+	if (Hwallhit == true)
+		hordis = dis(window->player_x, window->player_y, Hwallx, Hwally);
+	if (Vwallhit == true)
+		verdis = dis(window->player_x, window->player_y, Vwallx, Vwally);
+	
+
+
+	if (verdis < hordis && (Hwallhit == true || Vwallhit == true))
+	{
+		window->ray[colid].washitver = true;
+		window->ray[colid].ray_hit_x = Vwallx;
+		window->ray[colid].ray_hit_y = Vwally;
+		window->ray[colid].distance = verdis;
+	}
+	else if (verdis > hordis && (Hwallhit == true || Vwallhit == true))
+	{
+		window->ray[colid].washitver = false;
+		window->ray[colid].ray_hit_x = Hwallx;
+		window->ray[colid].ray_hit_y = Hwally;
+		window->ray[colid].distance = hordis;
+	}
 }
 
 void draw_the_rays3D(t_window *window)
@@ -130,10 +217,11 @@ void draw_the_rays3D(t_window *window)
 	i = 0;
 	colid = 0;
 	window->ray_a = window->pa - to_rad(30);
-	while (i < 1)
-	// while (i < window->rays)
+	// while (i < 1)
+	while (i < window->rays)
 	{
-		window->ray[colid].ray_a = window->ray_a;
+		// printf("%f \n", window->ray[colid].ray_a);
+		window->ray[colid].ray_a = normalizeAngle(window->ray_a);
 		window->ray[colid].col_id = colid;
 
 		// //	create the player movment direction
@@ -158,12 +246,12 @@ void draw_the_rays3D(t_window *window)
 
 		//	render the rayr
 		// if (i == 0 || i == window->rays - 1)
-		// 	dda_for_line(	window->player_x,
-		// 					window->player_y,
-		// 					window->player_x + cos(window->ray_a) * 30,
-		// 					window->player_y + sin(window->ray_a) * 30,
-		// 					window
-		// 				);
+			dda_for_line(	window->player_x,
+							window->player_y,
+							window->ray[colid].ray_hit_x,
+							window->ray[colid].ray_hit_y,
+							window
+						);
 		window->ray_a += to_rad(60) / window->rays;
 		colid++;
 		i++;
@@ -247,12 +335,12 @@ int draw_map(t_window *window)
 		i++;
 	}
 	// draw_the_rays3D(window);											// rays
-	dda_for_line(	window->player_x,
-					window->player_y,
-					window->player_x + cos(window->pa) * 1000,
-					window->player_y + sin(window->pa) * 1000,
-					window
-				);			// direction
+	// dda_for_line(	window->player_x,
+	// 				window->player_y,
+	// 				window->player_x + cos(window->pa) * 1000,
+	// 				window->player_y + sin(window->pa) * 1000,
+	// 				window
+	// 			);			// direction
 	return (ret);
 }
 
@@ -262,10 +350,6 @@ void draw_2D_map(t_window *window)
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->i * 32, window->k * 32, "cub3D");
 
-	// window->dirX = -1;
-	// window->dirY = 0;
-	// window->planeX = 0;
-	// window->planeY = 0.66;
 
 	
 	mlx_key_hook(window->window, key_hook, window);
