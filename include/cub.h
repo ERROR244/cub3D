@@ -128,8 +128,10 @@ char    **get_map_updated(char **ptr);
 // graphic_management
 void	graphic_management(t_window *w);
 int     close_window(t_window *window);
-double to_rad(double deg);
-double to_deg(double rad);
+double  to_rad(double deg);
+double  to_deg(double rad);
+void    draw_the_rays3D(t_window *window);
+bool    haswallAt(long x, long y, t_window *window);
 
 // 2D
 int	close_window(t_window *window);

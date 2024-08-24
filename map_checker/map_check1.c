@@ -42,7 +42,6 @@ void	check_characters(char **map, t_window *window)
 	if (k != 1)
 		the_map_is_invalid();
 	window->k = i;
-	printf("%d \n", j);
 }
 
 int longest_line_size_func(char **map)

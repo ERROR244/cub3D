@@ -84,5 +84,6 @@ int	key_hook(int keycode, t_window *window)
 	event = get_event(keycode);
 	ret = handle_event(event, window);
 	draw_map(window);
+	draw_the_rays3D(window);											// rays
 	return (ret);
 }
