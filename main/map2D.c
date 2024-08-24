@@ -37,7 +37,19 @@ void dda_for_line(int X0, int Y0, int X1, int Y1, t_window *window)
         X += Xinc;
         Y += Yinc;
     } 
-} 
+}
+
+void cast_rays(t_window *window)
+{
+	/////////////////////////////////////////
+	// horizontal RAY-GRIND intersection code
+	/////////////////////////////////////////
+
+	// find the closest (x, y)cordinate horizontal GRIND
+	window->yfirststep = round(window->player_y / 32) * 32;
+	window->xfirststep = window->player_x-(window->yfirststep-window->player_y)/tan(window->ray_a);
+
+}
 
 void draw_the_rays3D(t_window *window)
 {
@@ -47,11 +59,34 @@ void draw_the_rays3D(t_window *window)
 	i = 0;
 	colid = 0;
 	window->ray_a = window->pa - to_rad(30);
-	while (i < window->rays)
 	// while (i < 1)
+	while (i < window->rays)
 	{
+		window->ray[colid].ray_a = window->ray_a;
+		window->ray[colid].col_id = colid;
 
-		// if (i == 0 || i == window->rays - 1)
+		// up and down
+		window->ray[colid].is_ray_looking_down = (window->ray[colid].ray_a > 0 && (window->ray[colid].ray_a < PI || window->ray[colid].ray_a > 2*PI));
+		window->ray[colid].is_ray_looking_up = !window->ray[colid].is_ray_looking_down;
+
+		// left and right
+		window->ray[colid].is_ray_looking_right = (window->ray[colid].ray_a > 3*PI/2 || window->ray[colid].ray_a < PI/2);
+		window->ray[colid].is_ray_looking_left = !window->ray[colid].is_ray_looking_right;
+
+		if (window->ray[colid].is_ray_looking_down == true && window->ray[colid].is_ray_looking_right == true)
+			printf("%f -- right down\n", window->ray[colid].ray_a);
+		else if (window->ray[colid].is_ray_looking_down == false && window->ray[colid].is_ray_looking_right == true)
+			printf("%f -- right up\n", window->ray[colid].ray_a);
+		else if (window->ray[colid].is_ray_looking_down == false && window->ray[colid].is_ray_looking_right == false)
+			printf("%f -- left up\n", window->ray[colid].ray_a);
+		else if (window->ray[colid].is_ray_looking_down == true && window->ray[colid].is_ray_looking_right == false)
+			printf("%f -- left down\n", window->ray[colid].ray_a);
+
+		// cast rays
+		cast_rays(window);		
+
+		//	render the rayr
+		if (i == 0 || i == window->rays - 1)
 			dda_for_line(	window->player_x,
 							window->player_y,
 							window->player_x + cos(window->ray_a) * 30,
@@ -62,6 +97,7 @@ void draw_the_rays3D(t_window *window)
 		colid++;
 		i++;
 	}
+	printf("-----------------------------------------------------------------------\n");
 }
 
 int draw_squar(t_window *window, int y, int x, int color)
@@ -111,13 +147,6 @@ int draw_map(t_window *window)
 	i = 0;
 	ret = 0;
 	map = window->map->map;
-	draw_the_rays3D(window);											// rays
-	dda_for_line(	window->player_x,
-					window->player_y,
-					window->player_x + cos(window->pa) * 30,
-					window->player_y + sin(window->pa) * 30,
-					window
-				);			// direction
 	while (map[i] && ret == 0)
 	{
 		j = 0;
@@ -146,6 +175,13 @@ int draw_map(t_window *window)
 		x += 32;
 		i++;
 	}
+	draw_the_rays3D(window);											// rays
+	dda_for_line(	window->player_x,
+					window->player_y,
+					window->player_x + cos(window->pa) * 30,
+					window->player_y + sin(window->pa) * 30,
+					window
+				);			// direction
 	return (ret);
 }
 
@@ -160,7 +196,7 @@ void draw_2D_map(t_window *window)
 	// window->planeX = 0;
 	// window->planeY = 0.66;
 
-	mlx_loop_hook(window->mlx, draw_map, window);
+	
 	mlx_key_hook(window->window, key_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);

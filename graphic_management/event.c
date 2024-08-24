@@ -30,7 +30,6 @@ int handle_event(events event, t_window *window)
 {
 	int x;
 	int y;
-	printf("here--->%f \n", window->pa);
 	if (event == moveForWard)
 	{
 		x = (window->player_x) / 32;
@@ -62,17 +61,18 @@ int handle_event(events event, t_window *window)
 	else if (event == viewRight)
 	{
 		window->pa += 0.1;
-		if (window->pa > 0)
-			window->pa -= 2*PI;
+		if (window->pa > 2*PI)
+			window->pa = 0.0;
 	}
 	else if (event == viewLeft)
 	{
 		window->pa -= 0.1;
 		if (window->pa < 0)
-			window->pa += 2*PI;
+			window->pa = 2*PI;
 	}
 	else if (event == escExit)
 		return (close_window(window));
+	// printf("here--->%f \n", window->pa);
 	return (0);
 }
 
@@ -83,5 +83,6 @@ int	key_hook(int keycode, t_window *window)
 
 	event = get_event(keycode);
 	ret = handle_event(event, window);
+	draw_map(window);
 	return (ret);
 }

@@ -51,6 +51,16 @@ typedef struct s_map
 typedef struct s_ray
 {
     double ray_a;
+    double ray_hit_x;
+    double ray_hit_y;
+    double distance;
+
+    bool is_ray_looking_down;
+    bool is_ray_looking_up;
+    bool is_ray_looking_right;
+    bool is_ray_looking_left;
+
+    int     col_id;
 }   t_ray;
 
 typedef struct window
@@ -69,6 +79,9 @@ typedef struct window
     double  planeX, planeY;      // the 2d raycaster version of camera plane
     double  pa;
     double  ray_a;
+
+    t_ray   ray[60];
+
     int     wall_wigth;
     int     rays;
 
