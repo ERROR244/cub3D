@@ -72,7 +72,7 @@ int handle_event(events event, t_window *window)
 	}
 	else if (event == escExit)
 		return (close_window(window));
-	printf("here--->%f \n", window->pa);
+	// printf("here--->%f \n", window->pa);
 	return (0);
 }
 

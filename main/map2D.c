@@ -4,13 +4,13 @@ int plus = 1000;
 
 bool haswallAt(long x, long y, t_window *window)
 {
-    if (x < 0 || x > window->i * 32 || y < 0 || y > window->k *32)
-			return true;
 	int i;
 	int j;
     int mapGridIndexX = round(x / 32);
     int mapGridIndexY = round(y / 32);
 
+    if (x < 0 || x > window->i * 32 || y < 0 || y > window->k *32)
+			return true;
 	i = mapGridIndexY;
 	j = 0;
 	while (window->map->map[i][j] && j < mapGridIndexX)
@@ -51,9 +51,8 @@ int	close_window(t_window *window)
 
 double fabs(double n) { return ((n > 0) ? n : (n * (-1))); } ;
 
-void dda_for_line(int X0, int Y0, int X1, int Y1, t_window *window) 
+void dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window) 
 {
-	// printf("%d %d %d %d \n", X0, Y0, X1, Y1);
     double dx = X1 - X0; 
     double dy = Y1 - Y0; 
   
@@ -78,14 +77,14 @@ void cast_rays(t_window *window, int colid)
 	// horizontal RAY-GRIND intersection code
 	/////////////////////////////////////////
 	bool Hwallhit;
-	long Hwallx;
-	long Hwally;
+	double Hwallx = 0;
+	double Hwally = 0;
 
 	Hwallhit = false;
 
 	// find the closest (x, y)cordinate horizontal GRIND
 	window->yfirststep = round(window->player_y / 32) * 32;
-	if (window->ray[colid].is_ray_looking_down == true)
+	if (window->ray[colid].is_ray_looking_down)
 		window->yfirststep += 32;
 
 
@@ -93,29 +92,28 @@ void cast_rays(t_window *window, int colid)
 
 	// xstep and ystep
 	window->ystep = 32;
-	if (window->ray[colid].is_ray_looking_up == true)
+	if (window->ray[colid].is_ray_looking_up)
 		window->ystep *= -1;
 
 	window->xstep = 32 / tan(window->ray[colid].ray_a);
-	if (window->ray[colid].is_ray_looking_left == true && window->xstep > 0)
+	if (window->ray[colid].is_ray_looking_left && window->xstep > 0)
 		window->xstep *= -1;
-	if (window->ray[colid].is_ray_looking_right == true && window->xstep < 0)
+	if (window->ray[colid].is_ray_looking_right && window->xstep < 0)
 		window->xstep *= -1;
 
-	long nexthorztouchx = window->xfirststep;
-	long nexthorztouchy = window->yfirststep;
+	double nexthorztouchx = window->xfirststep;
+	double nexthorztouchy = window->yfirststep;
 
-	if (window->ray[colid].is_ray_looking_up == true)
+	if (window->ray[colid].is_ray_looking_up)
 		nexthorztouchy--;
 
-	// printf("%f %f %ld %ld %f \n", window->player_y/32, window->player_x/32, nexthorztouchy/32, nexthorztouchx/32, window->ray[colid].ray_a);
 	while (nexthorztouchx >= 0 && nexthorztouchy >= 0 &&
 			nexthorztouchx < window->i * 32 && nexthorztouchy < window->k * 32)
 	{
-		// printf("%ld %ld \n", window->map->map[nexthorztouchy/32][nexthorztouchx/32]);
-		// printf("%c \n", window->map->map[nexthorztouchy/32][nexthorztouchx/32]);
 		if (haswallAt(nexthorztouchx, nexthorztouchy, window))
 		{
+			if (window->ray[colid].is_ray_looking_up)
+				nexthorztouchy++;
 			Hwallhit = true;
 			Hwallx = nexthorztouchx;
 			Hwally = nexthorztouchy;
@@ -133,14 +131,14 @@ void cast_rays(t_window *window, int colid)
 	// vertical RAY-GRIND intersection code
 	/////////////////////////////////////////
 	bool Vwallhit;
-	long Vwallx;
-	long Vwally;
+	double Vwallx = 0;
+	double Vwally = 0;
 
 	Vwallhit = false;
 
 	// find the closest (x, y)cordinate vertical GRIND
 	window->xfirststep = round(window->player_x / 32) * 32;
-	if (window->ray[colid].is_ray_looking_down == true)
+	if (window->ray[colid].is_ray_looking_right)
 		window->xfirststep += 32;
 
 
@@ -148,27 +146,24 @@ void cast_rays(t_window *window, int colid)
 
 	// xstep and ystep
 	window->xstep = 32;
-	if (window->ray[colid].is_ray_looking_left == true)
+	if (window->ray[colid].is_ray_looking_left)
 		window->xstep *= -1;
 
 	window->ystep = 32 * tan(window->ray[colid].ray_a);
-	if (window->ray[colid].is_ray_looking_up == true && window->ystep > 0)
+	if (window->ray[colid].is_ray_looking_up && window->ystep > 0)
 		window->ystep *= -1;
-	if (window->ray[colid].is_ray_looking_down == true && window->ystep < 0)
+	if (window->ray[colid].is_ray_looking_down && window->ystep < 0)
 		window->ystep *= -1;
 
-	long nextvertouchx = window->xfirststep;
-	long nextvertouchy = window->yfirststep;
+	double nextvertouchx = window->xfirststep;
+	double nextvertouchy = window->yfirststep;
 
-	if (window->ray[colid].is_ray_looking_left == true)
+	if (window->ray[colid].is_ray_looking_left)
 		nextvertouchx--;
 
-	// printf("%f %f %ld %ld %f \n", window->player_y/32, window->player_x/32, nextvertouchy/32, nextvertouchx/32, window->ray[colid].ray_a);
 	while (nextvertouchx >= 0 && nextvertouchy >= 0 &&
 			nextvertouchx < window->i * 32 && nextvertouchy < window->k * 32)
 	{
-		// printf("%ld %ld \n", window->map->map[nextvertouchy/32][nextvertouchx/32]);
-		// printf("%c \n", window->map->map[nextvertouchy/32][nextvertouchx/32]);
 		if (haswallAt(nextvertouchx, nextvertouchy, window))
 		{
 			Vwallhit = true;
@@ -193,14 +188,18 @@ void cast_rays(t_window *window, int colid)
 	
 
 
-	if (verdis < hordis && (Hwallhit == true || Vwallhit == true))
+
+	window->ray[colid].ray_hit_x = window->player_x;
+	window->ray[colid].ray_hit_y = window->player_y;
+	window->ray[colid].distance = -1;
+	if (verdis < hordis && verdis != 2147483647)
 	{
 		window->ray[colid].washitver = true;
 		window->ray[colid].ray_hit_x = Vwallx;
 		window->ray[colid].ray_hit_y = Vwally;
 		window->ray[colid].distance = verdis;
 	}
-	else if (verdis > hordis && (Hwallhit == true || Vwallhit == true))
+	else if (verdis > hordis && hordis != 2147483647)
 	{
 		window->ray[colid].washitver = false;
 		window->ray[colid].ray_hit_x = Hwallx;
@@ -216,30 +215,18 @@ void draw_the_rays3D(t_window *window)
 
 	i = 0;
 	colid = 0;
-	window->ray_a = window->pa - to_rad(30);
+	window->ray_a = normalizeAngle(window->pa - to_rad(30));
 	// while (i < 1)
 	while (i < window->rays)
 	{
-		// printf("%f \n", window->ray[colid].ray_a);
 		window->ray[colid].ray_a = normalizeAngle(window->ray_a);
 		window->ray[colid].col_id = colid;
 
 		// //	create the player movment direction
-		// up and down
-		window->ray[colid].is_ray_looking_down = (window->ray[colid].ray_a > 0 && (window->ray[colid].ray_a < PI || window->ray[colid].ray_a > 2*PI));
+		window->ray[colid].is_ray_looking_down = (window->ray[colid].ray_a > 0 && window->ray[colid].ray_a < PI);
 		window->ray[colid].is_ray_looking_up = !window->ray[colid].is_ray_looking_down;
-		// left and right
-		window->ray[colid].is_ray_looking_right = (window->ray[colid].ray_a > 3*PI/2 || window->ray[colid].ray_a < PI/2);
+		window->ray[colid].is_ray_looking_right = (window->ray[colid].ray_a < 0.5*PI || window->ray[colid].ray_a > 1.5*PI);
 		window->ray[colid].is_ray_looking_left = !window->ray[colid].is_ray_looking_right;
-
-		// if (window->ray[colid].is_ray_looking_down == true && window->ray[colid].is_ray_looking_right == true)
-		// 	printf("%f -- right down\n", window->ray[colid].ray_a);
-		// else if (window->ray[colid].is_ray_looking_down == false && window->ray[colid].is_ray_looking_right == true)
-		// 	printf("%f -- right up\n", window->ray[colid].ray_a);
-		// else if (window->ray[colid].is_ray_looking_down == false && window->ray[colid].is_ray_looking_right == false)
-		// 	printf("%f -- left up\n", window->ray[colid].ray_a);
-		// else if (window->ray[colid].is_ray_looking_down == true && window->ray[colid].is_ray_looking_right == false)
-		// 	printf("%f -- left down\n", window->ray[colid].ray_a);
 
 		// cast rays
 		cast_rays(window, colid);		
