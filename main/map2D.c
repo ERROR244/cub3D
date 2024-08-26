@@ -8,6 +8,7 @@ bool haswallAt(long x, long y, t_window *window)
 	int j;
     int mapGridIndexX = round(x / 32);
     int mapGridIndexY = round(y / 32);
+	printf("%d %d \n", mapGridIndexX, mapGridIndexY);
 
     if (x < 0 || x > window->i * 32 || y < 0 || y > window->k *32)
 			return true;
@@ -112,8 +113,6 @@ void cast_rays(t_window *window, int colid)
 	{
 		if (haswallAt(nexthorztouchx, nexthorztouchy, window))
 		{
-			if (window->ray[colid].is_ray_looking_up)
-				nexthorztouchy++;
 			Hwallhit = true;
 			Hwallx = nexthorztouchx;
 			Hwally = nexthorztouchy;
@@ -211,13 +210,10 @@ void cast_rays(t_window *window, int colid)
 void draw_the_rays3D(t_window *window)
 {
 	int colid;
-	int i;
 
-	i = 0;
 	colid = 0;
 	window->ray_a = normalizeAngle(window->pa - to_rad(30));
-	// while (i < 1)
-	while (i < window->rays)
+	while (colid < window->rays)
 	{
 		window->ray[colid].ray_a = normalizeAngle(window->ray_a);
 		window->ray[colid].col_id = colid;
@@ -232,18 +228,15 @@ void draw_the_rays3D(t_window *window)
 		cast_rays(window, colid);		
 
 		//	render the rayr
-		// if (i == 0 || i == window->rays - 1)
-			dda_for_line(	window->player_x,
-							window->player_y,
-							window->ray[colid].ray_hit_x,
-							window->ray[colid].ray_hit_y,
-							window
-						);
+		dda_for_line(	window->player_x,
+						window->player_y,
+						window->ray[colid].ray_hit_x,
+						window->ray[colid].ray_hit_y,
+						window
+					);
 		window->ray_a += to_rad(60) / window->rays;
 		colid++;
-		i++;
 	}
-	// printf("-----------------------------------------------------------------------\n");
 }
 
 int draw_squar(t_window *window, int y, int x, int color)
@@ -267,10 +260,10 @@ int draw_squar(t_window *window, int y, int x, int color)
 		}
 		i++;
 	}
-	i = -4;
+	i = 0;
 	while (i < 4 && ret == 0)
 	{
-		j = -4;
+		j = 0;
 		while (j < 4 && ret == 0)
 		{
 			ret = mlx_pixel_put(window->mlx, window->window, window->player_x + i, window->player_y + j, 0x808080);
