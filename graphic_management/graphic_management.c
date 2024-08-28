@@ -14,17 +14,13 @@ void	graphic_management(t_window *window)
 {
 	// window->mlx = mlx_init();
 	// window->window = mlx_new_window(window->mlx, 1400, 900, "cub3D");
-	
+
 	window->pa = PI/2;
 	window->wall_wigth = 1;
 	window->rays = window->i / window->wall_wigth;
 
-	// // window->dirX = -1;
-	// // window->dirY = 0;
-	// // window->planeX = 0;
-	// // window->planeY = 0.66;
 
-	// mlx_loop_hook(window->mlx, draw_map, window);
+
 
 	// mlx_key_hook(window->window, key_hook, window);
 	// mlx_hook(window->window, 17, 0L, close_window, window);

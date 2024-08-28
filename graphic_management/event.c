@@ -17,8 +17,8 @@ events get_event(int keycode)
 		event = viewRight;
 	else if (keycode == 97)
 		event = viewLeft;
-	// else if (keycode == 119)
-	// 	event = viewUp;
+	else if (keycode == 119)
+		event = viewUp;
 	// else if (keycode == 115)
 	// 	event = viewDown;
 	else if (keycode == 65307)
@@ -33,46 +33,46 @@ int handle_event(events event, t_window *window)
 	if (event == moveForWard)
 	{
 		x = (window->player_x) / 32;
-		y = (window->player_y - 10) / 32;
+		y = (window->player_y - 3) / 32;
 		if (window->map->map[y][x] != '1')
-			window->player_y -= 10;
+			window->player_y -= 3;
 	}
 	else if (event == moveBackward)
 	{
 		x = (window->player_x) / 32;
-		y = (window->player_y + 10) / 32;
+		y = (window->player_y + 3) / 32;
 		if (window->map->map[y][x] != '1')
-			window->player_y += 10;
+			window->player_y += 3;
 	}
 	else if (event == moveRight)
 	{
-		x = (window->player_x + 10) / 32;
+		x = (window->player_x + 3) / 32;
 		y = (window->player_y) / 32;
 		if (window->map->map[y][x] != '1')
-			window->player_x += 10;
+			window->player_x += 3;
 	}
 	else if (event == moveLeft)
 	{
-		x = (window->player_x - 10) / 32;
+		x = (window->player_x - 3) / 32;
 		y = (window->player_y) / 32;
 		if (window->map->map[y][x] != '1')
-			window->player_x -= 10;
+			window->player_x -= 3;
 	}
 	else if (event == viewRight)
 	{
-		window->pa += 0.5;
+		window->pa += 0.1;
 		if (window->pa > 2*PI)
 			window->pa -= 2*PI;
 	}
 	else if (event == viewLeft)
 	{
-		window->pa -= 0.5;
+		window->pa -= 0.1;
 		if (window->pa < 0)
 			window->pa += 2*PI;
 	}
 	else if (event == escExit)
 		return (close_window(window));
-	printf("player------------------->%d %d \n", (int)window->player_x / 32, (int)window->player_y / 32);
+	// printf("player------------------->%d %d \n", (int)window->player_x / 32, (int)window->player_y / 32);
 	return (0);
 }
 

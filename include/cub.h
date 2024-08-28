@@ -74,7 +74,7 @@ typedef struct window
     void	*player;
     void	*mlx;
     void	*window;
-   
+
     double  player_x;
     double  player_y;
     double  pa;
@@ -85,13 +85,13 @@ typedef struct window
     int     wall_wigth;
     int     rays;
 
-    long    xfirststep;
-    long    yfirststep;
-    long    xstep;
-    long    ystep;
+    double  xfirststep;
+    double  yfirststep;
+    double  xstep;
+    double  ystep;
 
     int     i;             // width
-    int     k;             // 
+    int     k;             //
 }			t_window;
 
 // tmp
