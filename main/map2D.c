@@ -153,7 +153,8 @@ void draw_2D_map(t_window *window)
 {
 
 	window->mlx = mlx_init();
-	window->window = mlx_new_window(window->mlx, window->i * 32, window->k * 32, "cub3D");
+	window->window = mlx_new_window(window->mlx, 1400, 900, "cub3D");
+	// window->window = mlx_new_window(window->mlx, window->i * 32, window->k * 32, "cub3D");
 
 	// window->dirX = -1;
 	// window->dirY = 0;

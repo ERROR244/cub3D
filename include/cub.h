@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/05 12:22:01 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:36:30 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
 void    free_and_check(char **map);
 char    **get_map_updated(char **ptr);
+int     draw_mini_map(t_window *window);
+
 
 // graphic_management
 void	graphic_management(t_window *w);

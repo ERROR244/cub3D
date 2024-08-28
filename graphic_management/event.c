@@ -61,6 +61,9 @@ int handle_event(events event, t_window *window)
 		y = (window->player_y) / 32;
 		if (window->map->map[y][x] != '1')
 			window->player_x -= 10;
+		else
+			if (window->map->map[(int)((window->player_y + 5) / 32)][(int)(window->player_x) / 32] != '1')
+				window->player_y += 5;
 
 	}
 	else if (event == viewRight)
@@ -87,6 +90,7 @@ int	key_hook(int keycode, t_window *window)
 
 	event = get_event(keycode);
 	ret = handle_event(event, window);
-	draw_map(window);
+	// draw_map(window);
+	draw_mini_map(window);
 	return (ret);
 }

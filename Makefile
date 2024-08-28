@@ -21,6 +21,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_strncmp.c\
 			graphic_management/graphic_management.c\
 			graphic_management/event.c\
+			bonus/minimap.c\
 
 OBJM	= ${SRCM:.c=.o}
 
