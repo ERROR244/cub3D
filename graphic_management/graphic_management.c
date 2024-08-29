@@ -15,11 +15,12 @@ void	graphic_management(t_window *window)
 	// window->mlx = mlx_init();
 	// window->window = mlx_new_window(window->mlx, 1400, 900, "cub3D");
 
+	window->TILE_SIZE = 64;
+	window->minimap = 0.2;
 	window->pa = PI/2;
 	window->wall_wigth = 1;
-	window->rays = window->i / window->wall_wigth;
-
-
+	window->rays = (window->i * window->TILE_SIZE) / window->wall_wigth;
+	printf("%d\n", window->rays);
 
 
 	// mlx_key_hook(window->window, key_hook, window);

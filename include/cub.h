@@ -25,7 +25,10 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <time.h>
+# include <float.h>
 # include <math.h>
+# include <string.h>
+# include <errno.h>
 
 typedef enum {
     moveForWard, moveBackward,
@@ -51,9 +54,9 @@ typedef struct s_map
 typedef struct s_ray
 {
     double ray_a;
-    double ray_hit_x;
-    double ray_hit_y;
-    double distance;
+    double   ray_hit_x;
+    double   ray_hit_y;
+    double   distance;
 
     bool    washitver;
 
@@ -75,13 +78,17 @@ typedef struct window
     void	*mlx;
     void	*window;
 
+    double minimap;
+
     double  player_x;
     double  player_y;
     double  pa;
     double  ray_a;
 
-    t_ray   ray[60];
+    t_ray   ray[1056];
 
+    int     window_width;
+    int     window_hight;
     int     wall_wigth;
     int     rays;
 
@@ -89,6 +96,8 @@ typedef struct window
     double  yfirststep;
     double  xstep;
     double  ystep;
+
+    int TILE_SIZE;
 
     int     i;             // width
     int     k;             //

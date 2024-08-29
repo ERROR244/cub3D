@@ -6,10 +6,10 @@ bool haswallAt(long x, long y, t_window *window)
 {
 	int i;
 	int j;
-    int mapGridIndexX = round(x / 32);
-    int mapGridIndexY = round(y / 32);
+    int mapGridIndexX = round(x / window->TILE_SIZE);
+    int mapGridIndexY = round(y / window->TILE_SIZE);
 
-    if (x < 0 || x > window->i * 32 || y < 0 || y > window->k *32)
+    if (x < 0 || x > window->i * window->TILE_SIZE || y < 0 || y > window->k *window->TILE_SIZE)
 			return true;
 	i = mapGridIndexY;
 	j = 0;
@@ -65,7 +65,7 @@ void dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window)
     double Y = Y0;
     for (int i = 0; i <= steps; i++)
 	{
-        mlx_pixel_put(window->mlx, window->window, round(X), round(Y), 0xFF0000);
+        mlx_pixel_put(window->mlx, window->window, round(window->minimap*(X)), round(window->minimap*(Y)), 0xFF0000);
         X += Xinc;
         Y += Yinc;
     }
@@ -80,19 +80,19 @@ void cast_rays(t_window *window, int colid)
 	Hwallhit = false;
 
 	// find the closest (x, y)cordinate horizontal GRIND
-	window->yfirststep = (int)(window->player_y / 32) * 32;
+	window->yfirststep = (int)(window->player_y / window->TILE_SIZE) * window->TILE_SIZE;
 	if (window->ray[colid].is_ray_looking_down)
-		window->yfirststep += 32;
+		window->yfirststep += window->TILE_SIZE;
 
 
 	window->xfirststep = window->player_x + (window->yfirststep - window->player_y) / tan(window->ray[colid].ray_a);
 
 	// xstep and ystep
-	window->ystep = 32;
+	window->ystep = window->TILE_SIZE;
 	if (window->ray[colid].is_ray_looking_up)
 		window->ystep *= -1;
 
-	window->xstep = 32 / tan(window->ray[colid].ray_a);
+	window->xstep = window->TILE_SIZE / tan(window->ray[colid].ray_a);
 	if (window->ray[colid].is_ray_looking_left && window->xstep > 0)
 		window->xstep *= -1;
 	if (window->ray[colid].is_ray_looking_right && window->xstep < 0)
@@ -105,12 +105,10 @@ void cast_rays(t_window *window, int colid)
 		nexthorztouchy--;
 
 	while (nexthorztouchx >= 0 && nexthorztouchy >= 0 &&
-			nexthorztouchx < window->i * 32 && nexthorztouchy < window->k * 32)
+			nexthorztouchx < window->i * window->TILE_SIZE && nexthorztouchy < window->k * window->TILE_SIZE)
 	{
 		if (haswallAt(nexthorztouchx, nexthorztouchy, window))
 		{
-			// if (window->ray[colid].is_ray_looking_up)
-			// 	nexthorztouchy++;
 			Hwallhit = true;
 			Hwallx = nexthorztouchx;
 			Hwally = nexthorztouchy;
@@ -131,19 +129,19 @@ void cast_rays(t_window *window, int colid)
 	Vwallhit = false;
 
 	// find the closest (x, y)cordinate vertical GRIND
-	window->xfirststep = (int)(window->player_x / 32) * 32;
+	window->xfirststep = (int)(window->player_x / window->TILE_SIZE) * window->TILE_SIZE;
 	if (window->ray[colid].is_ray_looking_right)
-		window->xfirststep += 32;
+		window->xfirststep += window->TILE_SIZE;
 
 
 	window->yfirststep = window->player_y + (window->xfirststep - window->player_x) * tan(window->ray[colid].ray_a);
 
 	// xstep and ystep
-	window->xstep = 32;
+	window->xstep = window->TILE_SIZE;
 	if (window->ray[colid].is_ray_looking_left)
 		window->xstep *= -1;
 
-	window->ystep = 32 * tan(window->ray[colid].ray_a);
+	window->ystep = window->TILE_SIZE * tan(window->ray[colid].ray_a);
 	if (window->ray[colid].is_ray_looking_up && window->ystep > 0)
 		window->ystep *= -1;
 	if (window->ray[colid].is_ray_looking_down && window->ystep < 0)
@@ -155,17 +153,15 @@ void cast_rays(t_window *window, int colid)
 	if (window->ray[colid].is_ray_looking_left)
 		nextvertouchx--;
 
-	// printf("%f %f \n", nextvertouchx, nextvertouchx / 32);
-	// printf("%f %f \n", nextvertouchy, nextvertouchy / 32);
+	// printf("%f %f \n", nextvertouchx, nextvertouchx / window->TILE_SIZE);
+	// printf("%f %f \n", nextvertouchy, nextvertouchy / window->TILE_SIZE);
 	// printf("%f %f \n", window->player_x, window->player_y);
 
 	while (nextvertouchx >= 0 && nextvertouchy >= 0 &&
-			nextvertouchx < window->i * 32 && nextvertouchy < window->k * 32)
+			nextvertouchx < window->i * window->TILE_SIZE && nextvertouchy < window->k * window->TILE_SIZE)
 	{
 		if (haswallAt(nextvertouchx, nextvertouchy, window))
 		{
-			if (window->ray[colid].is_ray_looking_left)
-				nextvertouchx++;
 			Vwallhit = true;
 			Vwallx = nextvertouchx;
 			Vwally = nextvertouchy;
@@ -178,8 +174,8 @@ void cast_rays(t_window *window, int colid)
 		}
 	}
 
-	double hordis = 214748364788;
-	double verdis = 214748364788;
+	double hordis = DBL_MAX;
+	double verdis = DBL_MAX;
 
 	if (Hwallhit == true)
 		hordis = dis(window->player_x, window->player_y, Hwallx, Hwally);
@@ -189,17 +185,17 @@ void cast_rays(t_window *window, int colid)
 
 
 
-	window->ray[colid].ray_hit_x = window->player_x;
-	window->ray[colid].ray_hit_y = window->player_y;
-	window->ray[colid].distance = -1;
-	if (verdis < hordis && verdis != 214748364788)
+	// window->ray[colid].ray_hit_x = window->player_x;
+	// window->ray[colid].ray_hit_y = window->player_y;
+	// window->ray[colid].distance = -1;
+	if (verdis < hordis)
 	{
 		window->ray[colid].washitver = true;
 		window->ray[colid].ray_hit_x = Vwallx;
 		window->ray[colid].ray_hit_y = Vwally;
 		window->ray[colid].distance = verdis;
 	}
-	else if (verdis > hordis && hordis != 214748364788)
+	else
 	{
 		window->ray[colid].washitver = false;
 		window->ray[colid].ray_hit_x = Hwallx;
@@ -230,10 +226,10 @@ void draw_the_rays3D(t_window *window)
 		cast_rays(window, colid);
 
 		//	render the rayr
-		dda_for_line(	window->player_x,
-						window->player_y,
-						window->ray[colid].ray_hit_x,
-						window->ray[colid].ray_hit_y,
+		dda_for_line(	(window->player_x),
+						(window->player_y),
+						(window->ray[colid].ray_hit_x),
+						(window->ray[colid].ray_hit_y),
 						window
 					);
 		window->ray_a += to_rad(60) / window->rays;
@@ -249,26 +245,26 @@ int draw_squar(t_window *window, int y, int x, int color)
 
 	i = 0;
 	ret = 0;
-	while (i < 32 && ret == 0)
+	while (i < window->TILE_SIZE && ret == 0)
 	{
 		j = 0;
-		while (j < 32 && ret == 0)
+		while (j < window->TILE_SIZE && ret == 0)
 		{
-			if (j < 2 || i < 2)
-				ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, 0x808080);
+			if (window->minimap*(j) < window->minimap*4.5 || window->minimap*(i) < window->minimap*4.5)
+				ret = mlx_pixel_put(window->mlx, window->window, window->minimap*(x + i), window->minimap*(y + j), 0x808080);
 			else
-				ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, color);
+				ret = mlx_pixel_put(window->mlx, window->window, window->minimap*(x + i), window->minimap*(y + j), color);
 			j++;
 		}
 		i++;
 	}
-	i = 0;
+	i = -4;
 	while (i < 4 && ret == 0)
 	{
-		j = 0;
+		j = -4;
 		while (j < 4 && ret == 0)
 		{
-			ret = mlx_pixel_put(window->mlx, window->window, window->player_x + i, window->player_y + j, 0x808080);
+			ret = mlx_pixel_put(window->mlx, window->window, window->minimap*(window->player_x + i), window->minimap*(window->player_y + j), 0x808080);
 			j++;
 		}
 		i++;
@@ -305,15 +301,15 @@ int draw_map(t_window *window)
 				while (j <= window->i)
 				{
 					ret = draw_squar(window, x, y, 0x000000);
-					y += 32;
+					y += window->TILE_SIZE;
 					j++;
 				}
 				break ;
 			}
 			j++;
-			y += 32;
+			y += window->TILE_SIZE;
 		}
-		x += 32;
+		x += window->TILE_SIZE;
 		i++;
 	}
 	return (ret);
@@ -323,10 +319,11 @@ void draw_2D_map(t_window *window)
 {
 
 	window->mlx = mlx_init();
-	window->window = mlx_new_window(window->mlx, window->i * 32, window->k * 32, "cub3D");
+	window->window_width = window->i * window->TILE_SIZE;
+	window->window_hight = window->k * window->TILE_SIZE;
+	window->window = mlx_new_window(window->mlx, window->window_width, window->window_hight, "cub3D");
 
-	draw_map(window);
-
+	// draw_map(window);
 
 
 	// mlx_key_hook(window->window, key_hook, window);
