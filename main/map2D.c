@@ -4,16 +4,14 @@ int plus = 1000;
 
 bool haswallAt(long x, long y, t_window *window)
 {
-	int i;
 	int j;
-    int mapGridIndexX = round(x / window->TILE_SIZE);
-    int mapGridIndexY = round(y / window->TILE_SIZE);
+    int mapGridIndexX = floor(x / window->TILE_SIZE);
+    int mapGridIndexY = floor(y / window->TILE_SIZE);
 
     if (x < 0 || x > window->i * window->TILE_SIZE || y < 0 || y > window->k *window->TILE_SIZE)
-			return true;
-	i = mapGridIndexY;
+			return (true);
 	j = 0;
-	while (window->map->map[i][j] && j < mapGridIndexX)
+	while (window->map->map[mapGridIndexY][j] && j < mapGridIndexX)
 		j++;
 	if (j != mapGridIndexX)
 		return (true);
@@ -23,15 +21,16 @@ bool haswallAt(long x, long y, t_window *window)
 
 double normalizeAngle(double angle)
 {
-    angle = fmod(angle, (2 * PI));
-    if (angle < 0)
-        angle += 2 * PI;
-    return (angle);
+    angle = remainder(angle, TWO_PI);
+    if (angle < 0) {
+        angle = TWO_PI + angle;
+    }
+    return angle;
 }
 
-double	dis(double x0, double y0, double x1, double y1)
+double	dis(double x1, double y1, double x2, double y2)
 {
-	return (sqrt((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));
+    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
 char *eventstr[] = {
@@ -65,7 +64,7 @@ void dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window)
     double Y = Y0;
     for (int i = 0; i <= steps; i++)
 	{
-        mlx_pixel_put(window->mlx, window->window, round(window->minimap*(X)), round(window->minimap*(Y)), 0xFF0000);
+        mlx_pixel_put(window->mlx, window->window, floor(window->minimap*(X)), floor(window->minimap*(Y)), 0xFF0000);
         X += Xinc;
         Y += Yinc;
     }
@@ -80,7 +79,7 @@ void cast_rays(t_window *window, int colid)
 	Hwallhit = false;
 
 	// find the closest (x, y)cordinate horizontal GRIND
-	window->yfirststep = (int)(window->player_y / window->TILE_SIZE) * window->TILE_SIZE;
+	window->yfirststep = floor(window->player_y / window->TILE_SIZE) * window->TILE_SIZE;
 	if (window->ray[colid].is_ray_looking_down)
 		window->yfirststep += window->TILE_SIZE;
 
@@ -101,13 +100,15 @@ void cast_rays(t_window *window, int colid)
 	double nexthorztouchx = window->xfirststep;
 	double nexthorztouchy = window->yfirststep;
 
-	if (window->ray[colid].is_ray_looking_up)
-		nexthorztouchy--;
+	// if (window->ray[colid].is_ray_looking_up)
+	// 	nexthorztouchy--;
 
 	while (nexthorztouchx >= 0 && nexthorztouchy >= 0 &&
 			nexthorztouchx < window->i * window->TILE_SIZE && nexthorztouchy < window->k * window->TILE_SIZE)
 	{
-		if (haswallAt(nexthorztouchx, nexthorztouchy, window))
+		double xToCheck = nexthorztouchx;
+        double yToCheck = nexthorztouchy + (window->ray[colid].is_ray_looking_up ? -1 : 0);
+		if (haswallAt(xToCheck, yToCheck, window))
 		{
 			Hwallhit = true;
 			Hwallx = nexthorztouchx;
@@ -129,7 +130,7 @@ void cast_rays(t_window *window, int colid)
 	Vwallhit = false;
 
 	// find the closest (x, y)cordinate vertical GRIND
-	window->xfirststep = (int)(window->player_x / window->TILE_SIZE) * window->TILE_SIZE;
+	window->xfirststep = floor(window->player_x / window->TILE_SIZE) * window->TILE_SIZE;
 	if (window->ray[colid].is_ray_looking_right)
 		window->xfirststep += window->TILE_SIZE;
 
@@ -150,17 +151,15 @@ void cast_rays(t_window *window, int colid)
 	double nextvertouchx = window->xfirststep;
 	double nextvertouchy = window->yfirststep;
 
-	if (window->ray[colid].is_ray_looking_left)
-		nextvertouchx--;
-
-	// printf("%f %f \n", nextvertouchx, nextvertouchx / window->TILE_SIZE);
-	// printf("%f %f \n", nextvertouchy, nextvertouchy / window->TILE_SIZE);
-	// printf("%f %f \n", window->player_x, window->player_y);
+	// if (window->ray[colid].is_ray_looking_left)
+	// 	nextvertouchx--;
 
 	while (nextvertouchx >= 0 && nextvertouchy >= 0 &&
-			nextvertouchx < window->i * window->TILE_SIZE && nextvertouchy < window->k * window->TILE_SIZE)
+			nextvertouchx < window->window_width && nextvertouchy < window->window_hight)
 	{
-		if (haswallAt(nextvertouchx, nextvertouchy, window))
+		double xToCheck = nextvertouchx + (window->ray[colid].is_ray_looking_left ? -1 : 0);
+        double yToCheck = nextvertouchy;
+		if (haswallAt(xToCheck, yToCheck, window))
 		{
 			Vwallhit = true;
 			Vwallx = nextvertouchx;
@@ -185,24 +184,22 @@ void cast_rays(t_window *window, int colid)
 
 
 
-	// window->ray[colid].ray_hit_x = window->player_x;
-	// window->ray[colid].ray_hit_y = window->player_y;
-	// window->ray[colid].distance = -1;
-	if (verdis < hordis)
-	{
-		window->ray[colid].washitver = true;
-		window->ray[colid].ray_hit_x = Vwallx;
-		window->ray[colid].ray_hit_y = Vwally;
-		window->ray[colid].distance = verdis;
-	}
-	else
+
+	if (hordis < verdis)
 	{
 		window->ray[colid].washitver = false;
 		window->ray[colid].ray_hit_x = Hwallx;
 		window->ray[colid].ray_hit_y = Hwally;
 		window->ray[colid].distance = hordis;
 	}
-	// printf("%f %f %f %f \n", window->ray[colid].ray_hit_x, window->ray[colid].ray_hit_y, window->player_x, window->player_y);
+	else
+	{
+		window->ray[colid].washitver = true;
+		window->ray[colid].ray_hit_x = Vwallx;
+		window->ray[colid].ray_hit_y = Vwally;
+		window->ray[colid].distance = verdis;
+	}
+	printf("%f %f %f %f %f \n", window->ray[colid].distance, window->ray[colid].ray_hit_x, window->ray[colid].ray_hit_y, window->player_x, window->player_y);
 }
 
 void draw_the_rays3D(t_window *window)
@@ -210,7 +207,7 @@ void draw_the_rays3D(t_window *window)
 	int colid;
 
 	colid = 0;
-	window->ray_a = normalizeAngle(window->pa - to_rad(30));
+	window->ray_a = normalizeAngle(window->pa - ((60 * (3.14159265 / 180))/2));
 	while (colid < window->rays)
 	{
 		window->ray[colid].ray_a = normalizeAngle(window->ray_a);

@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 #define PI 3.141592
-
+#define TWO_PI 6.28318530
 
 # include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"
@@ -53,7 +53,7 @@ typedef struct s_map
 
 typedef struct s_ray
 {
-    double ray_a;
+    double   ray_a;
     double   ray_hit_x;
     double   ray_hit_y;
     double   distance;
@@ -85,7 +85,7 @@ typedef struct window
     double  pa;
     double  ray_a;
 
-    t_ray   ray[1056];
+    t_ray   ray[1401];
 
     int     window_width;
     int     window_hight;

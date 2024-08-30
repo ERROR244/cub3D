@@ -111,7 +111,7 @@ int render3d(t_window *window)
 		distance = window->ray[i].distance;// * cos(window->ray[i].ray_a - window->pa);
 		displane = (window->window_width / 2) / tan(to_rad(60) / 2);
 		wall3dhight = (window->TILE_SIZE / distance) * displane;
-		printf("%d %f %f %f\n", i, window->ray[i].distance, wall3dhight, displane);
+		// printf("%d %f %f %f\n", i, window->ray[i].distance, wall3dhight, displane);
 
 		draw_rect(window->mlx,
 				  window->window,
