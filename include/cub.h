@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/28 11:36:30 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:02:14 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define SO_LONG_H
 
 #define PI 3.141592
+#define MAP_SIZE_X 14
+#define MAP_SIZE_Y 14
 
 
 # include "../minilibx-linux/mlx.h"
@@ -62,7 +64,7 @@ typedef struct window
     void	*player;
     void	*mlx;
     void	*window;
-   
+
     double  player_x;
     double  player_y;
     double  dirX, dirY;          // direction vector
@@ -76,6 +78,11 @@ typedef struct window
     long    yfirststep;
     long    xstep;
     long    ystep;
+
+
+    // minimap
+    double  playermini_x;
+    double  playermini_y;
 
     int     i;             // width
     int     k;             // 

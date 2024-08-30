@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/11 12:01:31 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:56:07 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int main(int ac, char **av)
 	window.k = 0;
     map_check(&map, str, &window);
 	window.map = &map;
+	window.playermini_x = window.player_x;
+	window.playermini_y = window.player_y;
 	graphic_management(&window);
 
 

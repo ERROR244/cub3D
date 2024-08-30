@@ -23,7 +23,7 @@ void dda_for_line(int X0, int Y0, int X1, int Y1, t_window *window)
 {
     double dx = X1 - X0;
     double dy = Y1 - Y0;
-  
+
     double steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy); 
   
     double Xinc = dx / (double)steps; 
