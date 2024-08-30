@@ -15,6 +15,7 @@
 
 #define PI 3.141592
 #define TWO_PI 6.28318530
+#define FOV_ANGLE (60 * (PI / 180))
 
 # include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"

@@ -199,7 +199,7 @@ void cast_rays(t_window *window, int colid)
 		window->ray[colid].ray_hit_y = Vwally;
 		window->ray[colid].distance = verdis;
 	}
-	printf("%f %f %f %f %f \n", window->ray[colid].distance, window->ray[colid].ray_hit_x, window->ray[colid].ray_hit_y, window->player_x, window->player_y);
+	// printf("%f %f %f %f %f \n", window->ray[colid].distance, window->ray[colid].ray_hit_x, window->ray[colid].ray_hit_y, window->player_x, window->player_y);
 }
 
 void draw_the_rays3D(t_window *window)
@@ -207,7 +207,7 @@ void draw_the_rays3D(t_window *window)
 	int colid;
 
 	colid = 0;
-	window->ray_a = normalizeAngle(window->pa - ((60 * (3.14159265 / 180))/2));
+	window->ray_a = normalizeAngle(window->pa - (FOV_ANGLE / 2));
 	while (colid < window->rays)
 	{
 		window->ray[colid].ray_a = normalizeAngle(window->ray_a);
@@ -229,7 +229,7 @@ void draw_the_rays3D(t_window *window)
 						(window->ray[colid].ray_hit_y),
 						window
 					);
-		window->ray_a += to_rad(60) / window->rays;
+		window->ray_a += FOV_ANGLE / window->rays;
 		colid++;
 	}
 }
