@@ -6,15 +6,11 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:18:09 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/08/30 19:22:13 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/30 21:27:08 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-#define MINI_MAP_SIZE 5
-#define MAP_HEIGHT 900
-#define MAP_WIDTH 1400
 
 int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 {
@@ -57,7 +53,7 @@ int draw_mini_map(t_window *window)
 	int x = 0;
 	int y = 0;
 	int ret;
-	int xx , yy;
+	int xx, yy;
 	int x_start;
 	int y_start;
 	int x_end;
@@ -65,11 +61,10 @@ int draw_mini_map(t_window *window)
 
 	xx = (int)(playerx) - MINI_MAP_SIZE;
 	yy = (int)(playery) - MINI_MAP_SIZE;
-
 	if (xx < 0)
 	{
 		x_start = 0;
-		x_end =(int)(playerx) + MINI_MAP_SIZE - xx;
+		x_end = (int)(playerx) + MINI_MAP_SIZE - xx;
 	}
 	else
 	{
@@ -93,37 +88,35 @@ int draw_mini_map(t_window *window)
 		yy = 0;
 	playerx -= xx;
 	playery -= yy;
-	mlx_clear_window(window->mlx, window->window);
-
 	ret = 0;
 	map = window->map->map;
 	i = y_start;
-	while (i < y_end && ret == 0)
+	while (map[i] &&  i < y_end && ret == 0)
 	{
 		j = x_start;
 		y = 0;
-		while (j < x_end  && ret == 0)
+		while (map[i][j] && j < x_end && ret == 0)
 		{
-			if (map[i][j + 1] == '\0')
-			{
-				while (j <= window->i)
-				{
-					ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);;
-					y += 16;
-					j++;
-				}
-				break ;
-			}
 			if (map[i][j] == '0' || map[i][j] == 'N')
 				ret = draw_mini_squar(window, x, y, 0x0000FF, 16);
 			else if (map[i][j] == '1' || map[i][j] == ' ')
 				ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
+			if (map[i][j] == '\0' || map[i][j] == '\n')
+			{
+				while (j <= window->map->width)
+				{
+					ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
+					y += 16;
+					j++;
+				}
+				break;
+			}
 			j++;
 			y += 16;
 		}
 		x += 16;
 		i++;
 	}
-	ret = draw_mini_squar(window, (playery * 16) - 4, (playerx * 16) - 4 , 0x00000, 8);
+	ret = draw_mini_squar(window, (playery * 16) - 4, (playerx * 16) - 4, 0x00000, 6);
 	return (ret);
 }

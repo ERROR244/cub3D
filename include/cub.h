@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/30 11:02:14 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/30 21:23:06 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define SO_LONG_H
 
 #define PI 3.141592
-#define MAP_SIZE_X 14
-#define MAP_SIZE_Y 14
+#define MINI_MAP_SIZE 8
+#define MAP_HEIGHT 900
+#define MAP_WIDTH 1400
 
 
 # include "../minilibx-linux/mlx.h"
@@ -46,6 +47,7 @@ typedef struct s_map
 
     int *floor_color;
     int *ceiling_color;
+    int width;
 
     char **map;
 }   t_map;

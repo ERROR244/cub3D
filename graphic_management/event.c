@@ -162,6 +162,7 @@ int	key_hook(int keycode, t_window *window)
 	events event;
 	int ret = 0;
 
+	mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window, 0, 0);
