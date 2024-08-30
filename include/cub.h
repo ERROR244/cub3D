@@ -100,8 +100,8 @@ typedef struct window
 
     int TILE_SIZE;
 
-    int     i;             // width
-    int     k;             //
+    int     i;
+    int     k;
 }			t_window;
 
 // tmp
@@ -137,23 +137,24 @@ char    **get_map_updated(char **ptr);
 
 // graphic_management
 void	graphic_management(t_window *w);
-int     close_window(t_window *window);
+int	    close_window(t_window *window);
 double  to_rad(double deg);
 double  to_deg(double rad);
-void    draw_the_rays3D(t_window *window);
+void    rays3D_cast(t_window *window);
+int     render3d(t_window *window);
 bool    haswallAt(long x, long y, t_window *window);
 
 // 2D
-int	close_window(t_window *window);
-int draw_squar(t_window *window, int y, int x, int color);
-int draw_map(t_window *window);
-void draw_2D_map(t_window *window);
+int     draw_squar(t_window *window, int y, int x, int color);
+int     draw_map(t_window *window);
+void    draw_2D_map(t_window *window);
+void    dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window);
 
 
 // events
-int	key_hook(int keycode, t_window *window);
-int handle_event(events event, t_window *window);
-events get_event(int keycode);
+int	    key_hook(int keycode, t_window *window);
+int     handle_event(events event, t_window *window);
+events  get_event(int keycode);
 
 
 
