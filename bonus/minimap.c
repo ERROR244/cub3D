@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:18:09 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/08/30 21:27:08 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/31 13:01:32 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,12 @@ int draw_mini_map(t_window *window)
 		{
 			if (map[i][j] == '0' || map[i][j] == 'N')
 				ret = draw_mini_squar(window, x, y, 0x0000FF, 16);
-			else if (map[i][j] == '1' || map[i][j] == ' ')
+			else if (map[i][j] == '1' || map[i][j] == ' ' || map[i][j] == '\0' )
 				ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
+			j++;
 			if (map[i][j] == '\0' || map[i][j] == '\n')
 			{
-				while (j <= window->map->width)
+				while (j <= window->i && j <= x_end)
 				{
 					ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
 					y += 16;
@@ -111,7 +112,6 @@ int draw_mini_map(t_window *window)
 				}
 				break;
 			}
-			j++;
 			y += 16;
 		}
 		x += 16;

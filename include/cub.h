@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/30 21:23:06 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:53:35 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 #define PI 3.141592
-#define MINI_MAP_SIZE 8
+#define MINI_MAP_SIZE 6
 #define MAP_HEIGHT 900
 #define MAP_WIDTH 1400
 
@@ -80,7 +80,6 @@ typedef struct window
     long    yfirststep;
     long    xstep;
     long    ystep;
-
 
     // minimap
     double  playermini_x;
