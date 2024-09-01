@@ -14,17 +14,13 @@ events get_event(int keycode)
 	events event;
 
 	event = none;
-	if (keycode == 65363)
-		event = moveRight;
-	else if (keycode == 65362)
+	if (keycode == 65362 || keycode == 119)
 		event = moveForWard;
-	else if (keycode == 65364)
+	else if (keycode == 65364 || keycode == 115)
 		event = moveBackward;
-	else if (keycode == 65361)
-		event = moveLeft;
-	else if (keycode == 100)
+	else if (keycode == 65363 || keycode == 100)
 		event = viewRight;
-	else if (keycode == 97)
+	else if (keycode == 65361 || keycode == 97)
 		event = viewLeft;
 	else if (keycode == 65307)
 		event = escExit;
@@ -35,38 +31,30 @@ int handle_event1(events event, t_window *window, int x, int y)
 {
 	if (event == moveForWard)
 	{
-		x = (window->player_x) / window->TILE_SIZE;
-		y = (window->player_y - 3) / window->TILE_SIZE;
-		if (window->map->map[y][x] != '1')
-			window->player_y -= 3;
+		x = (window->player_x + (cos(window->pa) * 5));
+		y = (window->player_y + (sin(window->pa) * 5));
+		if (window->map->map[(int)((y) / window->TILE_SIZE)][(int)((x) / window->TILE_SIZE)] != '1')
+		{
+			window->player_y = y;
+			window->player_x = x;
+		}
 	}
 	else if (event == moveBackward)
 	{
-		x = (window->player_x) / window->TILE_SIZE;
-		y = (window->player_y + 3) / window->TILE_SIZE;
-		if (window->map->map[y][x] != '1')
-			window->player_y += 3;
-	}
-	else if (event == moveRight)
-	{
-		x = (window->player_x + 3) / window->TILE_SIZE;
-		y = (window->player_y) / window->TILE_SIZE;
-		if (window->map->map[y][x] != '1')
-			window->player_x += 3;
+		x = (window->player_x + (cos(window->pa) * 5 * (-1)));
+		y = (window->player_y + (sin(window->pa) * 5 * (-1)));
+		if (window->map->map[(int)((y) / window->TILE_SIZE)][(int)((x) / window->TILE_SIZE)] != '1')
+		{
+			window->player_y = y;
+			window->player_x = x;
+		}
 	}
 	return (0);
 }
 
-int handle_event2(events event, t_window *window, int x, int y)
+int handle_event2(events event, t_window *window)
 {
-	if (event == moveLeft)
-	{
-		x = (window->player_x - 3) / window->TILE_SIZE;
-		y = (window->player_y) / window->TILE_SIZE;
-		if (window->map->map[y][x] != '1')
-			window->player_x -= 3;
-	}
-	else if (event == viewRight)
+	if (event == viewRight)
 	{
 		window->pa += 0.1;
 		if (window->pa > 2*PI)
@@ -88,12 +76,14 @@ int	key_hook(int keycode, t_window *window)
 	events event;
 	int ret;
 
-	mlx_clear_window(window->mlx, window->window);
+	clear_image(window, window->window_width, window->window_hight, 0x000000);
 	event = get_event(keycode);
 	handle_event1(event, window, 0, 0);
-	handle_event2(event, window, 0, 0);
+	handle_event2(event, window);
 	rays3D_cast(window);
 	ret = render3d(window);
 	// draw_map(window);
+	// windoww->img->img = window->img->tmp_img;
+	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
 	return (ret);
 }

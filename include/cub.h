@@ -69,6 +69,15 @@ typedef struct s_ray
     int     col_id;
 }   t_ray;
 
+typedef struct	s_img {
+    void	*img;
+	void	*tmp_img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct window
 {
     t_map   *map;
@@ -86,7 +95,8 @@ typedef struct window
     double  pa;
     double  ray_a;
 
-    t_ray   ray[1401];
+    t_ray   *ray;
+    t_img   *img;
 
     int     window_width;
     int     window_hight;
@@ -143,6 +153,8 @@ double  to_deg(double rad);
 void    rays3D_cast(t_window *window);
 int     render3d(t_window *window);
 bool    haswallAt(long x, long y, t_window *window);
+int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
+void    clear_image(t_window *window, int width, int height, int color);
 
 // 2D
 int     draw_squar(t_window *window, int y, int x, int color);

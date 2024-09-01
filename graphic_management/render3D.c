@@ -1,6 +1,6 @@
 #include "../include/cub.h"
 
-int draw_rect(void *mlx, void *window, int x, int y, int width, int height, int color)
+int draw_rect(t_window *window, int x, int y, int width, int height, int color)
 {
 	int ret;
     int i;
@@ -13,7 +13,8 @@ int draw_rect(void *mlx, void *window, int x, int y, int width, int height, int 
 		j = 0;
         while (j < height && ret == 0)
         {
-            ret = mlx_pixel_put(mlx, window, x + i, y + j, color);
+			ret = my_mlx_pixel_put(window, x + i, y + j, color);
+            // ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, color);
 			j++;
 		}
 		i++;
@@ -36,8 +37,7 @@ int render3d(t_window *window)
 		distance = window->ray[i].distance * cos(window->ray[i].ray_a - window->pa);
 		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
 		wall3dhight = (window->TILE_SIZE / distance) * displane;
-		draw_rect(window->mlx,
-				  window->window,
+		draw_rect(window,
 				  round(i * window->wall_wigth),
 				  round((window->window_hight / 2) - (wall3dhight / 2)),
 				  round(window->wall_wigth),
