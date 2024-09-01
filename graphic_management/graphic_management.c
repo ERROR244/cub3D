@@ -36,6 +36,7 @@ void	graphic_management(t_window *window)
 	window->wall_wigth = 1;
 	window->window_width = 1400;
 	window->window_hight = 900;
+	window->update_waidow = true;
 	window->rays = window->window_width / window->wall_wigth;
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->window_width, window->window_hight, "cub3D");

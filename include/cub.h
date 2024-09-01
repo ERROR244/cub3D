@@ -110,6 +110,8 @@ typedef struct window
 
     int TILE_SIZE;
 
+    bool    update_waidow;
+
     int     i;
     int     k;
 }			t_window;

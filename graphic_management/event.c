@@ -29,25 +29,20 @@ events get_event(int keycode)
 
 int handle_event1(events event, t_window *window, int x, int y)
 {
+	int dir;
+
+	dir = 0;
 	if (event == moveForWard)
-	{
-		x = (window->player_x + (cos(window->pa) * 5));
-		y = (window->player_y + (sin(window->pa) * 5));
-		if (window->map->map[(int)((y) / window->TILE_SIZE)][(int)((x) / window->TILE_SIZE)] != '1')
-		{
-			window->player_y = y;
-			window->player_x = x;
-		}
-	}
+		dir = 1;
 	else if (event == moveBackward)
+		dir = -1;
+	x = (window->player_x + (cos(window->pa) * 5 * dir));
+	y = (window->player_y + (sin(window->pa) * 5 * dir));
+	if (!haswallAt(x+5, y+5, window) && dir != 0)
 	{
-		x = (window->player_x + (cos(window->pa) * 5 * (-1)));
-		y = (window->player_y + (sin(window->pa) * 5 * (-1)));
-		if (window->map->map[(int)((y) / window->TILE_SIZE)][(int)((x) / window->TILE_SIZE)] != '1')
-		{
-			window->player_y = y;
-			window->player_x = x;
-		}
+		window->update_waidow = true;
+		window->player_y = y;
+		window->player_x = x;
 	}
 	return (0);
 }
@@ -56,12 +51,14 @@ int handle_event2(events event, t_window *window)
 {
 	if (event == viewRight)
 	{
+		window->update_waidow = true;
 		window->pa += 0.1;
 		if (window->pa > 2*PI)
 			window->pa -= 2*PI;
 	}
 	else if (event == viewLeft)
 	{
+		window->update_waidow = true;
 		window->pa -= 0.1;
 		if (window->pa < 0)
 			window->pa += 2*PI;
@@ -77,13 +74,16 @@ int	key_hook(int keycode, t_window *window)
 	int ret;
 
 	clear_image(window, window->window_width, window->window_hight, 0x000000);
+	mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
 	rays3D_cast(window);
 	ret = render3d(window);
-	// draw_map(window);
 	// windoww->img->img = window->img->tmp_img;
-	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+	if (window->update_waidow == true)
+		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+	// draw_map(window);
+	window->update_waidow = false;
 	return (ret);
 }
