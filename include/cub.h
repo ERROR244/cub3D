@@ -16,6 +16,9 @@
 #define PI 3.141592
 #define TWO_PI 6.28318530
 #define FOV_ANGLE (60 * (PI / 180))
+#define MINI_MAP_SIZE 6
+#define MAP_HEIGHT 900
+#define MAP_WIDTH 1400
 
 # include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"
@@ -157,6 +160,10 @@ int     render3d(t_window *window);
 bool    haswallAt(long x, long y, t_window *window);
 int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
 void    clear_image(t_window *window, int width, int height, int color);
+
+// minimap
+int     draw_mini_map(t_window *window);
+
 
 // 2D
 int     draw_squar(t_window *window, int y, int x, int color);

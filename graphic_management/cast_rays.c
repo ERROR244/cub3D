@@ -3,8 +3,8 @@
 bool haswallAt(long x, long y, t_window *window)
 {
 	int j;
-    int mapGridIndexX = floor(x / window->TILE_SIZE);
-    int mapGridIndexY = floor(y / window->TILE_SIZE);
+    int mapGridIndexX = (int)(x / window->TILE_SIZE);
+    int mapGridIndexY = (int)(y / window->TILE_SIZE);
 
     if (x < 0 || x > window->i * window->TILE_SIZE || y < 0 || y > window->k *window->TILE_SIZE)
 			return (true);
@@ -132,9 +132,7 @@ void cast_rays(t_window *window, int colid)
 		if (haswallAt(nextvertouchx, nextvertouchy, window))
 		{
             if (window->ray[colid].is_ray_looking_left)
-        	{
                 nextvertouchx++;
-            }
 			Vwallhit = true;
 			Vwallx = nextvertouchx;
 			Vwally = nextvertouchy;
@@ -148,9 +146,15 @@ void cast_rays(t_window *window, int colid)
 	}
 
 	if (Hwallhit == true)
+	{
 		hordis = dis(window->player_x, window->player_y, Hwallx, Hwally);
+		hordis += (hordis == 0) ? 1.0 : 0.0;
+	}
 	if (Vwallhit == true)
+	{
 		verdis = dis(window->player_x, window->player_y, Vwallx, Vwally);
+		verdis += (verdis == 0) ? 1.0 : 0.0;
+	}
 	if (hordis < verdis)
 	{
 		window->ray[colid].washitver = false;
@@ -182,7 +186,8 @@ void rays3D_cast(t_window *window)
 		window->ray[colid].is_ray_looking_right = (window->ray[colid].ray_a < 0.5*PI || window->ray[colid].ray_a > 1.5*PI);
 		window->ray[colid].is_ray_looking_left = !window->ray[colid].is_ray_looking_right;
 		cast_rays(window, colid);
-		//	render the rayr
+		// printf("%f %d \n", window->ray[colid].distance, window->ray[colid].washitver);
+		// 	render the rayr
 		// dda_for_line(	(window->player_x),
 		// 				(window->player_y),
 		// 				(window->ray[colid].ray_hit_x),

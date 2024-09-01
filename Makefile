@@ -23,6 +23,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			graphic_management/event.c\
 			graphic_management/cast_rays.c\
 			graphic_management/render3D.c\
+			bonus/minimap.c
 
 OBJM	= ${SRCM:.c=.o}
 

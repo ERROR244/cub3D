@@ -36,9 +36,9 @@ int handle_event1(events event, t_window *window, int x, int y)
 		dir = 1;
 	else if (event == moveBackward)
 		dir = -1;
-	x = (window->player_x + (cos(window->pa) * 5 * dir));
-	y = (window->player_y + (sin(window->pa) * 5 * dir));
-	if (!haswallAt(x+5, y+5, window) && dir != 0)
+	x = (window->player_x + (cos(window->pa) * 6 * dir));
+	y = (window->player_y + (sin(window->pa) * 6 * dir));
+	if (!haswallAt(x, y, window) && dir != 0)
 	{
 		window->update_waidow = true;
 		window->player_y = y;
@@ -73,17 +73,18 @@ int	key_hook(int keycode, t_window *window)
 	events event;
 	int ret;
 
-	clear_image(window, window->window_width, window->window_hight, 0x000000);
-	mlx_clear_window(window->mlx, window->window);
+	ret = 0;
+	// mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
+	// draw_map(window);
 	rays3D_cast(window);
 	ret = render3d(window);
+	draw_mini_map(window);
 	// windoww->img->img = window->img->tmp_img;
 	if (window->update_waidow == true)
 		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-	// draw_map(window);
 	window->update_waidow = false;
 	return (ret);
 }

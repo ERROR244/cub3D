@@ -37,9 +37,9 @@ int draw_squar(t_window *window, int y, int x, int color)
 		j = 0;
 		while (j < window->TILE_SIZE && ret == 0)
 		{
-			if (window->minimap*(j) < window->minimap*4.5 || window->minimap*(i) < window->minimap*4.5)
-				ret = mlx_pixel_put(window->mlx, window->window, window->minimap*(x + i), window->minimap*(y + j), 0x808080);
-			else
+			// if (window->minimap*(j) < window->minimap*4.5 || window->minimap*(i) < window->minimap*4.5)
+			// 	ret = mlx_pixel_put(window->mlx, window->window, window->minimap*(x + i), window->minimap*(y + j), 0x808080);
+			// else
 				ret = mlx_pixel_put(window->mlx, window->window, window->minimap*(x + i), window->minimap*(y + j), color);
 			j++;
 		}
@@ -80,7 +80,7 @@ int draw_map(t_window *window)
 			if (map[i][j] == '0')
 				ret = draw_squar(window, x, y, 0xFFFFFF);
 			else if (map[i][j] == '1' || map[i][j] == ' ')
-				ret = draw_squar(window, x, y, 0x000000);
+				ret = draw_squar(window, x, y, 0x0000FF);
 			else if (map[i][j] == 'N')
 				ret = draw_squar(window, x, y, 0xFFFFFF);
 			if (map[i][j + 1] == '\0')
@@ -99,6 +99,12 @@ int draw_map(t_window *window)
 		x += window->TILE_SIZE;
 		i++;
 	}
+    dda_for_line(	window->player_x,
+					window->player_y,
+					window->player_x + cos(window->pa) * 30,
+					window->player_y + sin(window->pa) * 30,
+					window
+				);			// direction
 	return (ret);
 }
 

@@ -28,10 +28,23 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
     }
 	return (0);
 }
+// int put_img(t_window *window)
+// {
+//     int ret;
+//
+//     ret = 0;
+//     mlx_clear_window(window->mlx, window->window);
+//     draw_mini_map(window);
+//     ret = render3d(window);
+//
+// 	// if (window->update_waidow == true)
+// 		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+//     return (ret);
+// }
 
 void	graphic_management(t_window *window)
 {
-	window->minimap = 0.2;
+	window->minimap = 0.5;
 	window->pa = PI/2;
 	window->wall_wigth = 1;
 	window->window_width = 1400;
@@ -57,7 +70,9 @@ void	graphic_management(t_window *window)
 	    fprintf(stderr, "Failed to get image data address.\n");
 	    exit(EXIT_FAILURE);
 	}
+    key_hook(5, window);
 	// mlx_key_hook(window->window, key_hook, window);
+    // mlx_loop_hook(window->mlx, put_img, window);
 	mlx_hook(window->window, 02, 1L<<0, key_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);
