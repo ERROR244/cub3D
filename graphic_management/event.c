@@ -1,104 +1,26 @@
 #include "../include/cub.h"
 
-// events get_event(int keycode)
-// {
-// 	events event;
-
-// 	event = none;
-// 	if (keycode == 65363)
-// 		event = moveRight;
-// 	else if (keycode == 65362)
-// 		event = moveForWard;
-// 	else if (keycode == 65364)
-// 		event = moveBackward;
-// 	else if (keycode == 65361)
-// 		event = moveLeft;
-// 	else if (keycode == 100)
-// 		event = viewRight;
-// 	else if (keycode == 97)
-// 		event = viewLeft;
-// 	// else if (keycode == 119)
-// 	// 	event = viewUp;
-// 	// else if (keycode == 115)
-// 	// 	event = viewDown;
-// 	else if (keycode == 65307)
-// 		event = escExit;
-// 	return (event);
-// }
-
-// int handle_event(events event, t_window *window)
-// {
-// 	int x;
-// 	int y;
-// 	printf("here--->%f \n", window->pa);
-// 	if (event == moveForWard)
-// 	{
-// 		x = (window->player_x) / 32;
-// 		y = (window->player_y - 5) / 32;
-// 		if (window->map->map[y][x] != '1')
-// 			window->player_y -= 5;
-// 	}
-// 	else if (event == moveBackward)
-// 	{
-// 		x = (window->player_x) / 32;
-// 		y = (window->player_y + 5) / 32;
-// 		if (window->map->map[y][x] != '1')
-// 			window->player_y += 5;
-// 	}
-// 	else if (event == moveRight)
-// 	{
-// 		x = (window->player_x + 5) / 32;
-// 		y = (window->player_y) / 32;
-// 		if (window->map->map[y][x] != '1')
-// 			window->player_x += 5;
-// 		// else
-// 		// 	if (window->map->map[(int)((window->player_y - 5) / 32)][(int)(window->player_x) / 32] != '1')
-// 		// 		window->player_y -= 5;
-// 	}
-// 	else if (event == moveLeft)
-// 	{
-// 		x = (window->player_x - 5) / 32;
-// 		y = (window->player_y) / 32;
-// 		if (window->map->map[y][x] != '1')
-// 			window->player_x -= 5;
-// 		// else
-// 			// if (window->map->map[(int)((window->player_y + 5) / 32)][(int)(window->player_x) / 32] != '1')
-// 			// 	window->player_y += 5;
-
-// 	}
-// 	else if (event == viewRight)
-// 	{
-// 		window->pa += 0.1;
-// 		if (window->pa > 0)
-// 			window->pa -= 2*PI;
-// 	}
-// 	else if (event == viewLeft)
-// 	{
-// 		window->pa -= 0.1;
-// 		if (window->pa < 0)
-// 			window->pa += 2*PI;
-// 	}
-// 	else if (event == escExit)
-// 		return (close_window(window));
-// 	return (0);
-// }
+int	close_window(t_window *window)
+{
+	printf("Good game\n");
+    exit_game(window);
+	mlx_destroy_window(window->mlx, window->window);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
 
 events get_event(int keycode)
 {
 	events event;
 
 	event = none;
-	if (keycode == 65363)
-		event = moveRight;
-	else if (keycode == 65362)
+	if (keycode == 65362 || keycode == 119)
 		event = moveForWard;
-	else if (keycode == 65364)
+	else if (keycode == 65364 || keycode == 115)
 		event = moveBackward;
-	else if (keycode == 65361)
-		event = moveLeft;
-	else if (keycode == 100)
+	else if (keycode == 65363 || keycode == 100)
 		event = viewRight;
-	else if (keycode == 97)
+	else if (keycode == 65361 || keycode == 97)
 		event = viewLeft;
 	else if (keycode == 65307)
 		event = escExit;
@@ -107,58 +29,36 @@ events get_event(int keycode)
 
 int handle_event1(events event, t_window *window, int x, int y)
 {
-	if (event == moveForWard)
-	{
-		x = (window->player_x) / 32;
-		y = (window->player_y - 3) / 32;
-		if (window->map->map[y][x] != '1')
-			window->player_y -= 3;
-	}
-	else if (event == moveBackward)
-	{
-		x = (window->player_x) / 32;
-		y = (window->player_y + 3) / 32;
-		if (window->map->map[y][x] != '1')
-			window->player_y += 3;
+	int dir;
 
-	}
-	else if (event == moveRight)
+	dir = 0;
+	if (event == moveForWard)
+		dir = 1;
+	else if (event == moveBackward)
+		dir = -1;
+	x = (window->player_x + (cos(window->pa) * 6 * dir));
+	y = (window->player_y + (sin(window->pa) * 6 * dir));
+	if (!haswallAt(x, y, window) && dir != 0)
 	{
-		x = (window->player_x + 3) / 32;
-		y = (window->player_y) / 32;
-		if (window->map->map[y][x] != '1')
-			window->player_x += 3;
-		else
-		{
-			if (window->map->map[(int)((window->player_y - 5) / 32)][(int)(window->player_x) / 32] != '1')
-				window->player_y -= 3;
-		}
+		window->update_waidow = true;
+		window->player_y = y;
+		window->player_x = x;
 	}
 	return (0);
 }
 
-int handle_event2(events event, t_window *window, int x, int y)
+int handle_event2(events event, t_window *window)
 {
-	if (event == moveLeft)
+	if (event == viewRight)
 	{
-		x = (window->player_x - 3) / 32;
-		y = (window->player_y) / 32;
-		if (window->map->map[y][x] != '1')
-			window->player_x -= 3;
-		else
-		{
-			if (window->map->map[(int)((window->player_y + 5) / 32)][(int)(window->player_x) / 32] != '1')
-					window->player_y += 3;
-		}
-	}
-	else if (event == viewRight)
-	{
+		window->update_waidow = true;
 		window->pa += 0.1;
 		if (window->pa > 2*PI)
 			window->pa -= 2*PI;
 	}
 	else if (event == viewLeft)
 	{
+		window->update_waidow = true;
 		window->pa -= 0.1;
 		if (window->pa < 0)
 			window->pa += 2*PI;
@@ -171,13 +71,20 @@ int handle_event2(events event, t_window *window, int x, int y)
 int	key_hook(int keycode, t_window *window)
 {
 	events event;
-	int ret = 0;
+	int ret;
 
-	mlx_clear_window(window->mlx, window->window);
+	ret = 0;
+	// mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
 	handle_event1(event, window, 0, 0);
-	handle_event2(event, window, 0, 0);
-	draw_mini_map(window);
+	handle_event2(event, window);
 	// draw_map(window);
+	rays3D_cast(window);
+	ret = render3d(window);
+	draw_mini_map(window);
+	// windoww->img->img = window->img->tmp_img;
+	if (window->update_waidow == true)
+		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+	window->update_waidow = false;
 	return (ret);
 }

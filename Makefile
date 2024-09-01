@@ -21,7 +21,9 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_strncmp.c\
 			graphic_management/graphic_management.c\
 			graphic_management/event.c\
-			bonus/minimap.c\
+			graphic_management/cast_rays.c\
+			graphic_management/render3D.c\
+			bonus/minimap.c
 
 OBJM	= ${SRCM:.c=.o}
 
@@ -51,7 +53,7 @@ re:		fclean all
 push :
 	@make fclean
 	@git add .
-	@git commit -m "cub3D"
+	@git commit -m "merge done"
 	@git push origin Sfayga
 
 .SECONDARY : ${OBJM}

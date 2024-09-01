@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/30 20:15:57 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/11 12:01:31 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,6 @@ void exit_game(t_window *window)
     free(map->ceiling_color);
     free_array(map->map);
 }
-int	get_len_of_big_line(t_window *window)
-{
-	int i = 0;
-	int j = 0;
-	int len = 0;
-
-	while (window->map->map[i])
-	{
-		j = 0;
-		while (window->map->map[i][j])
-		{
-			j++;
-		}
-		if (j > len)
-			len = j;
-		i++;
-	}
-	return (len);
-}
 
 int main(int ac, char **av)
 {
@@ -119,11 +100,9 @@ int main(int ac, char **av)
     }
 	window.i = 0;
 	window.k = 0;
+	window.TILE_SIZE = 64;
     map_check(&map, str, &window);
 	window.map = &map;
-	window.map->width = get_len_of_big_line(&window);
-	window.playermini_x = window.player_x;
-	window.playermini_y = window.player_y;
 	graphic_management(&window);
 
 

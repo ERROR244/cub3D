@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/31 12:53:35 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:22:01 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define SO_LONG_H
 
 #define PI 3.141592
+#define TWO_PI 6.28318530
+#define FOV_ANGLE (60 * (PI / 180))
 #define MINI_MAP_SIZE 6
 #define MAP_HEIGHT 900
 #define MAP_WIDTH 1400
-
 
 # include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"
@@ -28,7 +29,10 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <time.h>
+# include <float.h>
 # include <math.h>
+# include <string.h>
+# include <errno.h>
 
 typedef enum {
     moveForWard, moveBackward,
@@ -47,15 +51,35 @@ typedef struct s_map
 
     int *floor_color;
     int *ceiling_color;
-    int width;
 
     char **map;
 }   t_map;
 
 typedef struct s_ray
 {
-    double ray_a;
+    double   ray_a;
+    double   ray_hit_x;
+    double   ray_hit_y;
+    double   distance;
+
+    bool    washitver;
+
+    bool is_ray_looking_down;
+    bool is_ray_looking_up;
+    bool is_ray_looking_right;
+    bool is_ray_looking_left;
+
+    int     col_id;
 }   t_ray;
+
+typedef struct	s_img {
+    void	*img;
+	void	*tmp_img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
 
 typedef struct window
 {
@@ -67,26 +91,32 @@ typedef struct window
     void	*mlx;
     void	*window;
 
+    double minimap;
+
     double  player_x;
     double  player_y;
-    double  dirX, dirY;          // direction vector
-    double  planeX, planeY;      // the 2d raycaster version of camera plane
     double  pa;
     double  ray_a;
+
+    t_ray   *ray;
+    t_img   *img;
+
+    int     window_width;
+    int     window_hight;
     int     wall_wigth;
     int     rays;
 
-    long    xfirststep;
-    long    yfirststep;
-    long    xstep;
-    long    ystep;
+    double  xfirststep;
+    double  yfirststep;
+    double  xstep;
+    double  ystep;
 
-    // minimap
-    double  playermini_x;
-    double  playermini_y;
+    int TILE_SIZE;
 
-    int     i;             // width
-    int     k;             // 
+    bool    update_waidow;
+
+    int     i;
+    int     k;
 }			t_window;
 
 // tmp
@@ -119,26 +149,33 @@ void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
 void    free_and_check(char **map);
 char    **get_map_updated(char **ptr);
-int     draw_mini_map(t_window *window);
-
 
 // graphic_management
 void	graphic_management(t_window *w);
-int     close_window(t_window *window);
-double to_rad(double deg);
-double to_deg(double rad);
+int	    close_window(t_window *window);
+double  to_rad(double deg);
+double  to_deg(double rad);
+void    rays3D_cast(t_window *window);
+int     render3d(t_window *window);
+bool    haswallAt(long x, long y, t_window *window);
+int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
+void    clear_image(t_window *window, int width, int height, int color);
+
+// minimap
+int     draw_mini_map(t_window *window);
+
 
 // 2D
-int	close_window(t_window *window);
-int draw_squar(t_window *window, int y, int x, int color);
-int draw_map(t_window *window);
-void draw_2D_map(t_window *window);
+int     draw_squar(t_window *window, int y, int x, int color);
+int     draw_map(t_window *window);
+void    draw_2D_map(t_window *window);
+void    dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window);
 
 
 // events
-int	key_hook(int keycode, t_window *window);
-int handle_event(events event, t_window *window);
-events get_event(int keycode);
+int	    key_hook(int keycode, t_window *window);
+int     handle_event(events event, t_window *window);
+events  get_event(int keycode);
 
 
 

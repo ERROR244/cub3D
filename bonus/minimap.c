@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minimap.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:18:09 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/08/31 19:58:28 by moer-ret         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/cub.h"
 
 int draw_mini_squar(t_window *window, double y, double x, int color, int size)
@@ -25,7 +13,7 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 		j = 0;
 		while (j < size && ret == 0)
 		{
-			ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, color);
+			ret = my_mlx_pixel_put(window, x + i, y + j, color);
 			j++;
 		}
 		i++;
@@ -43,8 +31,8 @@ int ft_abs(int x)
 int draw_mini_map(t_window *window)
 {
 	char **map;
-	double playerx = (double)(window->player_x / 32);
-	double playery = (double)(window->player_y / 32);
+	double playerx = (double)(window->player_x / 64);
+	double playery = (double)(window->player_y / 64);
 	int i;
 	int j;
 	int x = 0;
@@ -132,6 +120,16 @@ int draw_mini_map(t_window *window)
 			k++;
 		}
 	}
-	ret = draw_mini_squar(window, (playery * 16) - 4, (playerx * 16) - 4, 0x00000, 6);
+	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 6);
+
+    // for (int i = 0; i < window->rays; i++)
+    // {
+    //     dda_for_line(	(playerx*16),
+	// 					(playery*16),
+	// 					(window->ray[i].ray_hit_x / 64)*16,
+	// 					(window->ray[i].ray_hit_y / 64)*16,
+	// 					window
+	// 				);
+    // }
 	return (ret);
 }
