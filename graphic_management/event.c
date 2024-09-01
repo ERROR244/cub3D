@@ -120,6 +120,7 @@ int handle_event1(events event, t_window *window, int x, int y)
 		y = (window->player_y + 3) / 32;
 		if (window->map->map[y][x] != '1')
 			window->player_y += 3;
+
 	}
 	else if (event == moveRight)
 	{
@@ -127,6 +128,11 @@ int handle_event1(events event, t_window *window, int x, int y)
 		y = (window->player_y) / 32;
 		if (window->map->map[y][x] != '1')
 			window->player_x += 3;
+		else
+		{
+			if (window->map->map[(int)((window->player_y - 5) / 32)][(int)(window->player_x) / 32] != '1')
+				window->player_y -= 3;
+		}
 	}
 	return (0);
 }
@@ -139,6 +145,11 @@ int handle_event2(events event, t_window *window, int x, int y)
 		y = (window->player_y) / 32;
 		if (window->map->map[y][x] != '1')
 			window->player_x -= 3;
+		else
+		{
+			if (window->map->map[(int)((window->player_y + 5) / 32)][(int)(window->player_x) / 32] != '1')
+					window->player_y += 3;
+		}
 	}
 	else if (event == viewRight)
 	{

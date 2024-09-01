@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:18:09 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/08/31 17:37:25 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/31 19:58:28 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 		j = 0;
 		while (j < size && ret == 0)
 		{
-			// if (j < 2 || i < 2)
-			// 	ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, 0x808080);
-			// else
-				ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, color);
+			ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, color);
 			j++;
 		}
 		i++;
