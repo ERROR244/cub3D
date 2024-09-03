@@ -79,12 +79,12 @@ int	key_hook(int keycode, t_window *window)
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
 	// draw_map(window);
-	rays3D_cast(window);
-	ret = render3d(window);
-	draw_mini_map(window);
+	// rays3D_cast(window);
+	// ret = render3d(window);
+	// draw_mini_map(window);
 	// windoww->img->img = window->img->tmp_img;
-	if (window->update_waidow == true)
-		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-	window->update_waidow = false;
+	// if (window->update_waidow == true)
+	// 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+	// window->update_waidow = false;
 	return (ret);
 }
