@@ -9,7 +9,7 @@ int	close_window(t_window *window)
 	return (0);
 }
 
-events get_event(int keycode)
+events get_event(int keycode, t_window *window)
 {
 	events event;
 
@@ -24,6 +24,9 @@ events get_event(int keycode)
 		event = viewLeft;
 	else if (keycode == 65307)
 		event = escExit;
+	(void)window;
+	// mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
+	// printf("x = %d, y = %d\n", window->mouse_x, window->mouse_y);
 	return (event);
 }
 
@@ -68,6 +71,27 @@ int handle_event2(events event, t_window *window)
 	return (0);
 }
 
+int handle_mouse(t_window *window)
+{
+	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
+	printf("x = %d, y = %d\n", window->mouse_x, window->mouse_y);
+	if (window->mouse_x > 1206)
+	{
+		window->update_waidow = true;
+		window->pa += 0.1;
+		if (window->pa > 2*PI)
+			window->pa -= 2*PI;
+	}
+	else if (window->mouse_x < 433)
+	{
+		window->update_waidow = true;
+		window->pa -= 0.1;
+		if (window->pa < 0)
+			window->pa += 2*PI;
+	}
+	return (0);
+}
+
 int	key_hook(int keycode, t_window *window)
 {
 	events event;
@@ -75,9 +99,10 @@ int	key_hook(int keycode, t_window *window)
 
 	ret = 0;
 	// mlx_clear_window(window->mlx, window->window);
-	event = get_event(keycode);
+	event = get_event(keycode, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
+	handle_mouse(window);
 	// draw_map(window);
 	rays3D_cast(window);
 	ret = render3d(window);

@@ -72,14 +72,12 @@ void	graphic_management(t_window *window)
 	    fprintf(stderr, "Failed to get image data address.\n");
 	    exit(EXIT_FAILURE);
 	}
-    key_hook(6, window, 1);
+    key_hook(6, window);
 	// mouse_hook(1, window);
 	// mlx_key_hook(window->window, key_hook, window);
     // mlx_loop_hook(window->mlx, put_img, window);
 	// mlx_mouse_get_pos(window->mlx, window->window, (int)&window->player_x, (int)&window->player_y);
 	// mlx_mouse_hook(window->window, mouse_hook, window);
-	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
-	printf("button: 0, x: %d, y: %d\n", window->mouse_x ,window->mouse_y);
 	mlx_hook(window->window, 02, 1L<<0, key_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);

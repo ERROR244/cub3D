@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/09/02 21:10:36 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:26:32 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void    dda_for_line(double X0, double Y0, double X1, double Y1, t_window *windo
 // events
 int	    key_hook(int keycode, t_window *window);
 int     handle_event(events event, t_window *window);
-events  get_event(int keycode);
+events  get_event(int keycode, t_window *window);
 
 
 
