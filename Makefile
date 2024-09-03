@@ -53,7 +53,7 @@ re:		fclean all
 push :
 	@make fclean
 	@git add .
-	@git commit -m "try to get x and y of mouse"
+	@git commit -m "mouse done ??"
 	@git push origin Sfayga
 
 .SECONDARY : ${OBJM}
