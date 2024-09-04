@@ -12,6 +12,19 @@
 
 #include "../include/cub.h"
 
+orientation get_sdir(char c)
+{
+	if (c == 'N')
+		return (North);
+	if (c == 'S')
+		return (South);
+	if (c == 'E')
+		return (East);
+	if (c == 'W')
+		return (West);
+	return (None);
+}
+
 void	check_characters(char **map, t_window *window)
 {
 	int	i;
@@ -25,11 +38,15 @@ void	check_characters(char **map, t_window *window)
 		while (map[i][j])
 		{
 			if (map[i][j] != '1' && map[i][j] != '0' &&
-					map[i][j] != 'N' && map[i][j] != ' ')
+					map[i][j] != 'N' && map[i][j] != 'S' &&
+					map[i][j] != 'E' && map[i][j] != 'W' &&
+					map[i][j] != ' ' && map[i][j] != 'D')
 				the_map_is_invalid();
-			if (map[i][j] == 'N')
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W')
 			{
+				window->spawning_dir = get_sdir(map[i][j]);
 				k++;
+				map[i][j] = 'P';
 				window->player_x = j * window->TILE_SIZE;
 				window->player_y = i * window->TILE_SIZE;
 			}
@@ -44,67 +61,67 @@ void	check_characters(char **map, t_window *window)
 		the_map_is_invalid();
 }
 
-int longest_line_size_func(char **map)
-{
-	int i;
-	int size;
-	int line_size;
+// int longest_line_size_func(char **map)
+// {
+// 	int i;
+// 	int size;
+// 	int line_size;
+//
+// 	size = -1;
+// 	i = 0;
+// 	while (map[i])
+// 	{
+// 		line_size = ft_strlen(map[i]);
+// 		if (size < line_size)
+// 			size = line_size;
+// 		i++;
+// 	}
+// 	return (size);
+// }
+//
+// char	*get_line_bigger(char *line, int size)
+// {
+// 	char	*ret_line;
+// 	char	c;
+// 	int		i;
+//
+// 	i = 0;
+// 	ret_line = malloc(sizeof(char) * (size + 1));
+// 	while (line[i])
+// 	{
+// 		ret_line[i] = line[i];
+// 		c = line[i];
+// 		i++;
+// 	}
+// 	while (i < size)
+// 	{
+// 		ret_line[i] = c;
+// 		i++;
+// 	}
+// 	ret_line[i] = '\0';
+// 	return (ret_line);
+// }
 
-	size = -1;
-	i = 0;
-	while (map[i])
-	{
-		line_size = ft_strlen(map[i]);
-		if (size < line_size)
-			size = line_size;
-		i++;
-	}
-	return (size);
-}
-
-char	*get_line_bigger(char *line, int size)
-{
-	char	*ret_line;
-	char	c;
-	int		i;
-
-	i = 0;
-	ret_line = malloc(sizeof(char) * (size + 1));
-	while (line[i])
-	{
-		ret_line[i] = line[i];
-		c = line[i];
-		i++;
-	}
-	while (i < size)
-	{
-		ret_line[i] = c;
-		i++;
-	}
-	ret_line[i] = '\0';
-	return (ret_line);
-}
-
-char **get_map_updated(char **ptr)
-{
-	char	**map;
-	size_t	longest_line_size;
-	int		i;
-
-	i = 0;
-	longest_line_size = longest_line_size_func(ptr);
-	map = malloc(sizeof(char *) * (array_size(ptr) + 1));
-	while (ptr[i])
-	{
-		if (ft_strlen(ptr[i]) < longest_line_size)
-			map[i] = get_line_bigger(ptr[i], longest_line_size);
-		else
-			map[i] = ft_strdup(ptr[i]);
-		i++;
-	}
-	map[i] = NULL;
-	return (map);
-}
+// char **get_map_updated(char **ptr)
+// {
+// 	char	**map;
+// 	size_t	longest_line_size;
+// 	int		i;
+//
+// 	i = 0;
+// 	longest_line_size = longest_line_size_func(ptr);
+// 	map = malloc(sizeof(char *) * (array_size(ptr) + 1));
+// 	while (ptr[i])
+// 	{
+// 		if (ft_strlen(ptr[i]) < longest_line_size)
+// 			map[i] = get_line_bigger(ptr[i], longest_line_size);
+// 		else
+// 			map[i] = ft_strdup(ptr[i]);
+// 		i++;
+// 	}
+// 	map[i] = NULL;
+// 	return (map);
+// }
 
 void	is_the_map_surrounded_by_walls(char **ptr)
 {
@@ -121,12 +138,12 @@ void	is_the_map_surrounded_by_walls(char **ptr)
 		y = 0;
 		while (map[x][y])
 		{
-			if ((map[x][y] == '0' || map[x][y] == 'N') &&
+			if ((map[x][y] == '0' || map[x][y] == 'N' || map[x][y] == 'D') &&
 					surrounded_with_only_spaces_and_walls(map, x, y, lines) == false)
 				the_map_is_invalid();
 			y++;
 		}
 		x++;
 	}
-	free_and_check(map);
+	check_map_end(map);
 }

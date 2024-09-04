@@ -28,26 +28,41 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
     }
 	return (0);
 }
-// int put_img(t_window *window)
-// {
-//     int ret;
-//
-//     ret = 0;
-//     mlx_clear_window(window->mlx, window->window);
-//     draw_mini_map(window);
-//     ret = render3d(window);
-//
-// 	// if (window->update_waidow == true)
-// 		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-//     return (ret);
-// }
+int put_img(t_window *window)
+{
+    int ret;
+
+    ret = 0;
+	rays3D_cast(window);
+    ret = render3d(window);
+    draw_mini_map(window);
+
+	if (window->update_waidow == true) {
+        mlx_clear_window(window->mlx, window->window);
+		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+    }
+    window->update_waidow = false;
+    return (ret);
+}
+
+double get_spawninig_orientation(orientation ori)
+{
+    double pa;
+
+    pa = 0.0;
+    if (ori == North)
+        pa = 3*PI/2;
+    else if (ori == South)
+        pa = PI/2;
+    else if (ori == West)
+        pa = PI;
+    return (pa);
+}
 
 void	graphic_management(t_window *window)
 {
-	window->mouse_x = 0;
-	window->mouse_y = 0;
 	window->minimap = 0.5;
-	window->pa = PI/2;
+	window->pa = get_spawninig_orientation(window->spawning_dir);
 	window->wall_wigth = 1;
 	window->window_width = 1400;
 	window->window_hight = 900;
@@ -72,11 +87,11 @@ void	graphic_management(t_window *window)
 	    fprintf(stderr, "Failed to get image data address.\n");
 	    exit(EXIT_FAILURE);
 	}
-    key_hook(6, window);
-	// mouse_hook(1, window);
-	// mlx_key_hook(window->window, key_hook, window);
-    // mlx_loop_hook(window->mlx, put_img, window);
-	mlx_hook(window->window, 02, 1L<<0, key_hook, window);
+    // mlx_key_hook(window->window, key_hook, window);
+    put_img(window);
+    mlx_loop_hook(window->mlx, put_img, window);
+    mlx_hook(window->window, 02, 1L<<0, key_hook, window);
+    // mlx_hook(window->window, 6, 1L<<6, kkey_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);
 	// draw_2D_map(window);

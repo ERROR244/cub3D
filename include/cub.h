@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/09/02 21:26:32 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:22:01 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,18 @@
 # include <errno.h>
 
 typedef enum {
+    North, South,
+    East, West,
+    None
+}   orientation;
+
+typedef enum {
     moveForWard, moveBackward,
     moveRight, moveLeft,
     escExit, viewUp,
     viewDown, viewRight,
-    viewLeft,none
+    viewLeft, OpenClose,
+    none
 }   events;
 
 typedef struct s_map
@@ -111,12 +118,14 @@ typedef struct window
     double  xstep;
     double  ystep;
 
-	int		mouse_x;
-	int		mouse_y;
+    int		mouse_x;
+    int		mouse_y;
 
     int TILE_SIZE;
 
     bool    update_waidow;
+
+    orientation spawning_dir;
 
     int     i;
     int     k;
@@ -150,7 +159,7 @@ int     array_size(char **str);
 void	check_characters(char **map, t_window *window);
 void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
-void    free_and_check(char **map);
+void    check_map_end(char **map);
 char    **get_map_updated(char **ptr);
 
 // graphic_management
@@ -163,6 +172,7 @@ int     render3d(t_window *window);
 bool    haswallAt(long x, long y, t_window *window);
 int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
 void    clear_image(t_window *window, int width, int height, int color);
+int	    kkey_hook(int keycode, t_window *window);
 
 // minimap
 int     draw_mini_map(t_window *window);
@@ -178,7 +188,7 @@ void    dda_for_line(double X0, double Y0, double X1, double Y1, t_window *windo
 // events
 int	    key_hook(int keycode, t_window *window);
 int     handle_event(events event, t_window *window);
-events  get_event(int keycode, t_window *window);
+events  get_event(int keycode);
 
 
 

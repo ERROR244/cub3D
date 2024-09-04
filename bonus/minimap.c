@@ -21,11 +21,18 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 	return (ret);
 }
 
+int ft_abs(int x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
+
 int draw_mini_map(t_window *window)
 {
 	char **map;
-	double playerx = (double)(window->player_x / 64);
-	double playery = (double)(window->player_y / 64);
+	double playerx = (double)(window->player_x / window->TILE_SIZE);
+	double playery = (double)(window->player_y / window->TILE_SIZE);
 	int i;
 	int j;
 	int x = 0;
@@ -75,9 +82,13 @@ int draw_mini_map(t_window *window)
 		y = 0;
 		while (map[i][j] && j < x_end && ret == 0)
 		{
-			if (map[i][j] == '0' || map[i][j] == 'N')
+			if (map[i][j] == '0' || map[i][j] == 'P')
 				ret = draw_mini_squar(window, x, y, 0x0000FF, 16);
-			else if (map[i][j] == '1' || map[i][j] == ' ' || map[i][j] == '\0' )
+			else if (map[i][j] == 'D')
+				ret = draw_mini_squar(window, x, y, 0x00FF00, 16);
+			else if (map[i][j] == 'A')
+				ret = draw_mini_squar(window, x, y, 0xFF0000, 16);
+			else if (map[i][j] == '1' || map[i][j] == ' ' || map[i][j] == '\0')
 				ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
 			j++;
 			if (map[i][j] == '\0' || map[i][j] == '\n')
@@ -114,13 +125,19 @@ int draw_mini_map(t_window *window)
 		}
 	}
 	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 6);
+	dda_for_line(	((playerx * 32) + 3),
+					((playery * 32) + 6),
+					((playerx * 32) + 3) + cos(window->pa) * 20,
+					((playery * 32) + 6) + sin(window->pa) * 20,
+					window
+				);			// direction
 
     // for (int i = 0; i < window->rays; i++)
     // {
     //     dda_for_line(	(playerx*16),
 	// 					(playery*16),
-	// 					(window->ray[i].ray_hit_x / 64)*16,
-	// 					(window->ray[i].ray_hit_y / 64)*16,
+	// 					(window->ray[i].ray_hit_x / window->TILE_SIZE)*16,
+	// 					(window->ray[i].ray_hit_y / window->TILE_SIZE)*16,
 	// 					window
 	// 				);
     // }
