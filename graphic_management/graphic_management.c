@@ -76,8 +76,6 @@ void	graphic_management(t_window *window)
 	// mouse_hook(1, window);
 	// mlx_key_hook(window->window, key_hook, window);
     // mlx_loop_hook(window->mlx, put_img, window);
-	// mlx_mouse_get_pos(window->mlx, window->window, (int)&window->player_x, (int)&window->player_y);
-	// mlx_mouse_hook(window->window, mouse_hook, window);
 	mlx_hook(window->window, 02, 1L<<0, key_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);

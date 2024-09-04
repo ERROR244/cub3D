@@ -21,13 +21,6 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 	return (ret);
 }
 
-int ft_abs(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
 int draw_mini_map(t_window *window)
 {
 	char **map;

@@ -70,22 +70,31 @@ int handle_event2(events event, t_window *window)
 		close_window(window);
 	return (0);
 }
+int ft_abs(int x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
 
 int handle_mouse(t_window *window)
 {
+	int x = 0;
+	int y = 0;
+	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
+	int hold = x - window->mouse_x;
 	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
-	printf("x = %d, y = %d\n", window->mouse_x, window->mouse_y);
-	if (window->mouse_x > 1280)
+	if (hold > 0)
 	{
 		window->update_waidow = true;
-		window->pa += 0.06;
+		window->pa += ft_abs(hold) * 0.002;
 		if (window->pa > 2*PI)
 			window->pa -= 2*PI;
 	}
-	else if (window->mouse_x < 640)
+	else if (hold < 0)
 	{
 		window->update_waidow = true;
-		window->pa -= 0.06;
+		window->pa -= ft_abs(hold) * 0.002;
 		if (window->pa < 0)
 			window->pa += 2*PI;
 	}
@@ -99,10 +108,10 @@ int	key_hook(int keycode, t_window *window)
 
 	ret = 0;
 	// mlx_clear_window(window->mlx, window->window);
+	handle_mouse(window);
 	event = get_event(keycode, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
-	// handle_mouse(window);
 	// draw_map(window);
 	rays3D_cast(window);
 	ret = render3d(window);
