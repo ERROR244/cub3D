@@ -14,7 +14,8 @@ bool haswallAt(long x, long y, t_window *window)
 	if (j != mapGridIndexX)
 		return (true);
     return (window->map->map[mapGridIndexY][mapGridIndexX] != '0' &&
-			window->map->map[mapGridIndexY][mapGridIndexX] != 'N');
+			window->map->map[mapGridIndexY][mapGridIndexX] != 'P' &&
+			window->map->map[mapGridIndexY][mapGridIndexX] != 'A');
 }
 
 double normalizeAngle(double angle)

@@ -24,6 +24,8 @@ events get_event(int keycode)
 		event = viewLeft;
 	else if (keycode == 65307)
 		event = escExit;
+	else if (keycode == 32)
+		event = OpenClose;
 	return (event);
 }
 
@@ -68,16 +70,62 @@ int handle_event2(events event, t_window *window)
 	return (0);
 }
 
+int handle_event3(events event, t_window *window)
+{
+	int x;
+	int y;
+
+	if (event == OpenClose)
+	{
+		x = (int)(window->player_x / window->TILE_SIZE);
+		y = (int)(window->player_y / window->TILE_SIZE);
+		printf("%d %d \n", x, y);
+		printf("window: %p, map: %p, map->map: %p\n", (void*)window, (void*)window->map, (void*)window->map->map);
+		// // char **map = window->map->map;
+		// if (window->map->map[x+1][y] && (window->map->map[x+1][y] == 'D' || window->map->map[x+1][y] == 'A'))
+		// {
+		// 	if (window->map->map[x+1][y] == 'D')
+		// 		window->map->map[x+1][y] = 'A';
+		// 	else
+		// 		window->map->map[x+1][y] = 'D';
+		// }
+		// if (window->map->map[x][y+1] && (window->map->map[x][y+1] == 'D' || window->map->map[x][y+1] == 'A'))
+		// {
+		// 	if (window->map->map[x][y+1] == 'D')
+		// 		window->map->map[x][y+1] = 'A';
+		// 	else
+		// 		window->map->map[x][y+1] = 'D';
+		// }
+		// if (x - 1 >= 0 && (window->map->map[x-1][y] == 'D' || window->map->map[x-1][y] == 'A'))
+		// {
+		// 	if (window->map->map[x-1][y] == 'D')
+		// 		window->map->map[x-1][y] = 'A';
+		// 	else
+		// 		window->map->map[x-1][y] = 'D';
+		// }
+		// if (y - 1 >= 0 && (window->map->map[x][y-1] == 'D' || window->map->map[x][y-1] == 'A'))
+		// {
+		// 	if (window->map->map[x][y-1] == 'D')
+		// 		window->map->map[x][y-1] = 'A';
+		// 	else
+		// 		window->map->map[x][y-1] = 'D';
+		// }
+	}
+	return (0);
+}
+
 int	key_hook(int keycode, t_window *window)
 {
 	events event;
 	int ret;
 
 	ret = 0;
+	// printf("%d\n", keycode);
 	// mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
+	handle_event3(event, window);
 	// draw_map(window);
 	// rays3D_cast(window);
 	// ret = render3d(window);

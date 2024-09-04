@@ -35,11 +35,18 @@
 # include <errno.h>
 
 typedef enum {
+    North, South,
+    East, West,
+    None
+}   orientation;
+
+typedef enum {
     moveForWard, moveBackward,
     moveRight, moveLeft,
     escExit, viewUp,
     viewDown, viewRight,
-    viewLeft,none
+    viewLeft, OpenClose,
+    none
 }   events;
 
 typedef struct s_map
@@ -115,6 +122,8 @@ typedef struct window
 
     bool    update_waidow;
 
+    orientation spawning_dir;
+
     int     i;
     int     k;
 }			t_window;
@@ -147,7 +156,7 @@ int     array_size(char **str);
 void	check_characters(char **map, t_window *window);
 void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
-void    free_and_check(char **map);
+void    check_map_end(char **map);
 char    **get_map_updated(char **ptr);
 
 // graphic_management

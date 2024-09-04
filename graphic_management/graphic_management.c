@@ -45,10 +45,24 @@ int put_img(t_window *window)
     return (ret);
 }
 
+double get_spawninig_orientation(orientation ori)
+{
+    double pa;
+
+    pa = 0.0;
+    if (ori == North)
+        pa = 3*PI/2;
+    else if (ori == South)
+        pa = PI/2;
+    else if (ori == West)
+        pa = PI;
+    return (pa);
+}
+
 void	graphic_management(t_window *window)
 {
 	window->minimap = 0.5;
-	window->pa = PI/2;
+	window->pa = get_spawninig_orientation(window->spawning_dir);
 	window->wall_wigth = 1;
 	window->window_width = 1400;
 	window->window_hight = 900;
@@ -73,7 +87,6 @@ void	graphic_management(t_window *window)
 	    fprintf(stderr, "Failed to get image data address.\n");
 	    exit(EXIT_FAILURE);
 	}
-
     // mlx_key_hook(window->window, key_hook, window);
     put_img(window);
     mlx_loop_hook(window->mlx, put_img, window);

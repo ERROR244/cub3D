@@ -23,4 +23,5 @@ void	map_check(t_map *map, char **str, t_window *window)
 	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
 	free_array(str);
+	str = NULL;
 }

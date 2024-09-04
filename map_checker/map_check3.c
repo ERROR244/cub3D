@@ -16,7 +16,7 @@
 int	array_size(char **str)
 {
 	int i;
-	
+
 	i = 0;
 	while (str[i])
 		i++;
@@ -64,6 +64,7 @@ int *get_color(char *str)
     color[1] = ft_atoi(ptr[1]);
     color[2] = ft_atoi(ptr[2]);
     free_array(ptr);
+	ptr = NULL;
 	return (color);
 }
 

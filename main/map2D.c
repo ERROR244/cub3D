@@ -17,7 +17,7 @@ void dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window)
     double Y = Y0;
     for (int i = 0; i <= steps; i++)
 	{
-        mlx_pixel_put(window->mlx, window->window, floor(window->minimap*(X)), floor(window->minimap*(Y)), 0xFF0000);
+        mlx_pixel_put(window->mlx, window->window, floor(window->minimap*(X)), floor(window->minimap*(Y)), 0x000000);
         X += Xinc;
         Y += Yinc;
     }
@@ -81,7 +81,7 @@ int draw_map(t_window *window)
 				ret = draw_squar(window, x, y, 0xFFFFFF);
 			else if (map[i][j] == '1' || map[i][j] == ' ')
 				ret = draw_squar(window, x, y, 0x0000FF);
-			else if (map[i][j] == 'N')
+			else if (map[i][j] == 'P')
 				ret = draw_squar(window, x, y, 0xFFFFFF);
 			if (map[i][j + 1] == '\0')
 			{
