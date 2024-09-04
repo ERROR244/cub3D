@@ -70,46 +70,50 @@ int handle_event2(events event, t_window *window)
 	return (0);
 }
 
-int handle_event3(events event, t_window *window)
+int handle_event0(events event, t_window *window)
 {
-	int x;
-	int y;
+	int i;
+	int j;
 
 	if (event == OpenClose)
 	{
-		x = (int)(window->player_x / window->TILE_SIZE);
-		y = (int)(window->player_y / window->TILE_SIZE);
-		printf("%d %d \n", x, y);
-		printf("window: %p, map: %p, map->map: %p\n", (void*)window, (void*)window->map, (void*)window->map->map);
-		// // char **map = window->map->map;
-		// if (window->map->map[x+1][y] && (window->map->map[x+1][y] == 'D' || window->map->map[x+1][y] == 'A'))
-		// {
-		// 	if (window->map->map[x+1][y] == 'D')
-		// 		window->map->map[x+1][y] = 'A';
-		// 	else
-		// 		window->map->map[x+1][y] = 'D';
-		// }
-		// if (window->map->map[x][y+1] && (window->map->map[x][y+1] == 'D' || window->map->map[x][y+1] == 'A'))
-		// {
-		// 	if (window->map->map[x][y+1] == 'D')
-		// 		window->map->map[x][y+1] = 'A';
-		// 	else
-		// 		window->map->map[x][y+1] = 'D';
-		// }
-		// if (x - 1 >= 0 && (window->map->map[x-1][y] == 'D' || window->map->map[x-1][y] == 'A'))
-		// {
-		// 	if (window->map->map[x-1][y] == 'D')
-		// 		window->map->map[x-1][y] = 'A';
-		// 	else
-		// 		window->map->map[x-1][y] = 'D';
-		// }
-		// if (y - 1 >= 0 && (window->map->map[x][y-1] == 'D' || window->map->map[x][y-1] == 'A'))
-		// {
-		// 	if (window->map->map[x][y-1] == 'D')
-		// 		window->map->map[x][y-1] = 'A';
-		// 	else
-		// 		window->map->map[x][y-1] = 'D';
-		// }
+		j = (int)(window->player_x / window->TILE_SIZE);
+		i = (int)(window->player_y / window->TILE_SIZE);
+		window->update_waidow = true;
+		// printf("%d %d \n", x, y);
+		// printf("window: %p, map: %p, map->map: %p\n", (void*)window, (void*)window->map, (void*)window->map->map);
+		// char **map = window->map->map;
+		if (window->map->map[i+1][j] && (window->map->map[i+1][j] == 'D' || window->map->map[i+1][j] == 'A'))
+		{
+			if (window->map->map[i+1][j] == 'D')
+				window->map->map[i+1][j] = 'A';
+			else
+				window->map->map[i+1][j] = 'D';
+		}
+		else if (window->map->map[i][j+1] && (window->map->map[i][j+1] == 'D' || window->map->map[i][j+1] == 'A'))
+		{
+			if (window->map->map[i][j+1] == 'D')
+				window->map->map[i][j+1] = 'A';
+			else
+				window->map->map[i][j+1] = 'D';
+		}
+		else if (i - 1 >= 0 && (window->map->map[i-1][j] == 'D' || window->map->map[i-1][j] == 'A'))
+		{
+			if (window->map->map[i-1][j] == 'D')
+				window->map->map[i-1][j] = 'A';
+			else
+				window->map->map[i-1][j] = 'D';
+		}
+		else if (j - 1 >= 0 && (window->map->map[i][j-1] == 'D' || window->map->map[i][j-1] == 'A'))
+		{
+			if (window->map->map[i][j-1] == 'D')
+				window->map->map[i][j-1] = 'A';
+			else
+				window->map->map[i][j-1] = 'D';
+		}
+		else
+			window->update_waidow = true;
+		// print_array(window->map->map);
 	}
 	return (0);
 }
@@ -123,9 +127,9 @@ int	key_hook(int keycode, t_window *window)
 	// printf("%d\n", keycode);
 	// mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
+	handle_event0(event, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
-	handle_event3(event, window);
 	// draw_map(window);
 	// rays3D_cast(window);
 	// ret = render3d(window);
