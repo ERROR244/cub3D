@@ -90,7 +90,8 @@ void	graphic_management(t_window *window)
     // mlx_key_hook(window->window, key_hook, window);
     put_img(window);
     mlx_loop_hook(window->mlx, put_img, window);
-	mlx_hook(window->window, 02, 1L<<0, key_hook, window);
+    mlx_hook(window->window, 02, 1L<<0, key_hook, window);
+    // mlx_hook(window->window, 6, 1L<<6, kkey_hook, window);
 	mlx_hook(window->window, 17, 0L, close_window, window);
     mlx_loop(window->mlx);
 	// draw_2D_map(window);

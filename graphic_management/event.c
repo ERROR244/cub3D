@@ -38,8 +38,8 @@ int handle_event1(events event, t_window *window, int x, int y)
 		dir = 1;
 	else if (event == moveBackward)
 		dir = -1;
-	x = (window->player_x + (cos(window->pa) * 6 * dir));
-	y = (window->player_y + (sin(window->pa) * 6 * dir));
+	x = (window->player_x + (cos(window->pa) * 3 * dir));
+	y = (window->player_y + (sin(window->pa) * 3 * dir));
 	if (!haswallAt(x, y, window) && dir != 0)
 	{
 		window->update_waidow = true;
@@ -118,6 +118,38 @@ int handle_event0(events event, t_window *window)
 	return (0);
 }
 
+int fft_abs(int x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
+
+int handle_mouse(t_window *window)
+{
+	int x = 0;
+	int y = 0;
+	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
+	int hold = x - window->mouse_x;
+	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
+	if (hold > 0)
+	{
+		window->update_waidow = true;
+		window->pa += fft_abs(hold * 4) * 0.002;
+		if (window->pa > 2*PI)
+			window->pa -= 2*PI;
+	}
+	else if (hold < 0)
+	{
+		window->update_waidow = true;
+		window->pa -= fft_abs(hold * 4) * 0.002;
+		if (window->pa < 0)
+			window->pa += 2*PI;
+	}
+	return (0);
+}
+
+
 int	key_hook(int keycode, t_window *window)
 {
 	events event;
@@ -130,6 +162,7 @@ int	key_hook(int keycode, t_window *window)
 	handle_event0(event, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
+	handle_mouse(window);
 	// draw_map(window);
 	// rays3D_cast(window);
 	// ret = render3d(window);
@@ -140,3 +173,27 @@ int	key_hook(int keycode, t_window *window)
 	// window->update_waidow = false;
 	return (ret);
 }
+
+// int	kkey_hook(int keycode, t_window *window)
+// {
+// 	events event;
+// 	int ret;
+//
+// 	ret = 0;
+// 	// printf("%d\n", keycode);
+// 	// mlx_clear_window(window->mlx, window->window);
+// 	event = get_event(keycode);
+// 	// handle_event0(event, window);
+// 	// handle_event1(event, window, 0, 0);
+// 	// handle_event2(event, window);
+// 	// handle_mouse(window);
+// 	// draw_map(window);
+// 	// rays3D_cast(window);
+// 	// ret = render3d(window);
+// 	// draw_mini_map(window);
+// 	// windoww->img->img = window->img->tmp_img;
+// 	// if (window->update_waidow == true)
+// 	// 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+// 	// window->update_waidow = false;
+// 	return (ret);
+// }

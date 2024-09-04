@@ -118,6 +118,9 @@ typedef struct window
     double  xstep;
     double  ystep;
 
+    int		mouse_x;
+    int		mouse_y;
+
     int TILE_SIZE;
 
     bool    update_waidow;
@@ -169,6 +172,7 @@ int     render3d(t_window *window);
 bool    haswallAt(long x, long y, t_window *window);
 int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
 void    clear_image(t_window *window, int width, int height, int color);
+int	    kkey_hook(int keycode, t_window *window);
 
 // minimap
 int     draw_mini_map(t_window *window);
