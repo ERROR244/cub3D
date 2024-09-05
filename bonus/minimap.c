@@ -85,9 +85,9 @@ int draw_mini_map(t_window *window)
 			if (map[i][j] == '0' || map[i][j] == 'P')
 				ret = draw_mini_squar(window, x, y, 0x0000FF, 16);
 			else if (map[i][j] == 'D')
-				ret = draw_mini_squar(window, x, y, 0x00FF00, 16);
-			else if (map[i][j] == 'A')
 				ret = draw_mini_squar(window, x, y, 0xFF0000, 16);
+			else if (map[i][j] == 'A')
+				ret = draw_mini_squar(window, x, y, 0x00FF00, 16);
 			else if (map[i][j] == '1' || map[i][j] == ' ' || map[i][j] == '\0')
 				ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
 			j++;
@@ -131,7 +131,6 @@ int draw_mini_map(t_window *window)
 					((playery * 32) + 6) + sin(window->pa) * 20,
 					window
 				);			// direction
-
     // for (int i = 0; i < window->rays; i++)
     // {
     //     dda_for_line(	(playerx*16),

@@ -76,9 +76,7 @@ int handle_event1(events event, t_window *window, int x, int y)
 		window->update_waidow = true;
 		if (window->ray[window->rays/2].is_ray_looking_right)
 		{
-			// printf("%f \n", window->pa);
 			diff = (window->pa > 5) ? window->pa - TWO_PI : window->pa;
-			printf("%f \n", diff);
 			if (diff < 0 && !haswallAt(x-10, y+(diff * 1.5), window))
 				window->player_y += (diff * 1.5);
 			else if (diff > 0 && !haswallAt(x-10, y+(diff * 1.5), window))
@@ -88,9 +86,7 @@ int handle_event1(events event, t_window *window, int x, int y)
 		}
 		else
 		{
-			// printf("%f \n", window->pa);
 			diff = -1 * (window->pa - PI);
-			printf("%f \n", diff);
 			if (diff < 0 && !haswallAt(x+10, y+(diff * 1.5), window))
 				window->player_y += (diff * 1.5);
 			else if (diff > 0 && !haswallAt(x+10, y+(diff * 1.5), window))
@@ -123,6 +119,14 @@ int handle_event2(events event, t_window *window)
 	return (0);
 }
 
+void open_close_d(char *c)
+{
+	if (*c == 'D')
+		*c = 'A';
+	else
+		*c = 'D';
+}
+
 int handle_event0(events event, t_window *window)
 {
 	int i;
@@ -130,71 +134,41 @@ int handle_event0(events event, t_window *window)
 
 	if (event == OpenClose)
 	{
+		window->update_waidow = true;
 		j = (int)(window->player_x / window->TILE_SIZE);
 		i = (int)(window->player_y / window->TILE_SIZE);
-		window->update_waidow = true;
 		if (window->map->map[i+1][j] && (window->map->map[i+1][j] == 'D' || window->map->map[i+1][j] == 'A'))
-		{
-			if (window->map->map[i+1][j] == 'D')
-				window->map->map[i+1][j] = 'A';
-			else
-				window->map->map[i+1][j] = 'D';
-		}
+			open_close_d(&window->map->map[i+1][j]);
 		else if (window->map->map[i][j+1] && (window->map->map[i][j+1] == 'D' || window->map->map[i][j+1] == 'A'))
-		{
-			if (window->map->map[i][j+1] == 'D')
-				window->map->map[i][j+1] = 'A';
-			else
-				window->map->map[i][j+1] = 'D';
-		}
+			open_close_d(&window->map->map[i][j+1]);
 		else if (i - 1 >= 0 && (window->map->map[i-1][j] == 'D' || window->map->map[i-1][j] == 'A'))
-		{
-			if (window->map->map[i-1][j] == 'D')
-				window->map->map[i-1][j] = 'A';
-			else
-				window->map->map[i-1][j] = 'D';
-		}
+			open_close_d(&window->map->map[i-1][j]);
 		else if (j - 1 >= 0 && (window->map->map[i][j-1] == 'D' || window->map->map[i][j-1] == 'A'))
-		{
-			if (window->map->map[i][j-1] == 'D')
-				window->map->map[i][j-1] = 'A';
-			else
-				window->map->map[i][j-1] = 'D';
-		}
+			open_close_d(&window->map->map[i][j-1]);
 		else
-			window->update_waidow = true;
+			window->update_waidow = false;
 	}
 	return (0);
 }
 
-int fft_abs(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
 int handle_mouse(t_window *window)
 {
-	int x = 0;
-	int y = 0;
+	int x;
+	int y;
+
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
-	int hold = x - window->mouse_x;
+	int diff = window->mouse_x - x;
+	if (x > 0 && x < window->window_width && y > 0 && y < window->window_hight)
+	{
+		window->update_waidow_for_mouse = true;
+		if (diff > 0)
+			window->pa += diff * 0.005;
+		else if (diff < 0)
+			window->pa += diff * 0.005;
+		else
+			window->update_waidow_for_mouse = false;
+	}
 	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
-	if (hold > 0)
-	{
-		window->update_waidow = true;
-		window->pa += fft_abs(hold * 4) * 0.002;
-		if (window->pa > 2*PI)
-			window->pa -= 2*PI;
-	}
-	else if (hold < 0)
-	{
-		window->update_waidow = true;
-		window->pa -= fft_abs(hold * 4) * 0.002;
-		if (window->pa < 0)
-			window->pa += 2*PI;
-	}
 	return (0);
 }
 
@@ -202,25 +176,13 @@ int handle_mouse(t_window *window)
 int	key_hook(int keycode, t_window *window)
 {
 	events event;
-	int ret;
 
-	ret = 0;
-	// printf("%d\n", keycode);
-	// mlx_clear_window(window->mlx, window->window);
 	event = get_event(keycode);
 	handle_event0(event, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
 	// handle_mouse(window);
-	// draw_map(window);
-	// rays3D_cast(window);
-	// ret = render3d(window);
-	// draw_mini_map(window);
-	// windoww->img->img = window->img->tmp_img;
-	// if (window->update_waidow == true)
-	// 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-	// window->update_waidow = false;
-	return (ret);
+	return (0);
 }
 
 // int	kkey_hook(int keycode, t_window *window)
@@ -235,7 +197,6 @@ int	key_hook(int keycode, t_window *window)
 // 	// handle_event0(event, window);
 // 	// handle_event1(event, window, 0, 0);
 // 	// handle_event2(event, window);
-// 	// handle_mouse(window);
 // 	// draw_map(window);
 // 	// rays3D_cast(window);
 // 	// ret = render3d(window);

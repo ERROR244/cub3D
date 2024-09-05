@@ -124,6 +124,7 @@ typedef struct window
     int TILE_SIZE;
 
     bool    update_waidow;
+    bool    update_waidow_for_mouse;
 
     orientation spawning_dir;
 
@@ -172,7 +173,6 @@ int     render3d(t_window *window);
 bool    haswallAt(long x, long y, t_window *window);
 int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
 void    clear_image(t_window *window, int width, int height, int color);
-int	    kkey_hook(int keycode, t_window *window);
 
 // minimap
 int     draw_mini_map(t_window *window);
@@ -186,9 +186,10 @@ void    dda_for_line(double X0, double Y0, double X1, double Y1, t_window *windo
 
 
 // events
+events  get_event(int keycode);
 int	    key_hook(int keycode, t_window *window);
 int     handle_event(events event, t_window *window);
-events  get_event(int keycode);
+int     handle_mouse(t_window *window);
 
 
 

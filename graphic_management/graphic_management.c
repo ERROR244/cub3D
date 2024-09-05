@@ -33,15 +33,17 @@ int put_img(t_window *window)
     int ret;
 
     ret = 0;
+    handle_mouse(window);
 	rays3D_cast(window);
     ret = render3d(window);
     draw_mini_map(window);
 
-	if (window->update_waidow == true) {
+	if (window->update_waidow == true || window->update_waidow_for_mouse == true) {
         mlx_clear_window(window->mlx, window->window);
 		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
     }
     window->update_waidow = false;
+    window->update_waidow_for_mouse = false;
     return (ret);
 }
 
@@ -66,7 +68,8 @@ void	graphic_management(t_window *window)
 	window->wall_wigth = 1;
 	window->window_width = 1400;
 	window->window_hight = 900;
-	window->update_waidow = true;
+    window->update_waidow = true;
+	window->update_waidow_for_mouse = true;
 	window->rays = window->window_width / window->wall_wigth;
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->window_width, window->window_hight, "cub3D");
