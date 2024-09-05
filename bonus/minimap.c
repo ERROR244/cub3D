@@ -124,7 +124,7 @@ int draw_mini_map(t_window *window)
 			k++;
 		}
 	}
-	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 6);
+	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0xF0F0F0, 6);
 	dda_for_line(	((playerx * 32) + 3),
 					((playery * 32) + 6),
 					((playerx * 32) + 3) + cos(window->pa) * 20,

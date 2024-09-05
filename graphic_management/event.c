@@ -129,22 +129,40 @@ int handle_mouse(t_window *window)
 {
 	int x = 0;
 	int y = 0;
+
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
-	int hold = x - window->mouse_x;
-	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
-	if (hold > 0)
+	if (x > 0 && y > 0 && y < 900)
 	{
-		window->update_waidow = true;
-		window->pa += fft_abs(hold * 4) * 0.002;
-		if (window->pa > 2*PI)
-			window->pa -= 2*PI;
+		int hold = x - window->mouse_x;
+		mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
+		if (hold > 0)
+		{
+			window->update_waidow = true;
+			window->pa += fft_abs(hold * 4) * 0.001;
+			if (window->pa > 2*PI)
+				window->pa -= 2*PI;
+		}
+		else if (hold < 0)
+		{
+			window->update_waidow = true;
+			window->pa -= fft_abs(hold * 4) * 0.001;
+			if (window->pa < 0)
+				window->pa += 2*PI;
+		}
 	}
-	else if (hold < 0)
+	if (x == 0)
 	{
 		window->update_waidow = true;
-		window->pa -= fft_abs(hold * 4) * 0.002;
+		window->pa -= 0.04;
 		if (window->pa < 0)
 			window->pa += 2*PI;
+	}
+	else if (x >= 1919)
+	{
+		window->update_waidow = true;
+		window->pa += 0.04;
+		if (window->pa < 0)
+			window->pa -= 2*PI;
 	}
 	return (0);
 }
@@ -162,7 +180,7 @@ int	key_hook(int keycode, t_window *window)
 	handle_event0(event, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
-	handle_mouse(window);
+	// handle_mouse(window);
 	// draw_map(window);
 	// rays3D_cast(window);
 	// ret = render3d(window);

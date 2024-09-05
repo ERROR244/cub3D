@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/08/05 12:22:01 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:25:06 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void    dda_for_line(double X0, double Y0, double X1, double Y1, t_window *windo
 int	    key_hook(int keycode, t_window *window);
 int     handle_event(events event, t_window *window);
 events  get_event(int keycode);
+int     handle_mouse(t_window *window);
 
 
 

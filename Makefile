@@ -53,7 +53,7 @@ re:		fclean all
 push :
 	@make fclean
 	@git add .
-	@git commit -m "merge"
+	@git commit -m "saaaaaaaaaaave"
 	@git push origin Sfayga
 
 .SECONDARY : ${OBJM}

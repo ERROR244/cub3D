@@ -36,6 +36,7 @@ int put_img(t_window *window)
 	rays3D_cast(window);
     ret = render3d(window);
     draw_mini_map(window);
+	handle_mouse(window);
 
 	if (window->update_waidow == true) {
         mlx_clear_window(window->mlx, window->window);
