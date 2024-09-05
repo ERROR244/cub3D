@@ -29,48 +29,68 @@ events get_event(int keycode)
 	return (event);
 }
 
-void handle_ver(t_window *window, int x, int y)
-{
-	int tmp;
-	double diff;
-
-	window->update_waidow = true;
-	tmp = 10;
-	if (window->ray[window->rays/2].is_ray_looking_up)
-		diff = window->pa - 3*PI/2;
-	else
-	{
-		tmp *= -1;
-		diff = -1 * (window->pa - PI/2);
-	}
-	if (diff < 0 && !haswallAt(x+(diff * 1.5), y+tmp, window))
-		window->player_x += (diff * 1.5);
-	else if (diff > 0 && !haswallAt(x+(diff * 1.5), y+tmp, window))
-		window->player_x += (diff * 1.5);
-	else
-		window->update_waidow = false;
-}
-
 void handle_hor(t_window *window, int x, int y)
 {
 	int tmp;
 	double diff;
 
 	window->update_waidow = true;
-	tmp = -10;
+	tmp = 16;
+	if (window->ray[window->rays/2].is_ray_looking_up)
+		diff = window->pa - 3*PI/2;
+	else
+	{
+		tmp *= -1;
+		diff = -1*(window->pa - PI/2);
+	}
+	if (!haswallAt((int)(x+(diff * 1.5)), y+tmp, window))
+		window->player_x += diff * 1.5;
+	else
+		window->update_waidow = false;
+}
+
+void handle_ver(t_window *window, int x, int y)
+{
+	int tmp;
+	double diff;
+
+	window->update_waidow = true;
+	tmp = -16;
 	if (window->ray[window->rays/2].is_ray_looking_right)
 		diff = (window->pa > 5) ? window->pa - TWO_PI : window->pa;
 	else
 	{
 		tmp *= -1;
-		diff = -1 * (window->pa - PI);
+		diff = -1*(window->pa - PI);
 	}
-	if (diff < 0 && !haswallAt(x+tmp, y+(diff * 1.5), window))
-		window->player_y += (diff * 1.5);
-	else if (diff > 0 && !haswallAt(x+tmp, y+(diff * 1.5), window))
-		window->player_y += (diff * 1.5);
+	if (!haswallAt(x+tmp, (int)(y+(diff * 1.5)), window))
+		window->player_y += diff * 1.5;
 	else
 		window->update_waidow = false;
+}
+
+int handle_event1(events event, t_window *window, int x, int y)
+{
+	int 	dir;
+
+	dir = 0;
+	if (event == moveForWard)
+	dir = 1;
+	else if (event == moveBackward)
+	dir = -1;
+	x = (window->player_x + (cos(window->pa) * 3 * dir));
+	y = (window->player_y + (sin(window->pa) * 3 * dir));
+	if (!haswallAt(x, y, window) && dir != 0)
+	{
+		window->update_waidow = true;
+		window->player_y = y;
+		window->player_x = x;
+	}
+	else if (dir != 0 && window->ray[window->rays/2].washitver == false)
+		handle_hor(window, x, y);
+	else if (dir != 0 && window->ray[window->rays/2].washitver == true)
+		handle_ver(window, x, y);
+	return (0);
 }
 
 void open_close_d(char *c)
@@ -102,30 +122,6 @@ int handle_event0(events event, t_window *window)
 		else
 			window->update_waidow = false;
 	}
-	return (0);
-}
-
-int handle_event1(events event, t_window *window, int x, int y)
-{
-	int 	dir;
-
-	dir = 0;
-	if (event == moveForWard)
-		dir = 1;
-	else if (event == moveBackward)
-		dir = -1;
-	x = (window->player_x + (cos(window->pa) * 3 * dir));
-	y = (window->player_y + (sin(window->pa) * 3 * dir));
-	if (!haswallAt(x, y, window) && dir != 0)
-	{
-		window->update_waidow = true;
-		window->player_y = y;
-		window->player_x = x;
-	}
-	else if (dir != 0 && window->ray[window->rays/2].washitver == false)
-		handle_ver(window, x, y);
-	else if (dir != 0 && window->ray[window->rays/2].washitver == true)
-		handle_hor(window, x, y);
 	return (0);
 }
 
@@ -167,6 +163,10 @@ int handle_mouse(t_window *window)
 			window->pa += diff * 0.005;
 		else
 			window->update_waidow_for_mouse = false;
+		if (window->pa < 0)
+			window->pa += 2*PI;
+		else if (window->pa > 2*PI)
+			window->pa -= 2*PI;
 	// }
 	return (0);
 }

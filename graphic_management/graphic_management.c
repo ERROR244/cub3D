@@ -33,15 +33,33 @@ int put_img(t_window *window)
     int ret;
 
     ret = 0;
-    handle_mouse(window);
 	rays3D_cast(window);
     ret = render3d(window);
     draw_mini_map(window);
+    handle_mouse(window);
 
-	// if (window->update_waidow == true || window->update_waidow_for_mouse == true) {
+	double playerx = (double)(window->player_x / window->TILE_SIZE);
+	double playery = (double)(window->player_y / window->TILE_SIZE);
+    int xx = (int)(playerx) - MINI_MAP_SIZE;
+	int yy = (int)(playery) - MINI_MAP_SIZE;
+    if (xx < 0)
+		xx = 0;
+	if (yy < 0)
+		yy = 0;
+	playerx -= xx;
+	playery -= yy;
+
+	dda_for_line(	((playerx * 32) + 3),
+					((playery * 32) + 6),
+					((playerx * 32) + 3) + cos(window->pa) * 30,
+					((playery * 32) + 6) + sin(window->pa) * 30,
+					window
+				);			// direction
+
+	if (window->update_waidow == true || window->update_waidow_for_mouse == true) {
         mlx_clear_window(window->mlx, window->window);
 		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-    // }
+    }
     window->update_waidow = false;
     window->update_waidow_for_mouse = false;
     return (ret);

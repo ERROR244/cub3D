@@ -17,7 +17,7 @@ void dda_for_line(double X0, double Y0, double X1, double Y1, t_window *window)
     double Y = Y0;
     for (int i = 0; i <= steps; i++)
 	{
-        mlx_pixel_put(window->mlx, window->window, floor(window->minimap*(X)), floor(window->minimap*(Y)), 0x000000);
+        my_mlx_pixel_put(window, floor(window->minimap*(X)), floor(window->minimap*(Y)), 0x000000);
         X += Xinc;
         Y += Yinc;
     }

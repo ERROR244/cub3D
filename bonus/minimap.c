@@ -125,12 +125,6 @@ int draw_mini_map(t_window *window)
 		}
 	}
 	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 6);
-	dda_for_line(	((playerx * 32) + 3),
-					((playery * 32) + 6),
-					((playerx * 32) + 3) + cos(window->pa) * 20,
-					((playery * 32) + 6) + sin(window->pa) * 20,
-					window
-				);			// direction
     // for (int i = 0; i < window->rays; i++)
     // {
     //     dda_for_line(	(playerx*16),
