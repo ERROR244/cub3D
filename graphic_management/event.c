@@ -31,7 +31,8 @@ events get_event(int keycode)
 
 int handle_event1(events event, t_window *window, int x, int y)
 {
-	int dir;
+	double	diff;
+	int 	dir;
 
 	dir = 0;
 	if (event == moveForWard)
@@ -45,6 +46,58 @@ int handle_event1(events event, t_window *window, int x, int y)
 		window->update_waidow = true;
 		window->player_y = y;
 		window->player_x = x;
+	}
+	else if (dir != 0 && window->ray[window->rays/2].washitver == false)
+	{
+		window->update_waidow = true;
+		if (window->ray[window->rays/2].is_ray_looking_up)
+		{
+			diff = window->pa - 3*PI/2;
+			if (diff < 0 && !haswallAt(x+(diff * 1.5), y+10, window))
+				window->player_x += (diff * 1.5);
+			else if (diff > 0 && !haswallAt(x+(diff * 1.5), y+10, window))
+				window->player_x += (diff * 1.5);
+			else
+				window->update_waidow = false;
+		}
+		else
+		{
+			diff = -1 * (window->pa - PI/2);
+			if (diff < 0 && !haswallAt(x+(diff * 1.5), y-10, window))
+				window->player_x += (diff * 1.5);
+			else if (diff > 0 && !haswallAt(x+(diff * 1.5), y-10, window))
+				window->player_x += (diff * 1.5);
+			else
+				window->update_waidow = false;
+		}
+	}
+	else if (dir != 0 && window->ray[window->rays/2].washitver == true)
+	{
+		window->update_waidow = true;
+		if (window->ray[window->rays/2].is_ray_looking_right)
+		{
+			// printf("%f \n", window->pa);
+			diff = (window->pa > 5) ? window->pa - TWO_PI : window->pa;
+			printf("%f \n", diff);
+			if (diff < 0 && !haswallAt(x-10, y+(diff * 1.5), window))
+				window->player_y += (diff * 1.5);
+			else if (diff > 0 && !haswallAt(x-10, y+(diff * 1.5), window))
+				window->player_y += (diff * 1.5);
+			else
+				window->update_waidow = false;
+		}
+		else
+		{
+			// printf("%f \n", window->pa);
+			diff = -1 * (window->pa - PI);
+			printf("%f \n", diff);
+			if (diff < 0 && !haswallAt(x+10, y+(diff * 1.5), window))
+				window->player_y += (diff * 1.5);
+			else if (diff > 0 && !haswallAt(x+10, y+(diff * 1.5), window))
+				window->player_y += (diff * 1.5);
+			else
+				window->update_waidow = false;
+		}
 	}
 	return (0);
 }
@@ -80,9 +133,6 @@ int handle_event0(events event, t_window *window)
 		j = (int)(window->player_x / window->TILE_SIZE);
 		i = (int)(window->player_y / window->TILE_SIZE);
 		window->update_waidow = true;
-		// printf("%d %d \n", x, y);
-		// printf("window: %p, map: %p, map->map: %p\n", (void*)window, (void*)window->map, (void*)window->map->map);
-		// char **map = window->map->map;
 		if (window->map->map[i+1][j] && (window->map->map[i+1][j] == 'D' || window->map->map[i+1][j] == 'A'))
 		{
 			if (window->map->map[i+1][j] == 'D')
@@ -113,7 +163,6 @@ int handle_event0(events event, t_window *window)
 		}
 		else
 			window->update_waidow = true;
-		// print_array(window->map->map);
 	}
 	return (0);
 }
@@ -162,7 +211,7 @@ int	key_hook(int keycode, t_window *window)
 	handle_event0(event, window);
 	handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
-	handle_mouse(window);
+	// handle_mouse(window);
 	// draw_map(window);
 	// rays3D_cast(window);
 	// ret = render3d(window);
