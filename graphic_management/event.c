@@ -29,12 +29,12 @@ events get_event(int keycode)
 	return (event);
 }
 
-void handle_hor(t_window *window, int x, int y)
+void handle_forwardhor(t_window *window, int x, int y)
 {
 	int tmp;
 	double diff;
 
-	int		tmpx;
+	int		tmpx = 0;
 
 	if (window->ray[window->rays/2].is_ray_looking_right)
 		tmpx = 10;
@@ -56,17 +56,17 @@ void handle_hor(t_window *window, int x, int y)
 		window->update_waidow = false;
 }
 
-void handle_ver(t_window *window, int x, int y)
+void handle_forwardver(t_window *window, int x, int y)
 {
 	int 	tmp;
 	double	diff;
 
-	int		tmpy;
+	int		tmpy = 0;
 
-	if (window->ray[window->rays/2].is_ray_looking_up)
-		tmpy = -5;
-	else
+	if (window->ray[window->rays/2].is_ray_looking_down)
 		tmpy = 10;
+	else
+		tmpy = -5;
 
 	window->update_waidow = true;
 	tmp = -16;
@@ -93,19 +93,29 @@ int handle_event1(events event, t_window *window, int x, int y)
 
 	dir = 0;
 	if (event == moveForWard)
-	dir = 1;
+		dir = 1;
 	else if (event == moveBackward)
-	dir = -1;
+		dir = -1;
+
 	x = (window->player_x + (cos(window->pa) * 3 * dir));
 	y = (window->player_y + (sin(window->pa) * 3 * dir));
 
-	if (window->ray[window->rays/2].is_ray_looking_up)
+	if (window->ray[window->rays/2].is_ray_looking_up && event == moveForWard)
 		tmpy = -5;
-	else if (window->ray[window->rays/2].is_ray_looking_down)
+	else if (event == moveForWard)
 		tmpy = 10;
-	if (window->ray[window->rays/2].is_ray_looking_right)
+	if (window->ray[window->rays/2].is_ray_looking_right && event == moveForWard)
 		tmpx = 10;
-	else if (window->ray[window->rays/2].is_ray_looking_left)
+	else if (event == moveForWard)
+		tmpx = -5;
+
+	if (window->ray[window->rays/2].is_ray_looking_down && event == moveBackward)
+		tmpy = -5;
+	else if (event == moveBackward)
+		tmpy = 10;
+	if (window->ray[window->rays/2].is_ray_looking_left && event == moveBackward)
+		tmpx = 10;
+	else if (event == moveBackward)
 		tmpx = -5;
 
 	if (!haswallAt(x+tmpx, y+tmpy, window) && dir != 0)
@@ -114,10 +124,14 @@ int handle_event1(events event, t_window *window, int x, int y)
 		window->player_y = y;
 		window->player_x = x;
 	}
-	else if (dir != 0 && window->ray[window->rays/2].washitver == false)
-		handle_hor(window, x, y);
-	else if (dir != 0 && window->ray[window->rays/2].washitver == true)
-		handle_ver(window, x, y);
+	else if (dir != 0 && window->ray[window->rays/2].washitver == false && event == moveForWard)
+		handle_forwardhor(window, x, y);
+	// else if (dir != 0 && window->ray[window->rays/2].washitver == false && event == moveBackward)
+	// 	handle_backwardhor(window, x, y);
+	else if (dir != 0 && window->ray[window->rays/2].washitver == true && event == moveForWard)
+		handle_forwardver(window, x, y);
+	// else if (dir != 0 && window->ray[window->rays/2].washitver == true && event == moveBackward)
+	// 	handle_backwardver(window, x, y);
 	return (0);
 }
 
