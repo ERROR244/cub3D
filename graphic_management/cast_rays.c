@@ -149,12 +149,12 @@ void cast_rays(t_window *window, int colid)
 	if (Hwallhit == true)
 	{
 		hordis = dis(window->player_x, window->player_y, Hwallx, Hwally);
-		hordis += (hordis == 0) ? 1.0 : 0.0;
+		// hordis += (hordis == 0) ? 0.1 : 0.0;
 	}
 	if (Vwallhit == true)
 	{
 		verdis = dis(window->player_x, window->player_y, Vwallx, Vwally);
-		verdis += (verdis == 0) ? 1.0 : 0.0;
+		// verdis += (verdis == 0) ? 0.1 : 0.0;
 	}
 	if (hordis < verdis)
 	{
@@ -188,7 +188,7 @@ void rays3D_cast(t_window *window)
 		window->ray[colid].is_ray_looking_left = !window->ray[colid].is_ray_looking_right;
 		cast_rays(window, colid);
 		// printf("%f %d \n", window->ray[colid].distance, window->ray[colid].washitver);
-		// 	render the rayr
+			// render the rayr
 		// dda_for_line(	(window->player_x),
 		// 				(window->player_y),
 		// 				(window->ray[colid].ray_hit_x),

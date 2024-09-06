@@ -34,6 +34,13 @@ void handle_hor(t_window *window, int x, int y)
 	int tmp;
 	double diff;
 
+	int		tmpx;
+
+	if (window->ray[window->rays/2].is_ray_looking_right)
+		tmpx = 10;
+	else
+		tmpx = -5;
+
 	window->update_waidow = true;
 	tmp = 16;
 	if (window->ray[window->rays/2].is_ray_looking_up)
@@ -43,7 +50,7 @@ void handle_hor(t_window *window, int x, int y)
 		tmp *= -1;
 		diff = -1*(window->pa - PI/2);
 	}
-	if (!haswallAt((int)(x+(diff * 1.5)), y+tmp, window))
+	if (!haswallAt(((int)(x+(diff * 1.5)))+tmpx, y+tmp, window))
 		window->player_x += diff * 1.5;
 	else
 		window->update_waidow = false;
@@ -51,19 +58,28 @@ void handle_hor(t_window *window, int x, int y)
 
 void handle_ver(t_window *window, int x, int y)
 {
-	int tmp;
-	double diff;
+	int 	tmp;
+	double	diff;
+
+	int		tmpy;
+
+	if (window->ray[window->rays/2].is_ray_looking_up)
+		tmpy = -5;
+	else
+		tmpy = 10;
 
 	window->update_waidow = true;
 	tmp = -16;
 	if (window->ray[window->rays/2].is_ray_looking_right)
+	{
 		diff = (window->pa > 5) ? window->pa - TWO_PI : window->pa;
+	}
 	else
 	{
 		tmp *= -1;
 		diff = -1*(window->pa - PI);
 	}
-	if (!haswallAt(x+tmp, (int)(y+(diff * 1.5)), window))
+	if (!haswallAt(x+tmp, ((int)(y+(diff * 1.5))+tmpy), window))
 		window->player_y += diff * 1.5;
 	else
 		window->update_waidow = false;
@@ -72,6 +88,8 @@ void handle_ver(t_window *window, int x, int y)
 int handle_event1(events event, t_window *window, int x, int y)
 {
 	int 	dir;
+	int		tmpx = 0;
+	int		tmpy = 0;
 
 	dir = 0;
 	if (event == moveForWard)
@@ -80,7 +98,17 @@ int handle_event1(events event, t_window *window, int x, int y)
 	dir = -1;
 	x = (window->player_x + (cos(window->pa) * 3 * dir));
 	y = (window->player_y + (sin(window->pa) * 3 * dir));
-	if (!haswallAt(x, y, window) && dir != 0)
+
+	if (window->ray[window->rays/2].is_ray_looking_up)
+		tmpy = -5;
+	else if (window->ray[window->rays/2].is_ray_looking_down)
+		tmpy = 10;
+	if (window->ray[window->rays/2].is_ray_looking_right)
+		tmpx = 10;
+	else if (window->ray[window->rays/2].is_ray_looking_left)
+		tmpx = -5;
+
+	if (!haswallAt(x+tmpx, y+tmpy, window) && dir != 0)
 	{
 		window->update_waidow = true;
 		window->player_y = y;

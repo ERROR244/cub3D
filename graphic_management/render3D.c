@@ -39,7 +39,7 @@ int render3d(t_window *window)
 		distance = window->ray[i].distance * cos(window->ray[i].ray_a - window->pa);
 		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
 		wall3dhight = (window->TILE_SIZE / distance) * displane;
-		color = (window->ray[i].washitver) ? 0xB7B7B7 : 0xCCCCCC;
+		color = (window->ray[i].washitver) ? 0x1BFF1B : 0xCCCCCC;
 		draw_rect(window,
 				  round(i * window->wall_wigth),
 				  round((window->window_hight / 2) - (wall3dhight / 2)),
