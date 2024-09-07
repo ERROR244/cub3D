@@ -29,109 +29,46 @@ events get_event(int keycode)
 	return (event);
 }
 
-void handle_forwardhor(t_window *window, int x, int y)
+int get_tmpx_tmpy(char c, t_window *window, events event)
 {
-	int tmp;
-	double diff;
+	int		tmp;
 
-	int		tmpx = 0;
-
-	if (window->ray[window->rays/2].is_ray_looking_right)
-		tmpx = 10;
+	if (c == 'x')
+		tmp = -5;
 	else
-		tmpx = -5;
-
-	window->update_waidow = true;
-	tmp = 16;
-	if (window->ray[window->rays/2].is_ray_looking_up)
-		diff = window->pa - 3*PI/2;
-	else
-	{
-		tmp *= -1;
-		diff = -1*(window->pa - PI/2);
-	}
-	if (!haswallAt(((int)(x+(diff * 1.5)))+tmpx, y+tmp, window))
-		window->player_x += diff * 1.5;
-	else
-		window->update_waidow = false;
-}
-
-void handle_forwardver(t_window *window, int x, int y)
-{
-	int 	tmp;
-	double	diff;
-
-	int		tmpy = 0;
-
-	if (window->ray[window->rays/2].is_ray_looking_down)
-		tmpy = 10;
-	else
-		tmpy = -5;
-
-	window->update_waidow = true;
-	tmp = -16;
-	if (window->ray[window->rays/2].is_ray_looking_right)
-	{
-		diff = (window->pa > 5) ? window->pa - TWO_PI : window->pa;
-	}
-	else
-	{
-		tmp *= -1;
-		diff = -1*(window->pa - PI);
-	}
-	if (!haswallAt(x+tmp, ((int)(y+(diff * 1.5))+tmpy), window))
-		window->player_y += diff * 1.5;
-	else
-		window->update_waidow = false;
+		tmp = 10;
+	if (c == 'x'
+		&& ((window->ray[window->rays/2].is_ray_looking_right && event == moveForWard)
+		|| (window->ray[window->rays/2].is_ray_looking_left && event == moveBackward)))
+		tmp = 10;
+	if (c == 'y'
+		&& ((window->ray[window->rays/2].is_ray_looking_up && event == moveForWard)
+		|| (window->ray[window->rays/2].is_ray_looking_down && event == moveBackward)))
+		tmp = -5;
+	return (tmp);
 }
 
 int handle_event1(events event, t_window *window, int x, int y)
 {
 	int 	dir;
-	int		tmpx = 0;
-	int		tmpy = 0;
+	int		tmpx;
+	int		tmpy;
 
-	dir = 0;
 	if (event == moveForWard)
 		dir = 1;
-	else if (event == moveBackward)
+	else
 		dir = -1;
-
 	x = (window->player_x + (cos(window->pa) * 3 * dir));
 	y = (window->player_y + (sin(window->pa) * 3 * dir));
-
-	if (window->ray[window->rays/2].is_ray_looking_up && event == moveForWard)
-		tmpy = -5;
-	else if (event == moveForWard)
-		tmpy = 10;
-	if (window->ray[window->rays/2].is_ray_looking_right && event == moveForWard)
-		tmpx = 10;
-	else if (event == moveForWard)
-		tmpx = -5;
-
-	if (window->ray[window->rays/2].is_ray_looking_down && event == moveBackward)
-		tmpy = -5;
-	else if (event == moveBackward)
-		tmpy = 10;
-	if (window->ray[window->rays/2].is_ray_looking_left && event == moveBackward)
-		tmpx = 10;
-	else if (event == moveBackward)
-		tmpx = -5;
-
-	if (!haswallAt(x+tmpx, y+tmpy, window) && dir != 0)
-	{
-		window->update_waidow = true;
-		window->player_y = y;
+	tmpx = get_tmpx_tmpy('x', window, event);
+	tmpy = get_tmpx_tmpy('y', window, event);
+	window->update_waidow = true;
+	if (!haswallAt(x+tmpx, window->player_y+tmpy, window) && dir != 0)
 		window->player_x = x;
-	}
-	else if (dir != 0 && window->ray[window->rays/2].washitver == false && event == moveForWard)
-		handle_forwardhor(window, x, y);
-	// else if (dir != 0 && window->ray[window->rays/2].washitver == false && event == moveBackward)
-	// 	handle_backwardhor(window, x, y);
-	else if (dir != 0 && window->ray[window->rays/2].washitver == true && event == moveForWard)
-		handle_forwardver(window, x, y);
-	// else if (dir != 0 && window->ray[window->rays/2].washitver == true && event == moveBackward)
-	// 	handle_backwardver(window, x, y);
+	if (!haswallAt(window->player_x+tmpx, y+tmpy, window) && dir != 0)
+		window->player_y = y;
+	if (window->player_x != x && window->player_y != y)
+		window->update_waidow = false;
 	return (0);
 }
 
@@ -196,8 +133,6 @@ int handle_mouse(t_window *window)
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
 	int diff = window->mouse_x - x;
 	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
-	// if (x > 0 && x < window->window_width && y > 0 && y < window->window_hight)
-	// {
 		window->update_waidow_for_mouse = true;
 		if (diff > 0)
 			window->pa += diff * 0.005;
@@ -209,7 +144,6 @@ int handle_mouse(t_window *window)
 			window->pa += 2*PI;
 		else if (window->pa > 2*PI)
 			window->pa -= 2*PI;
-	// }
 	return (0);
 }
 
@@ -220,7 +154,8 @@ int	key_hook(int keycode, t_window *window)
 
 	event = get_event(keycode);
 	handle_event0(event, window);
-	handle_event1(event, window, 0, 0);
+	if (event == moveForWard || event == moveBackward)
+		handle_event1(event, window, 0, 0);
 	handle_event2(event, window);
 	// handle_mouse(window);
 	return (0);

@@ -42,10 +42,8 @@ typedef enum {
 
 typedef enum {
     moveForWard, moveBackward,
-    moveRight, moveLeft,
-    escExit, viewUp,
-    viewDown, viewRight,
-    viewLeft, OpenClose,
+    viewRight, viewLeft,
+    OpenClose, escExit,
     none
 }   events;
 
