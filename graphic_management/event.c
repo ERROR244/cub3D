@@ -63,9 +63,9 @@ int handle_event1(events event, t_window *window, int x, int y)
 	tmpx = get_tmpx_tmpy('x', window, event);
 	tmpy = get_tmpx_tmpy('y', window, event);
 	window->update_waidow = true;
-	if (!haswallAt(x+tmpx, window->player_y+tmpy, window) && dir != 0)
+	if (!haswallAt(x+tmpx, window->player_y+tmpy, window))
 		window->player_x = x;
-	if (!haswallAt(window->player_x+tmpx, y+tmpy, window) && dir != 0)
+	if (!haswallAt(window->player_x+tmpx, y+tmpy, window))
 		window->player_y = y;
 	if (window->player_x != x && window->player_y != y)
 		window->update_waidow = false;

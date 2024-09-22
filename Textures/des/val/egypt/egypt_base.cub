@@ -1,0 +1,15 @@
+NO ./xpm/egypt/egypt_wall_north.xpm
+SO ./xpm/egypt/egypt_wall_south.xpm
+EA ./xpm/egypt/egypt_wall_east.xpm
+WE ./xpm/egypt/egypt_wall_west.xpm
+
+F 23,18,4
+C 36,28,7
+
+111 11111
+101110001
+100100001
+101001001
+100000001
+111N00001
+  1111111

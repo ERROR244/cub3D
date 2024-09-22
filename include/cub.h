@@ -54,6 +54,12 @@ typedef struct s_map
     char *texture_we;
     char *texture_ea;
 
+    void *img_no;
+    void *img_so;
+    void *img_we;
+    void *img_ea;
+    void *door;
+
     int *floor_color;
     int *ceiling_color;
 
@@ -68,6 +74,7 @@ typedef struct s_ray
     double   distance;
 
     bool    washitver;
+    bool    door_hit;
 
     bool is_ray_looking_down;
     bool is_ray_looking_up;
@@ -144,6 +151,8 @@ void	the_map_is_invalid(void);
 void	invalid_file_name1(void);
 void	invalid_file(void);
 void	invalid_arg(void);
+void	the_Textures_is_invalid(void);
+
 
 char	**return_map(int fd, int i);
 char	**name_check(char *str);

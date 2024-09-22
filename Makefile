@@ -28,7 +28,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Wextra #-ggdb -fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror -ggdb -fsanitize=address -g3
 MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}

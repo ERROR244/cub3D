@@ -58,7 +58,12 @@ int put_img(t_window *window)
 
 	if (window->update_waidow == true || window->update_waidow_for_mouse == true) {
         mlx_clear_window(window->mlx, window->window);
-		mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+        mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_no, 128, 128);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_so, 256, 256);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_we, 512, 512);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_ea, 640, 640);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->door, 768, 768);
     }
     window->update_waidow = false;
     window->update_waidow_for_mouse = false;
@@ -79,8 +84,11 @@ double get_spawninig_orientation(orientation ori)
     return (pa);
 }
 
-void	graphic_management(t_window *window)
+void init_data(t_window *window)
 {
+    int width = 64;
+    int height = 64;
+
 	window->minimap = 0.5;
 	window->pa = get_spawninig_orientation(window->spawning_dir);
 	window->wall_wigth = 1;
@@ -91,9 +99,21 @@ void	graphic_management(t_window *window)
 	window->rays = window->window_width / window->wall_wigth;
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->window_width, window->window_hight, "cub3D");
+    window->map->img_no = mlx_xpm_file_to_image(window->mlx, window->map->texture_no, &width, &height);
+    window->map->img_so = mlx_xpm_file_to_image(window->mlx, window->map->texture_so, &width, &height);
+    window->map->img_we = mlx_xpm_file_to_image(window->mlx, window->map->texture_we, &width, &height);
+    window->map->img_ea = mlx_xpm_file_to_image(window->mlx, window->map->texture_ea, &width, &height);
+    window->map->door = mlx_xpm_file_to_image(window->mlx, "./Textures/xpm/wonderland/wonderland_wall_base.xpm", &width, &height);
+    if (!window->map->img_no || !window->map->img_so || !window->map->img_we || !window->map->img_ea)
+            the_Textures_is_invalid();
 	window->ray = malloc(sizeof(*(window->ray)) * window->rays);
 	window->img = malloc(sizeof(*(window->img)));
-	if (window->img == NULL) {
+}
+
+void	graphic_management(t_window *window)
+{
+    init_data(window);
+    if (window->img == NULL) {
 	    fprintf(stderr, "Failed to allocate memory for img.\n");
 	    exit(EXIT_FAILURE);
 	}
@@ -102,13 +122,11 @@ void	graphic_management(t_window *window)
 	    fprintf(stderr, "Failed to create image.\n");
 	    exit(EXIT_FAILURE);
 	}
-	// window->img->tmp_img = mlx_new_image(mlx, window->window_width, window->window_hight);
 	window->img->addr = mlx_get_data_addr(window->img->img, &window->img->bits_per_pixel, &window->img->line_length, &window->img->endian);
 	if (window->img->addr == NULL) {
 	    fprintf(stderr, "Failed to get image data address.\n");
 	    exit(EXIT_FAILURE);
 	}
-    // mlx_key_hook(window->window, key_hook, window);
     put_img(window);
     mlx_loop_hook(window->mlx, put_img, window);
     mlx_hook(window->window, 02, 1L<<0, key_hook, window);

@@ -24,6 +24,12 @@ void	the_map_is_invalid(void)
 	exit(EXIT_FAILURE);
 }
 
+void	the_Textures_is_invalid(void)
+{
+	printf("Error\n		The Textures is invalid\n");
+	exit(EXIT_FAILURE);
+}
+
 void	invalid_file_name1(void)
 {
 	printf("Error\n		invalid file name\n");

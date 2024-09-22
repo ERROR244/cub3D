@@ -170,6 +170,21 @@ void cast_rays(t_window *window, int colid)
 		window->ray[colid].ray_hit_y = Vwally;
 		window->ray[colid].distance = verdis;
 	}
+
+	int i1 = floor(window->ray[colid].ray_hit_y / window->TILE_SIZE);
+	int i2 = floor(window->ray[colid].ray_hit_x / window->TILE_SIZE);
+
+	if (window->ray[colid].is_ray_looking_up && window->ray[colid].washitver == false)
+		i1 -= 1;
+	if (window->ray[colid].is_ray_looking_left && window->ray[colid].washitver == true)
+		i2 -= 1;
+
+
+
+	if (window->map->map[i1][i2] == 'D')
+	{
+		window->ray[colid].door_hit = true;
+	}
 }
 
 void rays3D_cast(t_window *window)
@@ -186,6 +201,7 @@ void rays3D_cast(t_window *window)
 		window->ray[colid].is_ray_looking_up = !window->ray[colid].is_ray_looking_down;
 		window->ray[colid].is_ray_looking_right = (window->ray[colid].ray_a < 0.5*PI || window->ray[colid].ray_a > 1.5*PI);
 		window->ray[colid].is_ray_looking_left = !window->ray[colid].is_ray_looking_right;
+		window->ray[colid].door_hit = false;
 		cast_rays(window, colid);
 		// printf("%f %d \n", window->ray[colid].distance, window->ray[colid].washitver);
 			// render the rayr
