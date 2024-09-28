@@ -1,28 +1,41 @@
 #include "../include/cub.h"
 
-int get_color_from_img(void *img)
+unsigned int get_color_from_img(t_window *window, void *img, int x, int y)
 {
-	return (0);
+	unsigned int color;
+
+	window->texture->img = img;
+	window->texture->addr = mlx_get_data_addr(window->texture->img, &window->texture->bits_per_pixel, &window->texture->line_length, &window->texture->endian);
+	if (window->texture->addr == NULL) {
+	    fprintf(stderr, "Failed to get image data address.\n");
+	    exit(EXIT_FAILURE);
+	}
+	color = git_tpixel(window, x % SIZE, y % SIZE);
+	return (color);
 }
 
-int draw_rect(t_window *window, int x, int y, int width, int height, int color, void *img)
+int draw_rect(t_window *window, int x, int y, int width, int height, void *img)
 {
+	unsigned int color;
 	int		ret;
     int		i;
     int		j;
+	int 	k;
 
+	k = 0;
 	i = 0;
 	ret = 0;
 	(void)img;
     while (i < width && ret == 0)
     {
 		j = 0;
+		k = 0;
         while (j < height && ret == 0)
         {
-			// color = get_color_from_img(img);
+			color = get_color_from_img(window, img, x + i, y + j);
 			ret = my_mlx_pixel_put(window, x + i, y + j, color);
-            // ret = mlx_pixel_put(window->mlx, window->window, x + i, y + j, 0xFFFFFF);
 			j++;
+			k += 2;
 		}
 		i++;
     }
@@ -34,7 +47,6 @@ int render3d(t_window *window)
 	double	wall3dhight;
 	double	displane;
 	double	distance;
-	int 	color;
 	void	*img;
 	int 	ret;
 	int 	i;
@@ -47,39 +59,21 @@ int render3d(t_window *window)
 		distance = window->ray[i].distance * cos(window->ray[i].ray_a - window->pa);
 		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
 		wall3dhight = (window->TILE_SIZE / distance) * displane;
-
-		color = 0x424242;
 		if (window->ray[i].washitver && window->ray[i].is_ray_looking_right)
-		{
 			img = window->map->img_no;
-			color = 0x1BFF1B;
-		}
 		else if (window->ray[i].washitver && window->ray[i].is_ray_looking_left)
-		{
 			img = window->map->img_so;
-			color = 0xCCCCCC;
-		}
 		if (!window->ray[i].washitver && window->ray[i].is_ray_looking_up)
-		{
 			img = window->map->img_we;
-			color = 0xFF0000;
-		}
 		else if (!window->ray[i].washitver && window->ray[i].is_ray_looking_down)
-		{
 			img = window->map->img_ea;
-			color = 0x0000FF ;
-		}
 		if (window->ray[i].door_hit == true)
-		{
 			img = window->map->door;
-			color = 0x000000;
-		}
 		draw_rect(window,
 				  round(i * window->wall_wigth),
 				  round((window->window_hight / 2) - (wall3dhight / 2)),
 				  round(window->wall_wigth),
 				  round(wall3dhight),
-				  color,
 				  img
 				  );
 		i++;

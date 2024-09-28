@@ -19,6 +19,7 @@
 #define MINI_MAP_SIZE 6
 #define MAP_HEIGHT 900
 #define MAP_WIDTH 1400
+#define SIZE 100
 
 # include "../minilibx-linux/mlx.h"
 # include "../Get-Next-Line/get_next_line.h"
@@ -112,6 +113,7 @@ typedef struct window
 
     t_ray   *ray;
     t_img   *img;
+    t_img   *texture;
 
     int     window_width;
     int     window_hight;
@@ -171,15 +173,16 @@ void    check_map_end(char **map);
 char    **get_map_updated(char **ptr);
 
 // graphic_management
-void	graphic_management(t_window *w);
-int	    close_window(t_window *window);
-double  to_rad(double deg);
-double  to_deg(double rad);
-void    rays3D_cast(t_window *window);
-int     render3d(t_window *window);
-bool    haswallAt(long x, long y, t_window *window);
-int	    my_mlx_pixel_put(t_window *window, int x, int y, int color);
-void    clear_image(t_window *window, int width, int height, int color);
+void	     graphic_management(t_window *w);
+int	         close_window(t_window *window);
+double       to_rad(double deg);
+double       to_deg(double rad);
+void         rays3D_cast(t_window *window);
+int          render3d(t_window *window);
+bool         haswallAt(long x, long y, t_window *window);
+int	         my_mlx_pixel_put(t_window *window, int x, int y, int color);
+void         clear_image(t_window *window, int width, int height, int color);
+unsigned int git_tpixel(t_window *window, int x, int y);
 
 // minimap
 int     draw_mini_map(t_window *window);

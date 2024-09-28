@@ -18,6 +18,23 @@ void clear_image(t_window *window, int width, int height, int color)
     }
 }
 
+unsigned int git_tpixel(t_window *window, int x, int y)
+{
+    unsigned int    ret = 0;
+	char            *dst;
+
+    // printf("%d %d \n", x, y);
+    y = y > 0 ? y : 0;
+    x = x > 0 ? x : 0;
+    if (x >= 0 && x < SIZE && y >= 0 && y < SIZE)
+    {
+        // printf("HERE\n");
+        dst = window->texture->addr + (y * window->texture->line_length + x * (window->texture->bits_per_pixel / 8));
+        ret = *(unsigned int*)dst;
+    }
+	return (ret);
+}
+
 int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 {
 	char	*dst;
@@ -28,6 +45,7 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
     }
 	return (0);
 }
+
 int put_img(t_window *window)
 {
     int ret;
@@ -59,11 +77,11 @@ int put_img(t_window *window)
 	if (window->update_waidow == true || window->update_waidow_for_mouse == true) {
         mlx_clear_window(window->mlx, window->window);
         mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_no, 128, 128);
-        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_so, 256, 256);
-        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_we, 512, 512);
-        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_ea, 640, 640);
-        // mlx_put_image_to_window(window->mlx, window->window, window->map->door, 768, 768);
+        mlx_put_image_to_window(window->mlx, window->window, window->map->img_no, 0, 128);
+        mlx_put_image_to_window(window->mlx, window->window, window->map->img_so, 0, 256);
+        mlx_put_image_to_window(window->mlx, window->window, window->map->img_we, 0, 512);
+        mlx_put_image_to_window(window->mlx, window->window, window->map->img_ea, 0, 640);
+        mlx_put_image_to_window(window->mlx, window->window, window->map->door, 0, 768);
     }
     window->update_waidow = false;
     window->update_waidow_for_mouse = false;
@@ -86,8 +104,8 @@ double get_spawninig_orientation(orientation ori)
 
 void init_data(t_window *window)
 {
-    int width = 64;
-    int height = 64;
+    int width = SIZE;
+    int height = SIZE;
 
 	window->minimap = 0.5;
 	window->pa = get_spawninig_orientation(window->spawning_dir);
@@ -107,7 +125,8 @@ void init_data(t_window *window)
     if (!window->map->img_no || !window->map->img_so || !window->map->img_we || !window->map->img_ea)
             the_Textures_is_invalid();
 	window->ray = malloc(sizeof(*(window->ray)) * window->rays);
-	window->img = malloc(sizeof(*(window->img)));
+    window->img = malloc(sizeof(*(window->img)));
+	window->texture = malloc(sizeof(*(window->img)));
 }
 
 void	graphic_management(t_window *window)
