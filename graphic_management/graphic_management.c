@@ -20,15 +20,16 @@ void clear_image(t_window *window, int width, int height, int color)
 
 unsigned int git_tpixel(t_window *window, int x, int y)
 {
-    unsigned int    ret = 0;
+    unsigned int    ret;
 	char            *dst;
 
-    // printf("%d %d \n", x, y);
-    y = y > 0 ? y : 0;
-    x = x > 0 ? x : 0;
+    ret = 0;
+    if (y < 0)
+        y = 0;
+    if (x < 0)
+        x = 0;
     if (x >= 0 && x < SIZE && y >= 0 && y < SIZE)
     {
-        // printf("HERE\n");
         dst = window->texture->addr + (y * window->texture->line_length + x * (window->texture->bits_per_pixel / 8));
         ret = *(unsigned int*)dst;
     }
@@ -52,36 +53,38 @@ int put_img(t_window *window)
 
     ret = 0;
 	rays3D_cast(window);
-    ret = render3d(window);
+    clear_image(window, window->window_width, window->window_hight, 0x424242);
+    ret = render3d(window, 0, -1);
     draw_mini_map(window);
     handle_mouse(window);
 
-	double playerx = (double)(window->player_x / window->TILE_SIZE);
-	double playery = (double)(window->player_y / window->TILE_SIZE);
-    int xx = (int)(playerx) - MINI_MAP_SIZE;
-	int yy = (int)(playery) - MINI_MAP_SIZE;
-    if (xx < 0)
-		xx = 0;
-	if (yy < 0)
-		yy = 0;
-	playerx -= xx;
-	playery -= yy;
+	// double playerx = (double)(window->player_x / window->TILE_SIZE);
+	// double playery = (double)(window->player_y / window->TILE_SIZE);
+    // int xx = (int)(playerx) - MINI_MAP_SIZE;
+	// int yy = (int)(playery) - MINI_MAP_SIZE;
+    // if (xx < 0)
+	// 	xx = 0;
+	// if (yy < 0)
+	// 	yy = 0;
+	// playerx -= xx;
+	// playery -= yy;
 
-	dda_for_line(	((playerx * 32) + 3),
-					((playery * 32) + 6),
-					((playerx * 32) + 3) + cos(window->pa) * 30,
-					((playery * 32) + 6) + sin(window->pa) * 30,
-					window
-				);			// direction
+	// dda_for_line(	((playerx * 32) + 3),
+	// 				((playery * 32) + 6),
+	// 				((playerx * 32) + 3) + cos(window->pa) * 30,
+	// 				((playery * 32) + 6) + sin(window->pa) * 30,
+	// 				window
+	// 			);			// direction
 
-	if (window->update_waidow == true || window->update_waidow_for_mouse == true) {
+	if (window->update_waidow == true || window->update_waidow_for_mouse == true)
+    {
         mlx_clear_window(window->mlx, window->window);
         mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-        mlx_put_image_to_window(window->mlx, window->window, window->map->img_no, 0, 128);
-        mlx_put_image_to_window(window->mlx, window->window, window->map->img_so, 0, 256);
-        mlx_put_image_to_window(window->mlx, window->window, window->map->img_we, 0, 512);
-        mlx_put_image_to_window(window->mlx, window->window, window->map->img_ea, 0, 640);
-        mlx_put_image_to_window(window->mlx, window->window, window->map->door, 0, 768);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_no, 0, 128);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_so, 0, 256);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_we, 0, 512);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->img_ea, 0, 640);
+        // mlx_put_image_to_window(window->mlx, window->window, window->map->door, 0, 768);
     }
     window->update_waidow = false;
     window->update_waidow_for_mouse = false;

@@ -42,19 +42,14 @@ int draw_rect(t_window *window, int x, int y, int width, int height, void *img)
 	return (ret);
 }
 
-int render3d(t_window *window)
+int render3d(t_window *window, int ret, int i)
 {
 	double	wall3dhight;
 	double	displane;
 	double	distance;
 	void	*img;
-	int 	ret;
-	int 	i;
 
-	i = 0;
-	ret = 0;
-	clear_image(window, window->window_width, window->window_hight, 0x424242);
-	while (i < window->rays && ret == 0)
+	while (++i < window->rays && ret == 0)
 	{
 		distance = window->ray[i].distance * cos(window->ray[i].ray_a - window->pa);
 		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
@@ -69,14 +64,9 @@ int render3d(t_window *window)
 			img = window->map->img_ea;
 		if (window->ray[i].door_hit == true)
 			img = window->map->door;
-		draw_rect(window,
-				  round(i * window->wall_wigth),
-				  round((window->window_hight / 2) - (wall3dhight / 2)),
-				  round(window->wall_wigth),
-				  round(wall3dhight),
-				  img
-				  );
-		i++;
+		draw_rect(window, round(i * window->wall_wigth),
+				round((window->window_hight / 2) - (wall3dhight / 2)), round(window->wall_wigth),
+				round(wall3dhight), img);
 	}
 	return (ret);
 }

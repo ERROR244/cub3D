@@ -94,6 +94,22 @@ typedef struct	s_img {
 	int		endian;
 }				t_img;
 
+typedef struct
+{
+    double hordis;
+    double verdis;
+	double Hwallx;
+	double Hwally;
+    double Vwallx;
+    double Vwally;
+    double nexthorztouchx;
+	double nexthorztouchy;
+    double nextvertouchx;
+    double nextvertouchy;
+	bool Hwallhit;
+    bool Vwallhit;
+}   t_cast;
+
 typedef struct window
 {
     t_map   *map;
@@ -156,7 +172,7 @@ void	invalid_arg(void);
 void	the_Textures_is_invalid(void);
 
 
-char	**return_map(int fd, int i);
+char	**return_map(int fd, char *ptr, char *str, int i);
 char	**name_check(char *str);
 char	*ft_strjoin3(char const *s1, char c, char const *s2);
 void	the_map_is_invalid(void);
@@ -166,7 +182,7 @@ void	invalid_file_name1(void);
 void	map_check(t_map *map, char **str, t_window *window);
 void    check_texture_and_color(t_map *map, char **str);
 int     array_size(char **str);
-void	check_characters(char **map, t_window *window);
+void	check_characters(char **map, t_window *window, int i, int k);
 void	is_the_map_surrounded_by_walls(char **map);
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines);
 void    check_map_end(char **map);
@@ -178,11 +194,16 @@ int	         close_window(t_window *window);
 double       to_rad(double deg);
 double       to_deg(double rad);
 void         rays3D_cast(t_window *window);
-int          render3d(t_window *window);
+int          render3d(t_window *window, int ret, int i);
 bool         haswallAt(long x, long y, t_window *window);
 int	         my_mlx_pixel_put(t_window *window, int x, int y, int color);
 void         clear_image(t_window *window, int width, int height, int color);
 unsigned int git_tpixel(t_window *window, int x, int y);
+int          get_hit_pos(t_window *window, int col_id, char c);
+void get_dis(t_window *window, int col_id, t_cast cast);
+t_cast find_h_xy_setp(t_window *window, int col_id, t_cast cast);
+t_cast find_v_xy_setp(t_window *window, int col_id, t_cast cast);
+
 
 // minimap
 int     draw_mini_map(t_window *window);

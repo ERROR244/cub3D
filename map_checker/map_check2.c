@@ -46,17 +46,6 @@ bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y, int lines)
 		return (false);
 	if (x - 1 < 0 && (map[x][y] == '0' || map[x][y] == 'P' || map[x][y] == 'D'))
 		return (false);
-	//		-   -
-	//		  .
-	//		-   -
-	// if (x + 1 < lines && map[x + 1][y + 1] != '0' && map[x + 1][y + 1] != '1' && map[x + 1][y + 1] != 'P' && map[x + 1][y + 1] != 'D')
-	// 	return (false);
-	// if (y - 1 >= 0 && x - 1 >= 0 && map[x - 1][y - 1] != '0' && map[x - 1][y - 1] != '1' && map[x - 1][y - 1] != 'P' && map[x - 1][y - 1] != 'D')
-	// 	return (false);
-	// if (x - 1 >= 0 && map[x - 1][y + 1] != '0' && map[x - 1][y + 1] != '1' && map[x - 1][y + 1] != 'P' && map[x - 1][y + 1] != 'D')
-	// 	return (false);
-	// if (x + 1 < lines && y - 1 >= 0 && map[x + 1][y - 1] != '0' && map[x + 1][y - 1] != '1' && map[x + 1][y - 1] != 'P' && map[x + 1][y - 1] != 'D')
-	// 	return (false);
 	return (true);
 }
 

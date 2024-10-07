@@ -19,7 +19,7 @@ void	map_check(t_map *map, char **str, t_window *window)
 	char	**lines;
 
 	lines = str + 6;
-	check_characters(lines, window);
+	check_characters(lines, window, 0, 0);
 	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
 	free_array(str);
