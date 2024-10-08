@@ -1,13 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_check4.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 14:19:43 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/04 14:19:44 by ksohail-         ###   ########.fr       */
+/*   Created: 2023/11/04 15:00:23 by ksohail-          #+#    #+#             */
+/*   Updated: 2023/11/18 10:04:53 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "libft.h"
+
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (new && lst)
+	{
+		new->next = *lst;
+		*lst = new;
+	}
+}

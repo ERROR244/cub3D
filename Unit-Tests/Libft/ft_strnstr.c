@@ -1,13 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_check5.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 09:47:51 by ksohail-         ###   ########.fr       */
+/*   Created: 2023/11/01 12:11:30 by ksohail-          #+#    #+#             */
+/*   Updated: 2024/06/10 10:17:12 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "libft.h"
+
+char	*ft_strnstr(const char *big, const char *little, size_t len)
+{
+	size_t	needle_len;
+
+	needle_len = ft_strlen(little);
+	if (needle_len == 0)
+		return ((char *)big);
+	if (*big == '\0' || len < needle_len)
+		return (NULL);
+	while (*big != '\0' && len >= needle_len)
+	{
+		if (ft_strncmp(big, little, needle_len) == 0)
+			return ((char *)big);
+		big++;
+		len--;
+	}
+	return (NULL);
+}

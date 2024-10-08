@@ -1,0 +1,15 @@
+NO ./xpm/bar/bar_wall_north_HD.xpm
+SO ./xpm/bar/bar_wall_south_HD.xpm
+EA ./xpm/bar/bar_wall_east_HD.xpm
+WE ./xpm/bar/bar_wall_west_HD.xpm
+
+C 26,17,9
+F 27,24,22
+
+111 11111
+101110001
+100100001
+101001001
+100000001
+111N00001
+  1111111
