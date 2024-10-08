@@ -12,10 +12,10 @@
 
 #include "../include/cub.h"
 
-char **freed_split(char *str, char c)
+char	**freed_split(char *str, char c)
 {
 	char	**sptr;
-	
+
 	sptr = ft_split(str, c);
 	free(str);
 	return (sptr);
@@ -76,27 +76,27 @@ char	**name_check(char *str)
 	return (sptr);
 }
 
-void exit_game(t_window *window)
+void	exit_game(t_window *window)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = window->map;
-    free(map->texture_no);
+	free(map->texture_no);
 	free(map->texture_so);
 	free(map->texture_we);
 	free(map->texture_ea);
-    free(map->floor_color);
-    free(map->ceiling_color);
-    free_array(map->map);
+	free(map->floor_color);
+	free(map->ceiling_color);
+	free_array(map->map);
 	map->map = NULL;
 	window->map->map = NULL;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_window	window;
-    t_map       map;
-    char		**str;
+	t_map		map;
+	char		**str;
 
 	if (ac != 2)
 		invalid_arg();
@@ -108,9 +108,9 @@ int main(int ac, char **av)
 	window.i = 0;
 	window.k = 0;
 	window.TILE_SIZE = 32;
-    map_check(&map, str, &window);
+	map_check(&map, str, &window);
 	window.map = &map;
 	graphic_management(&window);
 	exit_game(&window);
-    return (0);
+	return (0);
 }

@@ -7,8 +7,6 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			map_checker/map_check1.c\
 			map_checker/map_check2.c\
 			map_checker/map_check3.c\
-			map_checker/map_check4.c\
-			map_checker/map_check5.c\
 			main/map2D.c\
 			main/main.c\
 			tmp/tmp1.c\
@@ -17,6 +15,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			Libft/ft_strdup.c\
 			Libft/ft_strjoin.c\
 			Libft/ft_split.c\
+			Libft/split_utils.c\
 			Libft/ft_atoi.c\
 			Libft/ft_strncmp.c\
 			graphic_management/graphic_management.c\

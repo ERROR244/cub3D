@@ -12,7 +12,7 @@
 
 #include "../include/cub.h"
 
-orientation get_sdir(t_window *window, char *c, int i, int j)
+orientation	get_sdir(t_window *window, char *c, int i, int j)
 {
 	*c = 'P';
 	window->player_x = j * window->TILE_SIZE;
@@ -37,12 +37,12 @@ void	check_characters(char **map, t_window *window, int i, int k)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] != '1' && map[i][j] != '0' &&
-					map[i][j] != 'N' && map[i][j] != 'S' &&
-					map[i][j] != 'E' && map[i][j] != 'W' &&
-					map[i][j] != ' ' && map[i][j] != 'D')
+			if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'N'
+				&& map[i][j] != 'S' && map[i][j] != 'E' && map[i][j] != 'W'
+				&& map[i][j] != ' ' && map[i][j] != 'D')
 				the_map_is_invalid();
-			if ((map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W') && ++k >= 0)
+			if ((map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
+					|| map[i][j] == 'W') && ++k >= 0)
 				window->spawning_dir = get_sdir(window, &map[i][j], i, j);
 			j++;
 			if (window->i < j)
@@ -70,8 +70,9 @@ void	is_the_map_surrounded_by_walls(char **ptr)
 		y = 0;
 		while (map[x][y])
 		{
-			if ((map[x][y] == '0' || map[x][y] == 'N' || map[x][y] == 'D') &&
-					surrounded_with_only_spaces_and_walls(map, x, y, lines) == false)
+			if ((map[x][y] == '0' || map[x][y] == 'N' || map[x][y] == 'D')
+				&& surrounded_with_only_spaces_and_walls(map, x, y,
+					lines) == false)
 				the_map_is_invalid();
 			y++;
 		}
