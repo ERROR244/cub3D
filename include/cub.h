@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/08 12:16:49 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:14:49 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
+# define MSPEED 1.5
 
 // # include <mlx.h>
 # include "../Get-Next-Line/get_next_line.h"
@@ -49,6 +50,8 @@ typedef enum
 {
 	moveForWard,
 	moveBackward,
+	moveRight,
+	moveLeft,
 	viewRight,
 	viewLeft,
 	OpenClose,
@@ -119,6 +122,17 @@ typedef struct
 	bool		Vwallhit;
 }				t_cast;
 
+typedef struct s_move
+{
+	int				forward;
+	int				backward;
+	int				left;
+	int				right;
+	int				rotate_left;
+	int				rotate_right;
+}	t_move;
+
+
 typedef struct window
 {
 	t_map		*map;
@@ -159,6 +173,8 @@ typedef struct window
 	bool		update_waidow_for_mouse;
 
 	orientation	spawning_dir;
+
+	t_move move;
 
 	int			i;
 	int			k;
@@ -210,9 +226,10 @@ int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
 void			clear_image(t_window *window, int width, int height, int color);
 unsigned int	git_tpixel(t_window *window, int x, int y);
 int				get_hit_pos(t_window *window, int col_id, char c);
-void			get_dis(t_window *window, int col_id, t_cast cast);
+t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
 t_cast			find_v_xy_setp(t_window *window, int col_id, t_cast cast);
+double			get_spawninig_orientation(orientation ori);
 
 // minimap
 int				draw_mini_map(t_window *window);
@@ -227,6 +244,14 @@ void			dda_for_line(double X0, double Y0, double X1, double Y1,
 // events
 events			get_event(int keycode);
 int				key_hook(int keycode, t_window *window);
+
+int				handle_door(events event, t_window *window);
+int				handle_rotate(t_window *window);
+int				key_release(int keycode, t_window *window);
+int				key_press(int keycode, t_window *window);
+int				handle_fb_move(t_window *window);
+
+
 int				handle_event(events event, t_window *window);
 int				handle_mouse(t_window *window);
 

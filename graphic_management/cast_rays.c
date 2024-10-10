@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:54 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/08 12:07:31 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/10 12:23:21 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,18 @@ void	cast_rays(t_window *window, int colid)
 	cast = find_h_xy_wall_hit(window, colid, cast);
 	cast = find_v_xy_setp(window, colid, cast);
 	cast = find_v_xy_wall_hit(window, colid, cast);
-	get_dis(window, colid, cast);
+	cast = get_dis(window, colid, cast);
+
+	int y = get_hit_pos(window, colid, 'y');
+	int x = get_hit_pos(window, colid, 'x');
+
+	// printf("y = %d, x = %d \n", y, x);
+
+	if (window->map->map[y][x] == 'D')
+		window->ray[colid].door_hit = true;
 }
 
-void	get_dis(t_window *window, int col_id, t_cast cast)
+t_cast	get_dis(t_window *window, int col_id, t_cast cast)
 {
 	if (cast.Hwallhit == true)
 		cast.hordis = dis(window->player_x, window->player_y, cast.Hwallx,
@@ -179,9 +187,7 @@ void	get_dis(t_window *window, int col_id, t_cast cast)
 		window->ray[col_id].ray_hit_y = cast.Vwally;
 		window->ray[col_id].distance = cast.verdis;
 	}
-	if (window->map->map[get_hit_pos(window, col_id, 'y')][get_hit_pos(window,
-			col_id, 'x')] == 'D')
-		window->ray[col_id].door_hit = true;
+	return (cast);
 }
 
 int	get_hit_pos(t_window *window, int col_id, char c)
@@ -193,13 +199,13 @@ int	get_hit_pos(t_window *window, int col_id, char c)
 	{
 		x = floor(window->ray[col_id].ray_hit_x / window->TILE_SIZE);
 		if (window->ray[col_id].is_ray_looking_left
-			&& window->ray[col_id].washitver == true)
+			&& window->ray[col_id].washitver == true && x != 0)
 			x -= 1;
 		return (x);
 	}
 	y = floor(window->ray[col_id].ray_hit_y / window->TILE_SIZE);
 	if (window->ray[col_id].is_ray_looking_up
-		&& window->ray[col_id].washitver == false)
+		&& window->ray[col_id].washitver == false && y != 0)
 		y -= 1;
 	return (y);
 }

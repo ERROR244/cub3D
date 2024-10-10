@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/08 12:15:56 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:12:32 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,33 +63,42 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 	return (0);
 }
 
-	// double playerx = (double)(window->player_x / window->TILE_SIZE);
-	// double playery = (double)(window->player_y / window->TILE_SIZE);
-	// int xx = (int)(playerx) - MINI_MAP_SIZE;
-	// int yy = (int)(playery) - MINI_MAP_SIZE;
-	// if (xx < 0)
-	// 	xx = 0;
-	// if (yy < 0)
-	// 	yy = 0;
-	// playerx -= xx;
-	// playery -= yy;
-	// dda_for_line(	((playerx * 32) + 3),
-	// 				((playery * 32) + 6),
-	// 				((playerx * 32) + 3) + cos(window->pa) * 30,
-	// 				((playery * 32) + 6) + sin(window->pa) * 30,
-	// 				window
-	// 			);			// direction
 
 int	put_img(t_window *window)
 {
 	int	ret;
 
 	ret = 0;
+	
+	handle_rotate(window);
+	handle_fb_move(window);
+	
 	rays_3d_cast(window);
 	clear_image(window, window->window_width, window->window_hight, 0x424242);
 	ret = render3d(window, 0, -1);
 	draw_mini_map(window);
 	handle_mouse(window);
+
+
+	
+	double playerx = (double)(window->player_x / window->TILE_SIZE);
+	double playery = (double)(window->player_y / window->TILE_SIZE);
+	int xx = (int)(playerx) - MINI_MAP_SIZE;
+	int yy = (int)(playery) - MINI_MAP_SIZE;
+	if (xx < 0)
+		xx = 0;
+	if (yy < 0)
+		yy = 0;
+	playerx -= xx;
+	playery -= yy;
+	dda_for_line(	((playerx * 32) + 3),
+					((playery * 32) + 6),
+					((playerx * 32) + 3) + cos(window->pa) * 30,
+					((playery * 32) + 6) + sin(window->pa) * 30,
+					window
+				);			// direction
+
+				
 	if (window->update_waidow == true
 		|| window->update_waidow_for_mouse == true)
 	{
@@ -121,6 +130,12 @@ void	init_data(t_window *window, int width, int height)
 	window->update_waidow = true;
 	window->update_waidow_for_mouse = true;
 	window->rays = window->window_width / window->wall_wigth;
+	window->move.forward = 0;
+	window->move.backward = 0;
+	window->move.left = 0;
+	window->move.right = 0;
+	window->move.rotate_left = 0;
+	window->move.rotate_right = 0;
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->window_width,
 			window->window_hight, "cub3D");
@@ -165,12 +180,19 @@ void	graphic_management(t_window *window)
 			&window->img->endian);
 	if (window->img->addr == NULL)
 		exit_error("Failed to get image data address.\n");
-	put_img(window);
-	mlx_loop_hook(window->mlx, put_img, window);
-	mlx_hook(window->window, 02, 1L << 0, key_hook, window);
+
+
+	
 	mlx_hook(window->window, 17, 0L, close_window, window);
+	mlx_hook(window->window, 02, 1L << 0, key_press, window);
+	mlx_loop_hook(window->mlx, put_img, window);
+	mlx_hook(window->window, 03, 1L << 1, key_release, window);
+
+	
+	
+	
+	
 	mlx_loop(window->mlx);
 }
 
-	// mlx_hook(window->window, 6, 1L<<6, kkey_hook, window);
 	// draw_2D_map(window);
