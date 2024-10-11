@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/10 16:14:09 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:51:21 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	handle_door(events event, t_window *window)
 
 	if (event == OpenClose)
 	{
-		window->update_waidow = true;
 		j = (int)(window->player_x / window->TILE_SIZE);
 		i = (int)(window->player_y / window->TILE_SIZE);
 		if (window->map->map[i + 1][j] && (window->map->map[i + 1][j] == 'D'
@@ -51,56 +50,62 @@ int	handle_door(events event, t_window *window)
 		else if (j - 1 >= 0 && (window->map->map[i][j - 1] == 'D'
 			|| window->map->map[i][j - 1] == 'A'))
 			open_close_d(&window->map->map[i][j - 1]);
-		else
-			window->update_waidow = false;
 	}
 	return (0);
 }
 
 int	handle_fb_move(t_window *window)
 {
-	int x;
-	int y;
-	double scale;
+	double x;
+	double y;
 
-	scale = 2;
-	// if (window->ray[window->rays / 2].is_ray_looking_up
-	// 	|| window->ray[window->rays / 2].is_ray_looking_right)
-	// {
-	// 	printf("HERE------------------------\n");
-	// 	scale = 2;
-	// }
-	// if ((window->ray[window->rays / 2].is_ray_looking_left
-	// 	&& window->ray[window->rays / 2].is_ray_looking_up)
-	// 	|| (window->ray[window->rays / 2].is_ray_looking_left
-	// 	&& window->ray[window->rays / 2].is_ray_looking_up))
-	// {
-	// 	scale = 10;
-	// 	printf("there>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-	// }
 	if (window->move.forward == 1)
 	{
-		window->update_waidow = true;
-		x = (window->player_x + (cos(window->pa) * MSPEED * 1));
-		y = (window->player_y + (sin(window->pa) * MSPEED * 1));
-		if (!has_wall_at(x + ((x - window->player_x) * scale), window->player_y, window))
+		x = window->player_x + (cos(window->pa) * MSPEED);
+		y = window->player_y + (sin(window->pa) * MSPEED);
+		if (has_wall_at(x + COLLISION_BUFFER, window->player_y, window))
 			window->player_x = x;
-		if (!has_wall_at(window->player_x, y + ((y - window->player_y) * scale), window))
+		if (has_wall_at(window->player_x, y + COLLISION_BUFFER, window))
 			window->player_y = y;
-		if (window->player_x != x && window->player_y != y)
-			window->update_waidow = false;
 	}
 	else if (window->move.backward == 1)
 	{
-		window->update_waidow = true;
-		x = (window->player_x + (cos(window->pa) * MSPEED * -1));
-		y = (window->player_y + (sin(window->pa) * MSPEED * -1));
-		if (!has_wall_at(x + ((x - window->player_x) * scale), window->player_y, window))
+		x = window->player_x - (cos(window->pa) * MSPEED);
+		y = window->player_y - (sin(window->pa) * MSPEED);
+		if (has_wall_at(x + COLLISION_BUFFER, window->player_y, window))
 			window->player_x = x;
-		if (!has_wall_at(window->player_x, y + ((y - window->player_y) * scale), window))
+		if (has_wall_at(window->player_x, y + COLLISION_BUFFER, window))
 			window->player_y = y;
-		if (window->player_x != x && window->player_y != y)
-			window->update_waidow = false;
+	}
+	return (0);
+}
+
+int	handle_lr_move(t_window *window)
+{
+	double x;
+	double y;
+
+	if (window->move.right == 1)
+	{
+		x = window->player_x + (cos(window->pa + (PI / 2)) * MSPEED);
+		y = window->player_y - (sin(window->pa + (PI / 2)) * MSPEED);
+		
+		
+		if (has_wall_at(x, window->player_y, window))
+			window->player_x = x;
+		if (has_wall_at(window->player_x, y, window))
+			window->player_y = y;
+	}
+	else if (window->move.left == 1)
+	{
+		x = window->player_x + (cos(window->pa - (PI / 2)) * MSPEED);
+		y = window->player_y - (sin(window->pa - (PI / 2)) * MSPEED);
+		
+		
+		if (has_wall_at(x, window->player_y, window))
+			window->player_x = x;
+		if (has_wall_at(window->player_x, y, window))
+			window->player_y = y;
 	}
 	return (0);
 }
@@ -109,14 +114,12 @@ int	handle_rotate(t_window *window)
 {
 	if (window->move.rotate_right == 1)
 	{
-		window->update_waidow = true;
 		window->pa += 0.05;
 		if (window->pa > 2 * PI)
 			window->pa -= 2 * PI;
 	}
 	else if (window->move.rotate_left == 1)
 	{
-		window->update_waidow = true;
 		window->pa -= 0.05;
 		if (window->pa < 0)
 			window->pa += 2 * PI;
@@ -137,13 +140,10 @@ int	handle_mouse(t_window *window)
 	diff = window->mouse_x - x;
 	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x,
 		&window->mouse_y);
-	window->update_waidow_for_mouse = true;
 	if (diff > 0)
 		window->pa += diff * 0.005;
 	else if (diff < 0)
 		window->pa += diff * 0.005;
-	else
-		window->update_waidow_for_mouse = false;
 	if (window->pa < 0)
 		window->pa += TWO_PI;
 	else if (window->pa > TWO_PI)

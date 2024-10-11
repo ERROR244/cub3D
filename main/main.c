@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/08 13:00:21 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:19:55 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	exit_game(t_window *window)
 	free(map->texture_ea);
 	free(map->floor_color);
 	free(map->ceiling_color);
+	free(map->array_length);
 	free_array(map->map);
 	map->map = NULL;
 	window->map->map = NULL;

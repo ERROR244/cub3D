@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/10 16:14:49 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:51:49 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 1.5
+# define MSPEED 2
+#define COLLISION_BUFFER 10
+
+
 
 // # include <mlx.h>
 # include "../Get-Next-Line/get_next_line.h"
@@ -75,6 +78,8 @@ typedef struct s_map
 	int			*floor_color;
 	int			*ceiling_color;
 
+	int			*array_length;
+
 	char		**map;
 }				t_map;
 
@@ -92,6 +97,8 @@ typedef struct s_ray
 	bool		is_ray_looking_up;
 	bool		is_ray_looking_right;
 	bool		is_ray_looking_left;
+
+	void		*img;
 
 	int			col_id;
 }				t_ray;
@@ -168,9 +175,6 @@ typedef struct window
 	int			mouse_y;
 
 	int			TILE_SIZE;
-
-	bool		update_waidow;
-	bool		update_waidow_for_mouse;
 
 	orientation	spawning_dir;
 
@@ -250,6 +254,7 @@ int				handle_rotate(t_window *window);
 int				key_release(int keycode, t_window *window);
 int				key_press(int keycode, t_window *window);
 int				handle_fb_move(t_window *window);
+int				handle_lr_move(t_window *window);
 
 
 int				handle_event(events event, t_window *window);

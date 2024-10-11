@@ -13,7 +13,7 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 		j = 0;
 		while (j < size && ret == 0)
 		{
-			// if (has_wall_at(x + i, y + j, window))
+			// if (!has_wall_at(x + i, y + j, window))
 				ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
 			j++;
 		}

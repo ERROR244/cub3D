@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/10 16:12:32 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:41:09 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,18 @@ int	put_img(t_window *window)
 	int	ret;
 
 	ret = 0;
-	
-	handle_rotate(window);
-	handle_fb_move(window);
-	
+	if (window->move.rotate_right == 1 || window->move.rotate_left == 1)
+		handle_rotate(window);
+	if (window->move.right == 1 || window->move.left == 1)
+		handle_lr_move(window);
+	if (window->move.forward == 1 || window->move.backward == 1)
+		handle_fb_move(window);
+
 	rays_3d_cast(window);
 	clear_image(window, window->window_width, window->window_hight, 0x424242);
 	ret = render3d(window, 0, -1);
 	draw_mini_map(window);
 	handle_mouse(window);
-
 
 	
 	double playerx = (double)(window->player_x / window->TILE_SIZE);
@@ -99,15 +101,8 @@ int	put_img(t_window *window)
 				);			// direction
 
 				
-	if (window->update_waidow == true
-		|| window->update_waidow_for_mouse == true)
-	{
-		mlx_clear_window(window->mlx, window->window);
-		mlx_put_image_to_window(window->mlx, window->window, window->img->img,
-			0, 0);
-	}
-	window->update_waidow = false;
-	window->update_waidow_for_mouse = false;
+	mlx_clear_window(window->mlx, window->window);
+	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
 	return (ret);
 }
 
@@ -127,8 +122,6 @@ double	get_spawninig_orientation(orientation ori)
 
 void	init_data(t_window *window, int width, int height)
 {
-	window->update_waidow = true;
-	window->update_waidow_for_mouse = true;
 	window->rays = window->window_width / window->wall_wigth;
 	window->move.forward = 0;
 	window->move.backward = 0;

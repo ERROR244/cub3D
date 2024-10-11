@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   map_check1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/09 02:36:46 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:51:13 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-orientation	get_sdir(t_window *window, char *c, int i, int j)
+orientation	get_sdir(t_window *window, char c, int i, int j)
 {
-	*c = 'P';
 	window->player_x = j * window->TILE_SIZE;
 	window->player_y = i * window->TILE_SIZE;
-	if (*c == 'N')
+	if (c == 'N')
 		return (North);
-	if (*c == 'S')
+	if (c == 'S')
 		return (South);
-	if (*c == 'E')
+	if (c == 'E')
 		return (East);
-	if (*c == 'W')
+	if (c == 'W')
 		return (West);
 	return (None);
 }
@@ -43,7 +42,10 @@ void	check_characters(char **map, t_window *window, int i, int k)
 				the_map_is_invalid();
 			if ((map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
 					|| map[i][j] == 'W') && ++k >= 0)
-				window->spawning_dir = get_sdir(window, &map[i][j], i, j);
+			{
+				map[i][j] = '0';
+				window->spawning_dir = get_sdir(window, map[i][j], i, j);
+			}
 			j++;
 			if (window->i < j)
 				window->i = j;

@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/08 12:18:06 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:37:22 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,7 @@ int	render3d(t_window *window, int ret, int i)
 				- window->pa);
 		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
 		wall3dhight = (window->TILE_SIZE / distance) * displane;
-		if (window->ray[i].washitver && window->ray[i].is_ray_looking_right)
-			img = window->map->img_no;
-		else if (window->ray[i].washitver && window->ray[i].is_ray_looking_left)
-			img = window->map->img_so;
-		if (!window->ray[i].washitver && window->ray[i].is_ray_looking_up)
-			img = window->map->img_we;
-		else if (!window->ray[i].washitver
-			&& window->ray[i].is_ray_looking_down)
-			img = window->map->img_ea;
-		if (window->ray[i].door_hit == true)
-			img = window->map->door;
+		img = window->ray[i].img;
 		draw_rect(window, round(i * window->wall_wigth),
 			round((window->window_hight / 2) - (wall3dhight / 2)),
 			round(window->wall_wigth), round(wall3dhight), img);
