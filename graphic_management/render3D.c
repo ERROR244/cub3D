@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 11:37:22 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:16:57 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,27 @@ unsigned int	get_color_from_img(t_window *window, void *img, int x, int y)
 int	draw_rect(t_window *window, int x, int y, int width, int height, void *img)
 {
 	unsigned int	color;
+	int				*floor_color;
 	int				ret;
 	int				i;
 	int				j;
-	int				k;
 
-	k = 0;
 	i = 0;
 	ret = 0;
-	(void)img;
+	floor_color = window->map->floor_color;
 	while (i < width && ret == 0)
 	{
 		j = 0;
-		k = 0;
 		while (j < height && ret == 0)
 		{
 			color = get_color_from_img(window, img, x + i, y + j);
 			ret = my_mlx_pixel_put(window, x + i, y + j, color);
 			j++;
-			k += 2;
+		}
+		while (j < window->window_hight && ret == 0)
+		{
+			ret = my_mlx_pixel_put(window, x + i, y + j, create_trgb(0, floor_color[0], floor_color[1], floor_color[2]));
+			j++;
 		}
 		i++;
 	}
@@ -64,7 +66,7 @@ int	render3d(t_window *window, int ret, int i)
 	while (++i < window->rays && ret == 0)
 	{
 		distance = window->ray[i].distance * cos(window->ray[i].ray_a
-				- window->pa);
+					- window->pa);
 		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
 		wall3dhight = (window->TILE_SIZE / distance) * displane;
 		img = window->ray[i].img;

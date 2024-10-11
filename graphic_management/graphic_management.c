@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 11:41:09 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:10:38 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 
 int	put_img(t_window *window)
 {
+	int *ceiling_color;
 	int	ret;
 
 	ret = 0;
+	ceiling_color = window->map->ceiling_color;
 	if (window->move.rotate_right == 1 || window->move.rotate_left == 1)
 		handle_rotate(window);
 	if (window->move.right == 1 || window->move.left == 1)
@@ -77,7 +79,7 @@ int	put_img(t_window *window)
 		handle_fb_move(window);
 
 	rays_3d_cast(window);
-	clear_image(window, window->window_width, window->window_hight, 0x424242);
+	clear_image(window, window->window_width, window->window_hight, create_trgb(0, ceiling_color[0], ceiling_color[1], ceiling_color[2]));
 	ret = render3d(window, 0, -1);
 	draw_mini_map(window);
 	handle_mouse(window);
@@ -141,7 +143,7 @@ void	init_data(t_window *window, int width, int height)
 	window->map->img_ea = mlx_xpm_file_to_image(window->mlx,
 			window->map->texture_ea, &width, &height);
 	window->map->door = mlx_xpm_file_to_image(window->mlx,
-			"./Textures/xpm/wonderland/wonderland_wall_base.xpm", &width,
+			"./Textures/xpm/star_ship/starship_wall_north_HD.xpm", &width,
 			&height);
 	if (!window->map->img_no || !window->map->img_so || !window->map->img_we
 		|| !window->map->img_ea)

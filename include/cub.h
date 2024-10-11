@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/11 11:51:49 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:16:22 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_map
 	void		*img_ea;
 	void		*door;
 
-	int			*floor_color;
 	int			*ceiling_color;
+	int			*floor_color;
 
 	int			*array_length;
 
@@ -234,6 +234,9 @@ t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
 t_cast			find_v_xy_setp(t_window *window, int col_id, t_cast cast);
 double			get_spawninig_orientation(orientation ori);
+int				create_trgb(int t, int r, int g, int b);
+
+
 
 // minimap
 int				draw_mini_map(t_window *window);

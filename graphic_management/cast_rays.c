@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:54 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 11:37:01 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:53:31 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,15 @@ bool	has_wall_at(long x, long y, t_window *window)
 		return (false);
 	if (window->map->array_length[map_grid_index_y] <= map_grid_index_x)
 		return (false);
-	return (window->map->map[map_grid_index_y][map_grid_index_x] == '0');
+	return (window->map->map[map_grid_index_y][map_grid_index_x] == '0'
+			|| window->map->map[map_grid_index_y][map_grid_index_x] == 'A');
 }
 
 double	normalize_angle(double angle)
 {
 	angle = remainder(angle, TWO_PI);
 	if (angle < 0)
-	{
 		angle = TWO_PI + angle;
-	}
 	return (angle);
 }
 

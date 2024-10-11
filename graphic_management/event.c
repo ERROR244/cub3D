@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 12:16:10 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:45:20 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,18 @@ int	handle_fb_move(t_window *window)
 		y = window->player_y + (sin(window->pa) * MSPEED);
 		tmpx = get_tmpx_tmpy_fb('x', window, moveForWard);
 		tmpy = get_tmpx_tmpy_fb('y', window, moveForWard);
-		if (has_wall_at(x + tmpx, window->player_y, window))
-			window->player_x = x;
-		if (has_wall_at(window->player_x, y + tmpy, window))
-			window->player_y = y;
 	}
-	else if (window->move.backward == 1)
+	else
 	{
 		x = window->player_x - (cos(window->pa) * MSPEED);
 		y = window->player_y - (sin(window->pa) * MSPEED);
 		tmpx = get_tmpx_tmpy_fb('x', window, moveBackward);
 		tmpy = get_tmpx_tmpy_fb('y', window, moveBackward);
-		if (has_wall_at(x + tmpx, window->player_y, window))
-			window->player_x = x;
-		if (has_wall_at(window->player_x, y + tmpy, window))
-			window->player_y = y;
 	}
+	if (has_wall_at(x + tmpx, window->player_y, window))
+		window->player_x = x;
+	if (has_wall_at(window->player_x, y + tmpy, window))
+		window->player_y = y;
 	return (0);
 }
 
@@ -116,9 +112,11 @@ int	handle_lr_move(t_window *window)
 	tmpy = 0;
 	if (window->move.right == 1)
 	{
-		x = window->player_x + (cos(window->pa + (PI / 2)) * MSPEED);
-		y = window->player_y - (sin(window->pa + (PI / 2)) * MSPEED);
+		x = window->player_x + (cos(window->pa - (PI / 2)) * MSPEED);
+		y = window->player_y - (sin(window->pa - (PI / 2)) * MSPEED);
 		
+		tmpx = (x - window->player_x) * 2.5;
+		tmpy = (y - window->player_y) * 2.5;
 		
 		
 		if (has_wall_at(x + tmpx, window->player_y, window))
@@ -126,10 +124,14 @@ int	handle_lr_move(t_window *window)
 		if (has_wall_at(window->player_x, y + tmpy, window))
 			window->player_y = y;
 	}
-	else if (window->move.left == 1)
+	else
 	{
-		x = window->player_x + (cos(window->pa - (PI / 2)) * MSPEED);
-		y = window->player_y - (sin(window->pa - (PI / 2)) * MSPEED);
+		x = window->player_x + (cos(window->pa + (PI / 2)) * MSPEED);
+		y = window->player_y - (sin(window->pa + (PI / 2)) * MSPEED);
+		
+
+		tmpx = (x - window->player_x) * 2.5;
+		tmpy = (y - window->player_y) * 2.5;
 		
 		
 		if (has_wall_at(x + tmpx, window->player_y, window))
