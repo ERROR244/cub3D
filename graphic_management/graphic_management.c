@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 19:10:38 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/13 10:34:32 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,15 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 
 int	put_img(t_window *window)
 {
-	int *ceiling_color;
-	int	ret;
-
-	ret = 0;
-	ceiling_color = window->map->ceiling_color;
 	if (window->move.rotate_right == 1 || window->move.rotate_left == 1)
 		handle_rotate(window);
 	if (window->move.right == 1 || window->move.left == 1)
-		handle_lr_move(window);
+		handle_lr_move(window, 0, 0);
 	if (window->move.forward == 1 || window->move.backward == 1)
 		handle_fb_move(window);
-
 	rays_3d_cast(window);
-	clear_image(window, window->window_width, window->window_hight, create_trgb(0, ceiling_color[0], ceiling_color[1], ceiling_color[2]));
-	ret = render3d(window, 0, -1);
+	if (render3d(window, 0, -1) != 0);
+		return (-1);
 	draw_mini_map(window);
 	handle_mouse(window);
 
@@ -105,7 +99,7 @@ int	put_img(t_window *window)
 				
 	mlx_clear_window(window->mlx, window->window);
 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
-	return (ret);
+	return (0);
 }
 
 double	get_spawninig_orientation(orientation ori)

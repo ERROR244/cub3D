@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 18:45:20 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/13 10:32:12 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,43 +101,29 @@ int	handle_fb_move(t_window *window)
 	return (0);
 }
 
-int	handle_lr_move(t_window *window)
+int	handle_lr_move(t_window *window, double x, double y)
 {
-	double x;
-	double y;
-	int	tmpx;
-	int	tmpy;
-
-	tmpx = 0;
-	tmpy = 0;
 	if (window->move.right == 1)
 	{
 		x = window->player_x + (cos(window->pa - (PI / 2)) * MSPEED);
-		y = window->player_y - (sin(window->pa - (PI / 2)) * MSPEED);
-		
-		tmpx = (x - window->player_x) * 2.5;
-		tmpy = (y - window->player_y) * 2.5;
-		
-		
-		if (has_wall_at(x + tmpx, window->player_y, window))
+		y = window->player_y + (sin(window->pa - (PI / 2)) * MSPEED);
+		if (has_wall_at(x + ((x - window->player_x) * 6),
+			y + ((y - window->player_y) * 6), window))
+		{
 			window->player_x = x;
-		if (has_wall_at(window->player_x, y + tmpy, window))
 			window->player_y = y;
+		}
 	}
 	else
 	{
 		x = window->player_x + (cos(window->pa + (PI / 2)) * MSPEED);
-		y = window->player_y - (sin(window->pa + (PI / 2)) * MSPEED);
-		
-
-		tmpx = (x - window->player_x) * 2.5;
-		tmpy = (y - window->player_y) * 2.5;
-		
-		
-		if (has_wall_at(x + tmpx, window->player_y, window))
+		y = window->player_y + (sin(window->pa + (PI / 2)) * MSPEED);
+		if (has_wall_at(x + ((x - window->player_x) * 6),
+			y + ((y - window->player_y) * 6), window))
+		{
 			window->player_x = x;
-		if (has_wall_at(window->player_x, y + tmpy, window))
 			window->player_y = y;
+		}
 	}
 	return (0);
 }

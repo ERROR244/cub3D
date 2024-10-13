@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 19:18:08 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/13 10:09:53 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ int	main(int ac, char **av)
 	window.k = 0;
 	window.TILE_SIZE = 32;
 	map_check(&map, str, &window);
-	print_array_of_int(map.ceiling_color);
-	print_array_of_int(map.floor_color);
 	window.map = &map;
 	graphic_management(&window);
 	exit_game(&window);

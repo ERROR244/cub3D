@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 19:16:57 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:00:02 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	draw_rect(t_window *window, int x, int y, int width, int height, void *img)
 {
 	unsigned int	color;
 	int				*floor_color;
+	int				*ceiling_color;
 	int				ret;
 	int				i;
 	int				j;
@@ -37,8 +38,15 @@ int	draw_rect(t_window *window, int x, int y, int width, int height, void *img)
 	i = 0;
 	ret = 0;
 	floor_color = window->map->floor_color;
+	ceiling_color = window->map->ceiling_color;
 	while (i < width && ret == 0)
 	{
+		j = 0;
+		while (j < y && ret == 0)
+		{
+			ret = my_mlx_pixel_put(window, x + i, j, create_trgb(0, ceiling_color[0], ceiling_color[1], ceiling_color[2]));
+			j++;
+		}
 		j = 0;
 		while (j < height && ret == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/11 19:16:22 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/13 10:32:28 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ int				handle_rotate(t_window *window);
 int				key_release(int keycode, t_window *window);
 int				key_press(int keycode, t_window *window);
 int				handle_fb_move(t_window *window);
-int				handle_lr_move(t_window *window);
+int				handle_lr_move(t_window *window, double x, double y);
 
 
 int				handle_event(events event, t_window *window);
