@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/13 10:32:28 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/16 00:26:00 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ typedef struct s_ray
 typedef struct s_img
 {
 	void		*img;
-	void		*tmp_img;
 	char		*addr;
 	int			bits_per_pixel;
 	int			line_length;
