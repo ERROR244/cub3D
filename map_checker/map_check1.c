@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   map_check1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/09 02:36:46 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:51:13 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-orientation get_sdir(char c)
+orientation	get_sdir(t_window *window, char c, int i, int j)
 {
+	window->player_x = j * window->TILE_SIZE;
+	window->player_y = i * window->TILE_SIZE;
 	if (c == 'N')
 		return (North);
 	if (c == 'S')
@@ -25,30 +27,24 @@ orientation get_sdir(char c)
 	return (None);
 }
 
-void	check_characters(char **map, t_window *window)
+void	check_characters(char **map, t_window *window, int i, int k)
 {
-	int	i;
 	int	j;
-	int k = 0;
 
-	i = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] != '1' && map[i][j] != '0' &&
-					map[i][j] != 'N' && map[i][j] != 'S' &&
-					map[i][j] != 'E' && map[i][j] != 'W' &&
-					map[i][j] != ' ' && map[i][j] != 'D')
+			if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'N'
+				&& map[i][j] != 'S' && map[i][j] != 'E' && map[i][j] != 'W'
+				&& map[i][j] != ' ' && map[i][j] != 'D')
 				the_map_is_invalid();
-			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W')
+			if ((map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
+					|| map[i][j] == 'W') && ++k >= 0)
 			{
-				window->spawning_dir = get_sdir(map[i][j]);
-				k++;
-				map[i][j] = 'P';
-				window->player_x = j * window->TILE_SIZE;
-				window->player_y = i * window->TILE_SIZE;
+				map[i][j] = '0';
+				window->spawning_dir = get_sdir(window, map[i][j], i, j);
 			}
 			j++;
 			if (window->i < j)
@@ -56,72 +52,10 @@ void	check_characters(char **map, t_window *window)
 		}
 		i++;
 	}
-	window->k = i;
 	if (k != 1)
 		the_map_is_invalid();
+	window->k = i;
 }
-
-// int longest_line_size_func(char **map)
-// {
-// 	int i;
-// 	int size;
-// 	int line_size;
-//
-// 	size = -1;
-// 	i = 0;
-// 	while (map[i])
-// 	{
-// 		line_size = ft_strlen(map[i]);
-// 		if (size < line_size)
-// 			size = line_size;
-// 		i++;
-// 	}
-// 	return (size);
-// }
-//
-// char	*get_line_bigger(char *line, int size)
-// {
-// 	char	*ret_line;
-// 	char	c;
-// 	int		i;
-//
-// 	i = 0;
-// 	ret_line = malloc(sizeof(char) * (size + 1));
-// 	while (line[i])
-// 	{
-// 		ret_line[i] = line[i];
-// 		c = line[i];
-// 		i++;
-// 	}
-// 	while (i < size)
-// 	{
-// 		ret_line[i] = c;
-// 		i++;
-// 	}
-// 	ret_line[i] = '\0';
-// 	return (ret_line);
-// }
-
-// char **get_map_updated(char **ptr)
-// {
-// 	char	**map;
-// 	size_t	longest_line_size;
-// 	int		i;
-//
-// 	i = 0;
-// 	longest_line_size = longest_line_size_func(ptr);
-// 	map = malloc(sizeof(char *) * (array_size(ptr) + 1));
-// 	while (ptr[i])
-// 	{
-// 		if (ft_strlen(ptr[i]) < longest_line_size)
-// 			map[i] = get_line_bigger(ptr[i], longest_line_size);
-// 		else
-// 			map[i] = ft_strdup(ptr[i]);
-// 		i++;
-// 	}
-// 	map[i] = NULL;
-// 	return (map);
-// }
 
 void	is_the_map_surrounded_by_walls(char **ptr)
 {
@@ -138,8 +72,9 @@ void	is_the_map_surrounded_by_walls(char **ptr)
 		y = 0;
 		while (map[x][y])
 		{
-			if ((map[x][y] == '0' || map[x][y] == 'N' || map[x][y] == 'D') &&
-					surrounded_with_only_spaces_and_walls(map, x, y, lines) == false)
+			if ((map[x][y] == '0' || map[x][y] == 'N' || map[x][y] == 'D')
+				&& surrounded_with_only_spaces_and_walls(map, x, y,
+					lines) == false)
 				the_map_is_invalid();
 			y++;
 		}

@@ -25,19 +25,17 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
 	ptr = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (ptr == 0)
-		return (0);
+	if (!ptr)
+		return (NULL);
 	i = 0;
 	j = 0;
-	while (s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
+	while (s1[j])
+		ptr[i++] = s1[j++];
+	j = 0;
 	while (s2[j])
 		ptr[i++] = s2[j++];
 	ptr[i] = '\0';
-    free((char *)s1);
-    free((char *)s2);
+	free((char *)s1);
+	free((char *)s2);
 	return (ptr);
 }

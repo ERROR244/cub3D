@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/11 12:01:31 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/13 10:09:53 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-char	**return_map(int fd, int i)
+char	**freed_split(char *str, char c)
 {
-	char	*ptr;
-	char	*str;
 	char	**sptr;
 
-	ptr = get_next_line(fd);
-	if (ptr == NULL)
-		the_map_is_invalid();
-	str = ptr;
+	sptr = ft_split(str, c);
+	free(str);
+	return (sptr);
+}
+
+char	**return_map(int fd, char *ptr, char *str, int i)
+{
 	while (ptr != NULL)
 	{
 		ptr = get_next_line(fd);
@@ -44,15 +45,14 @@ char	**return_map(int fd, int i)
 			i++;
 		str = ft_strjoin(str, ptr);
 	}
-	close(fd);
-	sptr = ft_split(str, '\n');
-	free(str);
-	return (sptr);
+	return (freed_split(str, '\n'));
 }
 
 char	**name_check(char *str)
 {
-	int	i;
+	char	**sptr;
+	char	*ptr;
+	int		i;
 
 	i = 0;
 	while (str[0] && str[i + 1])
@@ -68,58 +68,50 @@ char	**name_check(char *str)
 	i = open(str, O_RDONLY);
 	if (i == -1)
 		invalid_file_name1();
-	return (return_map(i, 0));
+	ptr = get_next_line(i);
+	if (ptr == NULL)
+		the_map_is_invalid();
+	sptr = return_map(i, ptr, ptr, 0);
+	close(i);
+	return (sptr);
 }
 
-void exit_game(t_window *window)
+void	exit_game(t_window *window)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = window->map;
-    free(map->texture_no);
+	free(map->texture_no);
 	free(map->texture_so);
 	free(map->texture_we);
 	free(map->texture_ea);
-    free(map->floor_color);
-    free(map->ceiling_color);
-    free_array(map->map);
+	free(map->floor_color);
+	free(map->ceiling_color);
+	free(map->array_length);
+	free_array(map->map);
 	map->map = NULL;
 	window->map->map = NULL;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_window	window;
-    t_map       map;
-    char		**str;
+	t_map		map;
+	char		**str;
 
 	if (ac != 2)
 		invalid_arg();
 	str = name_check(av[1]);
 	if (str == 0)
-    {
+	{
 		the_map_is_invalid();
-    }
+	}
 	window.i = 0;
 	window.k = 0;
 	window.TILE_SIZE = 32;
-    map_check(&map, str, &window);
+	map_check(&map, str, &window);
 	window.map = &map;
 	graphic_management(&window);
-
-
-
-	// printf("------------------------------>%s\n", map.texture_no);
-	// printf("------------------------------>%s\n", map.texture_so);
-	// printf("------------------------------>%s\n", map.texture_we);
-	// printf("------------------------------>%s\n", map.texture_ea);
-	//
-    // print_array_of_int(map.ceiling_color);
-    // print_array_of_int(map.floor_color);
-	//
-    // print_array(map.map);
-
 	exit_game(&window);
-
-    return (0);
+	return (0);
 }

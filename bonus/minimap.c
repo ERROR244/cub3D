@@ -13,7 +13,8 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 		j = 0;
 		while (j < size && ret == 0)
 		{
-			ret = my_mlx_pixel_put(window, x + i, y + j, color);
+			// if (!has_wall_at(x + i, y + j, window))
+				ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
 			j++;
 		}
 		i++;
@@ -85,9 +86,9 @@ int draw_mini_map(t_window *window)
 			if (map[i][j] == '0' || map[i][j] == 'P')
 				ret = draw_mini_squar(window, x, y, 0x0000FF, 16);
 			else if (map[i][j] == 'D')
-				ret = draw_mini_squar(window, x, y, 0x00FF00, 16);
-			else if (map[i][j] == 'A')
 				ret = draw_mini_squar(window, x, y, 0xFF0000, 16);
+			else if (map[i][j] == 'A')
+				ret = draw_mini_squar(window, x, y, 0x00FF00, 16);
 			else if (map[i][j] == '1' || map[i][j] == ' ' || map[i][j] == '\0')
 				ret = draw_mini_squar(window, x, y, 0x00FFFF, 16);
 			j++;
@@ -124,22 +125,6 @@ int draw_mini_map(t_window *window)
 			k++;
 		}
 	}
-	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0xF0F0F0, 6);
-	dda_for_line(	((playerx * 32) + 3),
-					((playery * 32) + 6),
-					((playerx * 32) + 3) + cos(window->pa) * 20,
-					((playery * 32) + 6) + sin(window->pa) * 20,
-					window
-				);			// direction
-
-    // for (int i = 0; i < window->rays; i++)
-    // {
-    //     dda_for_line(	(playerx*16),
-	// 					(playery*16),
-	// 					(window->ray[i].ray_hit_x / window->TILE_SIZE)*16,
-	// 					(window->ray[i].ray_hit_y / window->TILE_SIZE)*16,
-	// 					window
-	// 				);
-    // }
+	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 4);
 	return (ret);
 }
