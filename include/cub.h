@@ -20,7 +20,7 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 2
+# define MSPEED 1
 #define COLLISION_BUFFER 10
 
 

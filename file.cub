@@ -1,5 +1,5 @@
 NO ./Textures/xpm/egypt/egypt_wall_east.xpm
-WE ./Textures/xpm/star_ship/starship_wall_east_HD.xpm
+WE ./Textures/xpm/star_ship/starship_wall_east.xpm
 SO ./Textures/xpm/star_wars/star_wars_wall_north.xpm
 EA ./Textures/xpm/star_wars/star_wars_wall_east.xpm
 
