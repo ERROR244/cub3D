@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:54 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 18:53:31 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:06:39 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,6 @@ void	cast_rays(t_window *window, int colid)
 	int y = get_hit_pos(window, colid, 'y');
 	int x = get_hit_pos(window, colid, 'x');
 
-	// printf("y = %d, x = %d \n", y, x);
-
 	if (window->map->map[y][x] == 'D')
 		window->ray[colid].door_hit = true;
 }
@@ -206,16 +204,16 @@ int	get_hit_pos(t_window *window, int col_id, char c)
 void git_ray_img(t_window *window, int i)
 {
 	if (window->ray[i].washitver && window->ray[i].is_ray_looking_right)
-		window->ray[i].img = window->map->img_no;
+		window->ray[i].img = &window->texture[0];							 // window->map->img_no;
 	else if (window->ray[i].washitver && window->ray[i].is_ray_looking_left)
-		window->ray[i].img = window->map->img_so;
+		window->ray[i].img = &window->texture[1];							 // window->map->img_so;
 	if (!window->ray[i].washitver && window->ray[i].is_ray_looking_up)
-		window->ray[i].img = window->map->img_we;
+		window->ray[i].img = &window->texture[2];							 // window->map->img_we;
 	else if (!window->ray[i].washitver
 		&& window->ray[i].is_ray_looking_down)
-		window->ray[i].img = window->map->img_ea;
+		window->ray[i].img = &window->texture[3];							 // window->map->img_ea;
 	if (window->ray[i].door_hit == true)
-		window->ray[i].img = window->map->door;
+		window->ray[i].img = &window->texture[4];							 // window->map->door;
 }
 
 void	rays_3d_cast(t_window *window)

@@ -6,23 +6,18 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/12 16:00:02 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:20:05 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-unsigned int	get_color_from_img(t_window *window, void *img, int x, int y)
+unsigned int	get_color_from_img(t_window *window, t_img *img, int x, int y)
 {
 	unsigned int	color;
 
-	window->texture->img = img;
-	window->texture->addr = mlx_get_data_addr(window->texture->img,
-			&window->texture->bits_per_pixel, &window->texture->line_length,
-			&window->texture->endian);
-	if (window->texture->addr == NULL)
-		exit_error("Failed to get image data address.\n");
-	color = git_tpixel(window, x % SIZE, y % SIZE);
+	(void)window;
+	color = git_tpixel(img, x % SIZE, y % SIZE);
 	return (color);
 }
 
@@ -39,6 +34,7 @@ int	draw_rect(t_window *window, int x, int y, int width, int height, void *img)
 	ret = 0;
 	floor_color = window->map->floor_color;
 	ceiling_color = window->map->ceiling_color;
+	// printf("%d \n", width);
 	while (i < width && ret == 0)
 	{
 		j = 0;

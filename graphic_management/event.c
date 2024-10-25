@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/13 10:32:12 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:45:00 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,31 +145,51 @@ int	handle_rotate(t_window *window)
 	return (0);
 }
 
-int	handle_mouse(t_window *window)
+int fft_abs(int x)
 {
-	int	x;
-	int	y;
-	int	diff;
-	static int a = 0;
+	if (x < 0)
+		return (-x);
+	return (x);
+}
 
-	x = 0;
-	y = 0;
+int handle_mouse(t_window *window)
+{
+	int x = 0;
+	int y = 0;
+
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
-	diff = window->mouse_x - x;
-	mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x,
-		&window->mouse_y);
-	if (diff > 0)
-		window->pa += diff * 0.005;
-	else if (diff < 0)
-		window->pa += diff * 0.005;
-	if (window->pa < 0)
-		window->pa += TWO_PI;
-	else if (window->pa > TWO_PI)
-		window->pa = 0;
-	if (a++ == 0)
-		window->pa = get_spawninig_orientation(window->spawning_dir);
+	if (x > 0 && y > 0 && y < 900)
+	{
+		int hold = x - window->mouse_x;
+		mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
+		if (hold > 0)
+		{
+			window->pa += fft_abs(hold * 4) * 0.001;
+			if (window->pa > 2*PI)
+				window->pa -= 2*PI;
+		}
+		else if (hold < 0)
+		{
+			window->pa -= fft_abs(hold * 4) * 0.001;
+			if (window->pa < 0)
+				window->pa += 2*PI;
+		}
+	}
+	if (x == 0)
+	{
+		window->pa -= 0.04;
+		if (window->pa < 0)
+			window->pa += 2*PI;
+	}
+	else if (x >= 1919)
+	{
+		window->pa += 0.04;
+		if (window->pa < 0)
+			window->pa -= 2*PI;
+	}
 	return (0);
 }
+
 
 int		key_press(int keycode, t_window *window)
 {
@@ -189,6 +209,8 @@ int		key_press(int keycode, t_window *window)
 		handle_door(OpenClose, window);
 	else if (keycode == 65307)
 		close_window(window);
+	else if (keycode == 101)
+		window->shoot = true;
 	return (0);
 }
 
@@ -206,5 +228,7 @@ int		key_release(int keycode, t_window *window)
 		window->move.rotate_left = 0;
 	else if (keycode == 65363)
 		window->move.rotate_right = 0;
+	else if (keycode == 101)
+		window->shoot = false;
 	return (0);
 }
