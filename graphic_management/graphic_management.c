@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/14 09:51:08 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:28:29 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	init_data(t_window *window, int width, int height)
 	window->map->img_ea = mlx_xpm_file_to_image(window->mlx,
 			window->map->texture_ea, &width, &height);
 	window->map->door = mlx_xpm_file_to_image(window->mlx,
-			"./Textures/xpm/star_ship/starship_wall_north_HD.xpm", &width,
+			"./Textures/xpm/egypt/dpp1.xpm", &width,
 			&height);
 	if (!window->map->img_no || !window->map->img_so || !window->map->img_we
 		|| !window->map->img_ea)
