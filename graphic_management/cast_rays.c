@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:54 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/08 12:07:31 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:06:39 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 bool	has_wall_at(long x, long y, t_window *window)
 {
-	int	j;
 	int	map_grid_index_x;
 	int	map_grid_index_y;
 
@@ -22,24 +21,18 @@ bool	has_wall_at(long x, long y, t_window *window)
 	map_grid_index_y = (int)(y / window->TILE_SIZE);
 	if (x < 0 || x > window->i * window->TILE_SIZE || y < 0 || y > window->k
 		* window->TILE_SIZE)
-		return (true);
-	j = 0;
-	while (window->map->map[map_grid_index_y][j] && j < map_grid_index_x)
-		j++;
-	if (j != map_grid_index_x)
-		return (true);
-	return (window->map->map[map_grid_index_y][map_grid_index_x] != '0'
-		&& window->map->map[map_grid_index_y][map_grid_index_x] != 'P'
-		&& window->map->map[map_grid_index_y][map_grid_index_x] != 'A');
+		return (false);
+	if (window->map->array_length[map_grid_index_y] <= map_grid_index_x)
+		return (false);
+	return (window->map->map[map_grid_index_y][map_grid_index_x] == '0'
+			|| window->map->map[map_grid_index_y][map_grid_index_x] == 'A');
 }
 
 double	normalize_angle(double angle)
 {
 	angle = remainder(angle, TWO_PI);
 	if (angle < 0)
-	{
 		angle = TWO_PI + angle;
-	}
 	return (angle);
 }
 
@@ -100,7 +93,7 @@ t_cast	find_h_xy_wall_hit(t_window *window, int col_id, t_cast cast)
 		&& cast.nexthorztouchx < window->i * window->TILE_SIZE
 		&& cast.nexthorztouchy < window->k * window->TILE_SIZE)
 	{
-		if (has_wall_at(cast.nexthorztouchx, cast.nexthorztouchy, window))
+		if (!has_wall_at(cast.nexthorztouchx, cast.nexthorztouchy, window))
 		{
 			if (window->ray[col_id].is_ray_looking_up)
 				cast.nexthorztouchy++;
@@ -124,7 +117,7 @@ t_cast	find_v_xy_wall_hit(t_window *window, int col_id, t_cast cast)
 		&& cast.nextvertouchx < window->i * window->TILE_SIZE
 		&& cast.nextvertouchy < window->k * window->TILE_SIZE)
 	{
-		if (has_wall_at(cast.nextvertouchx, cast.nextvertouchy, window))
+		if (!has_wall_at(cast.nextvertouchx, cast.nextvertouchy, window))
 		{
 			if (window->ray[col_id].is_ray_looking_left)
 				cast.nextvertouchx++;
@@ -154,10 +147,16 @@ void	cast_rays(t_window *window, int colid)
 	cast = find_h_xy_wall_hit(window, colid, cast);
 	cast = find_v_xy_setp(window, colid, cast);
 	cast = find_v_xy_wall_hit(window, colid, cast);
-	get_dis(window, colid, cast);
+	cast = get_dis(window, colid, cast);
+
+	int y = get_hit_pos(window, colid, 'y');
+	int x = get_hit_pos(window, colid, 'x');
+
+	if (window->map->map[y][x] == 'D')
+		window->ray[colid].door_hit = true;
 }
 
-void	get_dis(t_window *window, int col_id, t_cast cast)
+t_cast	get_dis(t_window *window, int col_id, t_cast cast)
 {
 	if (cast.Hwallhit == true)
 		cast.hordis = dis(window->player_x, window->player_y, cast.Hwallx,
@@ -179,9 +178,7 @@ void	get_dis(t_window *window, int col_id, t_cast cast)
 		window->ray[col_id].ray_hit_y = cast.Vwally;
 		window->ray[col_id].distance = cast.verdis;
 	}
-	if (window->map->map[get_hit_pos(window, col_id, 'y')][get_hit_pos(window,
-			col_id, 'x')] == 'D')
-		window->ray[col_id].door_hit = true;
+	return (cast);
 }
 
 int	get_hit_pos(t_window *window, int col_id, char c)
@@ -193,15 +190,30 @@ int	get_hit_pos(t_window *window, int col_id, char c)
 	{
 		x = floor(window->ray[col_id].ray_hit_x / window->TILE_SIZE);
 		if (window->ray[col_id].is_ray_looking_left
-			&& window->ray[col_id].washitver == true)
+			&& window->ray[col_id].washitver == true && x != 0)
 			x -= 1;
 		return (x);
 	}
 	y = floor(window->ray[col_id].ray_hit_y / window->TILE_SIZE);
 	if (window->ray[col_id].is_ray_looking_up
-		&& window->ray[col_id].washitver == false)
+		&& window->ray[col_id].washitver == false && y != 0)
 		y -= 1;
 	return (y);
+}
+
+void git_ray_img(t_window *window, int i)
+{
+	if (window->ray[i].washitver && window->ray[i].is_ray_looking_right)
+		window->ray[i].img = &window->texture[0];							 // window->map->img_no;
+	else if (window->ray[i].washitver && window->ray[i].is_ray_looking_left)
+		window->ray[i].img = &window->texture[1];							 // window->map->img_so;
+	if (!window->ray[i].washitver && window->ray[i].is_ray_looking_up)
+		window->ray[i].img = &window->texture[2];							 // window->map->img_we;
+	else if (!window->ray[i].washitver
+		&& window->ray[i].is_ray_looking_down)
+		window->ray[i].img = &window->texture[3];							 // window->map->img_ea;
+	if (window->ray[i].door_hit == true)
+		window->ray[i].img = &window->texture[4];							 // window->map->door;
 }
 
 void	rays_3d_cast(t_window *window)
@@ -224,6 +236,7 @@ void	rays_3d_cast(t_window *window)
 		w->ray[i].is_ray_looking_left = !w->ray[i].is_ray_looking_right;
 		w->ray[i].door_hit = false;
 		cast_rays(w, i);
+		git_ray_img(w, i);
 		w->ray_a += FOV_ANGLE / w->rays;
 		i++;
 	}

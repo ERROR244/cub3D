@@ -13,7 +13,8 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 		j = 0;
 		while (j < size && ret == 0)
 		{
-			ret = my_mlx_pixel_put(window, x + i, y + j, color);
+			// if (!has_wall_at(x + i, y + j, window))
+				ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
 			j++;
 		}
 		i++;
@@ -124,15 +125,6 @@ int draw_mini_map(t_window *window)
 			k++;
 		}
 	}
-	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 6);
-    // for (int i = 0; i < window->rays; i++)
-    // {
-    //     dda_for_line(	(playerx*16),
-	// 					(playery*16),
-	// 					(window->ray[i].ray_hit_x / window->TILE_SIZE)*16,
-	// 					(window->ray[i].ray_hit_y / window->TILE_SIZE)*16,
-	// 					window
-	// 				);
-    // }
+	ret = draw_mini_squar(window, (playery * 16), (playerx * 16), 0x00000, 4);
 	return (ret);
 }

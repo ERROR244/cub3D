@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:42 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/08/05 09:47:57 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:19:17 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,29 @@ char	*get_texture(char *str)
 	return (ft_strdup(str));
 }
 
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+char	**get_map(char **str)
+{
+	char	**map;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = array_size(str);
+	map = malloc(sizeof(char *) * (len + 1));
+	while (str[i])
+	{
+		map[i] = ft_strdup(str[i]);
+		i++;
+	}
+	map[i] = NULL;
+	return (map);
+}
+
 int	*get_color(char *str)
 {
 	char	**ptr;
@@ -64,24 +87,6 @@ int	*get_color(char *str)
 	color[2] = ft_atoi(ptr[2]);
 	free_array(ptr);
 	return (color);
-}
-
-char	**get_map(char **str)
-{
-	char	**map;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = array_size(str);
-	map = malloc(sizeof(char *) * (len + 1));
-	while (str[i])
-	{
-		map[i] = ft_strdup(str[i]);
-		i++;
-	}
-	map[i] = NULL;
-	return (map);
 }
 
 void	check_texture_and_color(t_map *map, char **str)
