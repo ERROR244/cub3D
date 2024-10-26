@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:40:02 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:28:56 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	handle_fb_move(t_window *window)
 
 int	handle_lr_move(t_window *window, double x, double y)
 {
-	if (window->move.right != 1)
+	if (window->move.right == 1)
 	{
 		x = window->player_x + (cos(window->pa - (PI / 2)) * MSPEED);
 		y = window->player_y + (sin(window->pa - (PI / 2)) * MSPEED);
@@ -152,8 +152,29 @@ int fft_abs(int x)
 	return (x);
 }
 
-int handle_mouse_plus(int x, t_window *window)
+int handle_mouse(t_window *window)
 {
+	int x = 0;
+	int y = 0;
+
+	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
+	if (x > 0 && y > 0 && y < 900)
+	{
+		int hold = x - window->mouse_x;
+		mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
+		if (hold > 0)
+		{
+			window->pa += fft_abs(hold * 4) * 0.001;
+			if (window->pa > 2*PI)
+				window->pa -= 2*PI;
+		}
+		else if (hold < 0)
+		{
+			window->pa -= fft_abs(hold * 4) * 0.001;
+			if (window->pa < 0)
+				window->pa += 2*PI;
+		}
+	}
 	if (x == 0)
 	{
 		window->pa -= 0.04;
@@ -169,32 +190,6 @@ int handle_mouse_plus(int x, t_window *window)
 	return (0);
 }
 
-int handle_mouse(t_window *window)
-{
-	int x = 0;
-	int y = 0;
-
-	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
-	if (x > 0 && y > 0 && y < 900)
-	{
-		int hold = x - window->mouse_x;
-		mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
-		if (hold > 0)
-		{
-			window->pa += fft_abs(hold * 4) * 0.0008;
-			if (window->pa > 2*PI)
-				window->pa -= 2*PI;
-		}
-		else if (hold < 0)
-		{
-			window->pa -= fft_abs(hold * 4) * 0.0008;
-			if (window->pa < 0)
-				window->pa += 2*PI;
-		}
-	}
-	handle_mouse_plus(x, window);
-	return (0);
-}
 
 int		key_press(int keycode, t_window *window)
 {
@@ -203,9 +198,9 @@ int		key_press(int keycode, t_window *window)
 	else if (keycode == 115)
 		window->move.backward = 1;
 	else if (keycode == 97)
-		window->move.left = 1;
-	else if (keycode == 100)
 		window->move.right = 1;
+	else if (keycode == 100)
+		window->move.left = 1;
 	else if (keycode == 65361)
 		window->move.rotate_left = 1;
 	else if (keycode == 65363)
@@ -214,6 +209,8 @@ int		key_press(int keycode, t_window *window)
 		handle_door(OpenClose, window);
 	else if (keycode == 65307)
 		close_window(window);
+	else if (keycode == 101)
+		window->shoot = true;
 	return (0);
 }
 
@@ -224,12 +221,14 @@ int		key_release(int keycode, t_window *window)
 	else if (keycode == 115)
 		window->move.backward = 0;
 	else if (keycode == 97)
-		window->move.left = 0;
-	else if (keycode == 100)
 		window->move.right = 0;
+	else if (keycode == 100)
+		window->move.left = 0;
 	else if (keycode == 65361)
 		window->move.rotate_left = 0;
 	else if (keycode == 65363)
 		window->move.rotate_right = 0;
+	else if (keycode == 101)
+		window->shoot = false;
 	return (0);
 }

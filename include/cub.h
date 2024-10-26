@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/13 10:32:28 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:12:49 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,6 @@ typedef struct s_map
 	char		*texture_we;
 	char		*texture_ea;
 
-	void		*img_no;
-	void		*img_so;
-	void		*img_we;
-	void		*img_ea;
-	void		*door;
-
 	int			*ceiling_color;
 	int			*floor_color;
 
@@ -82,6 +76,15 @@ typedef struct s_map
 
 	char		**map;
 }				t_map;
+
+typedef struct s_img
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_img;
 
 typedef struct s_ray
 {
@@ -98,20 +101,10 @@ typedef struct s_ray
 	bool		is_ray_looking_right;
 	bool		is_ray_looking_left;
 
-	void		*img;
+	t_img		*img;
 
 	int			col_id;
 }				t_ray;
-
-typedef struct s_img
-{
-	void		*img;
-	void		*tmp_img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_img;
 
 typedef struct
 {
@@ -160,6 +153,8 @@ typedef struct window
 	t_ray		*ray;
 	t_img		*img;
 	t_img		*texture;
+	t_img		*txt;
+	t_img		*anm;
 
 	int			window_width;
 	int			window_hight;
@@ -182,6 +177,8 @@ typedef struct window
 
 	int			i;
 	int			k;
+
+	bool		shoot;
 }				t_window;
 
 // tmp
@@ -227,14 +224,16 @@ void			rays_3d_cast(t_window *window);
 int				render3d(t_window *window, int ret, int i);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
-void			clear_image(t_window *window, int width, int height, int color);
-unsigned int	git_tpixel(t_window *window, int x, int y);
+unsigned int	get_pixel_color(char *src_addr, int x, int y, int line_length, int bits_per_pixel);
+// unsigned int	git_tpixel(t_window *window, int x, int y);
 int				get_hit_pos(t_window *window, int col_id, char c);
 t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
 t_cast			find_v_xy_setp(t_window *window, int col_id, t_cast cast);
 double			get_spawninig_orientation(orientation ori);
 int				create_trgb(int t, int r, int g, int b);
+void			init_texture(t_window *window, int width, int height);
+void			init_anm(t_window *window);
 
 
 
@@ -262,5 +261,6 @@ int				handle_lr_move(t_window *window, double x, double y);
 
 int				handle_event(events event, t_window *window);
 int				handle_mouse(t_window *window);
+void	invalid(void);
 
 #endif

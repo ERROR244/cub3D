@@ -27,7 +27,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Wextra  -ggdb -fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror -ggdb -fsanitize=address -g3
 MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}
@@ -48,6 +48,12 @@ fclean:		clean remove
 	@rm -f ${NAME}
 
 re:		fclean all
+
+push :
+	@make fclean
+	@git add .
+	@git commit -m "cub3D"
+	@git push origin Sfayga
 
 .SECONDARY : ${OBJM}
 .PHONY: all clean fclean re
