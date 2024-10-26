@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/25 11:45:00 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:28:56 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,9 +198,9 @@ int		key_press(int keycode, t_window *window)
 	else if (keycode == 115)
 		window->move.backward = 1;
 	else if (keycode == 97)
-		window->move.left = 1;
-	else if (keycode == 100)
 		window->move.right = 1;
+	else if (keycode == 100)
+		window->move.left = 1;
 	else if (keycode == 65361)
 		window->move.rotate_left = 1;
 	else if (keycode == 65363)
@@ -221,9 +221,9 @@ int		key_release(int keycode, t_window *window)
 	else if (keycode == 115)
 		window->move.backward = 0;
 	else if (keycode == 97)
-		window->move.left = 0;
-	else if (keycode == 100)
 		window->move.right = 0;
+	else if (keycode == 100)
+		window->move.left = 0;
 	else if (keycode == 65361)
 		window->move.rotate_left = 0;
 	else if (keycode == 65363)

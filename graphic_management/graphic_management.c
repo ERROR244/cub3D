@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/25 11:50:13 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:31:03 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,8 @@ unsigned int get_pixel_color(char *src_addr, int x, int y, int line_length, int 
     return *(unsigned int *)pixel;
 }
 
-unsigned int	git_tpixel(t_img *img, int x, int y)
-{
-	unsigned int	ret;
-	char			*dst;
 
-	ret = 0;
-	if (y < 0)
-		y = 0;
-	if (x < 0)
-		x = 0;
-	if (x >= 0 && x < SIZE && y >= 0 && y < SIZE)
-	{
-		dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-		ret = *(unsigned int *)dst;
-	}
-	return (ret);
-}
+
 
 int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 {
@@ -167,7 +152,7 @@ void init_texture(t_window *window, int width, int height)
 	window->texture[1].img = mlx_xpm_file_to_image(window->mlx, window->map->texture_so, &width, &height);
 	window->texture[2].img = mlx_xpm_file_to_image(window->mlx, window->map->texture_we, &width, &height);
 	window->texture[3].img = mlx_xpm_file_to_image(window->mlx, window->map->texture_ea, &width, &height);
-	window->texture[4].img =  mlx_xpm_file_to_image(window->mlx, "./Textures/xpm/star_ship/starship_wall_north_HD.xpm", &width, &height);
+	window->texture[4].img =  mlx_xpm_file_to_image(window->mlx, "./Textures/xpm/egypt/dpp1.xpm", &width, &height);
 	if (!window->texture[0].img || !window->texture[1].img || !window->texture[2].img || !window->texture[3].img || !window->texture[4].img)
 		the_textures_is_invalid();
 

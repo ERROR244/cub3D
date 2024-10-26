@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/25 11:44:49 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:12:49 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct window
 	t_ray		*ray;
 	t_img		*img;
 	t_img		*texture;
+	t_img		*txt;
 	t_img		*anm;
 
 	int			window_width;
@@ -224,7 +225,7 @@ int				render3d(t_window *window, int ret, int i);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
 unsigned int	get_pixel_color(char *src_addr, int x, int y, int line_length, int bits_per_pixel);
-unsigned int	git_tpixel(t_img *img, int x, int y);
+// unsigned int	git_tpixel(t_window *window, int x, int y);
 int				get_hit_pos(t_window *window, int col_id, char c);
 t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
