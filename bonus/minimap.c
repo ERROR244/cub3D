@@ -13,8 +13,7 @@ int draw_mini_squar(t_window *window, double y, double x, int color, int size)
 		j = 0;
 		while (j < size && ret == 0)
 		{
-			// if (!has_wall_at(x + i, y + j, window))
-				ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
+			ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
 			j++;
 		}
 		i++;
@@ -32,8 +31,8 @@ int ft_abs(int x)
 int draw_mini_map(t_window *window)
 {
 	char **map;
-	double playerx = (double)(window->player_x / window->TILE_SIZE);
-	double playery = (double)(window->player_y / window->TILE_SIZE);
+	double playerx = (double)(window->player_x / window->tile_size);
+	double playery = (double)(window->player_y / window->tile_size);
 	int i;
 	int j;
 	int x = 0;

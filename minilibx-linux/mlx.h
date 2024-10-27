@@ -78,7 +78,7 @@ int	mlx_get_color_value(void *mlx_ptr, int color);
 
 
 /*
-** dealing with Events
+** dealing with t_events
 */
 
 int	mlx_mouse_hook (void *win_ptr, int (*funct_ptr)(), void *param);
@@ -118,7 +118,7 @@ int	mlx_destroy_image(void *mlx_ptr, void *img_ptr);
 int	mlx_destroy_display(void *mlx_ptr);
 
 /*
-**  generic hook system for all events, and minilibX functions that
+**  generic hook system for all t_events, and minilibX functions that
 **    can be hooked. Some macro and defines from X11/X.h are needed here.
 */
 

@@ -13,7 +13,7 @@ MiniLibX - Simple X-Window Interface Library for students
 .SH DESCRIPTION
 MiniLibX is an easy way to create graphical software,
 without any X-Window programming knowledge. It provides
-simple window creation, a drawing tool, image and basic events
+simple window creation, a drawing tool, image and basic t_events
 management.
 
 .SH X-WINDOW CONCEPT
@@ -29,7 +29,7 @@ On the other side, the X-Server manages the screen, keyboard and mouse
 .br
 A network connection must be established between these two entities to send
 drawing orders (from the software to the X-Server), and keyboard/mouse
-events (from the X-Server to the software).
+t_events (from the X-Server to the software).
 
 .SH INCLUDE FILE
 .B mlx.h
@@ -65,7 +65,7 @@ All other MiniLibX functions are described in the following man pages:
 : manipulate images
 .TP 20
 .B mlx_loop
-: handle keyboard or mouse events
+: handle keyboard or mouse t_events
 
 .SH LINKING MiniLibX
 To use MiniLibX functions, you'll need to link

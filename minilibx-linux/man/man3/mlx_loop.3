@@ -1,6 +1,6 @@
 .TH MiniLibX 3 "September 19, 2002"
 .SH NAME
-MiniLibX - Handle events
+MiniLibX - Handle t_events
 .SH SYNOPSYS
 
 .nf
@@ -43,17 +43,17 @@ MiniLibX - Handle events
 .I void *mlx_ptr, int (*funct_ptr)(), void *param
 );
 
-.SH X-WINDOW EVENTS
+.SH X-WINDOW t_events
 
 The X-Window system is bi-directionnal. On one hand, the program sends orders to
 the screen to display pixels, images, and so on. On the other hand,
 it can get information from the keyboard and mouse associated to
-the screen. To do so, the program receives "events" from the keyboard or the
+the screen. To do so, the program receives "t_events" from the keyboard or the
 mouse.
 
 .SH DESCRIPTION
 
-To receive events, you must use
+To receive t_events, you must use
 .B mlx_loop
 (). This function never returns. It is an infinite loop that waits for
 an event, and then calls a user-defined function associated with this event.
@@ -62,7 +62,7 @@ A single parameter is needed, the connection identifier
 (see the
 .B mlx manual).
 
-You can assign different functions to the three following events:
+You can assign different functions to the three following t_events:
 .br
 - A key is pressed
 .br
@@ -111,7 +111,7 @@ MiniLibX.
 
 .I param
 is the address specified in the mlx_*_hook calls. This address is never
-used nor modified by the MiniLibX. On key and mouse events, additional
+used nor modified by the MiniLibX. On key and mouse t_events, additional
 information is passed:
 .I keycode
 tells you which key is pressed (look for the X11 include file "keysymdef.h"),
@@ -123,8 +123,8 @@ tells you which key is pressed (look for the X11 include file "keysymdef.h"),
 .I button
 tells you which mouse button was pressed.
 
-.SH GOING FURTHER WITH EVENTS
-The MiniLibX provides a much generic access to all X-Window events. The
+.SH GOING FURTHER WITH t_events
+The MiniLibX provides a much generic access to all X-Window t_events. The
 .I mlx.h
 include define
 .B mlx_hook()

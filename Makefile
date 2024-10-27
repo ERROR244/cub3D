@@ -7,10 +7,10 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			map_checker/map_check1.c\
 			map_checker/map_check2.c\
 			map_checker/map_check3.c\
-			main/map2D.c\
 			main/main.c\
 			tmp/tmp1.c\
 			error/error0.c\
+			error/error1.c\
 			Libft/ft_strlen.c\
 			Libft/ft_strdup.c\
 			Libft/ft_strjoin.c\
@@ -21,13 +21,17 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			graphic_management/graphic_management.c\
 			graphic_management/event.c\
 			graphic_management/cast_rays.c\
+			graphic_management/wall_check.c\
+			graphic_management/player_move.c\
+			graphic_management/get_hit_pos.c\
+			graphic_management/init_gm_data.c\
 			graphic_management/render3D.c\
 			bonus/minimap.c
 
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror# -ggdb -g3 -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -ggdb -g3 -fsanitize=address
 MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}
