@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/26 15:28:56 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/27 13:43:25 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,29 @@
 
 int	close_window(t_window *window)
 {
+	int i;
+
+	i = 0;
 	printf("Good game\n");
 	exit_game(window);
-	mlx_destroy_window(window->mlx, window->window);
+	while (i < 4)
+	{
+		mlx_destroy_image(window->mlx, window->texture[i].img);
+		mlx_destroy_image(window->mlx, window->anm[i++].img);
+	}
+	mlx_destroy_image(window->mlx, window->texture[i].img);
+	mlx_destroy_image(window->mlx, window->img->img);
+	free(window->texture);
+	free(window->anm);
+	free(window->img);
+	free(window->ray);
+	if (window->mlx && window->window)
+        mlx_destroy_window(window->mlx, window->window);
+    if (window->mlx)
+	{
+        mlx_destroy_display(window->mlx);
+        free(window->mlx);
+	}
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -154,13 +174,16 @@ int fft_abs(int x)
 
 int handle_mouse(t_window *window)
 {
-	int x = 0;
-	int y = 0;
+	int x;
+	int y;
+	int hold;
 
+	x = 0;
+	y = 0;
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
 	if (x > 0 && y > 0 && y < 900)
 	{
-		int hold = x - window->mouse_x;
+		hold = x - window->mouse_x;
 		mlx_mouse_get_pos(window->mlx, window->window, &window->mouse_x, &window->mouse_y);
 		if (hold > 0)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/26 15:31:03 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/27 13:41:21 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,13 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 void put_anm_to_img(t_window *window, int index)
 {
 	unsigned int color;
-	int x = 0;
-	int y = 0;
+	int x;
+	int y;
 	int i;
 
-	i = 0;
-	if (index < 3)
-		i = 0;
-	else if (index < 6)
-		i = 1;
-	else if (index < 9)
-		i = 2;
-	else if (index < 12)
-		i = 3;
+	x = 0;
+	y = 0;
+	i = index / 5;
 	while (x < 512)
 	{
 		y = 0;
@@ -77,34 +71,16 @@ int	put_img(t_window *window)
 		handle_fb_move(window);
 	rays_3d_cast(window);
 	if (render3d(window, 0, -1) != 0)
-		return (-1);
+		close_window(window);
 	draw_mini_map(window);
 	handle_mouse(window);
-
-	
-	// double playerx = (double)(window->player_x / window->TILE_SIZE);
-	// double playery = (double)(window->player_y / window->TILE_SIZE);
-	// int xx = (int)(playerx) - MINI_MAP_SIZE;
-	// int yy = (int)(playery) - MINI_MAP_SIZE;
-	// if (xx < 0)
-	// 	xx = 0;
-	// if (yy < 0)
-	// 	yy = 0;
-	// playerx -= xx;
-	// playery -= yy;
-	// dda_for_line(	((playerx * 32) + 3),
-	// 				((playery * 32) + 6),
-	// 				((playerx * 32) + 3) + cos(window->pa) * 30,
-	// 				((playery * 32) + 6) + sin(window->pa) * 30,
-	// 				window
-	// 			);			// direction
 				
 	mlx_clear_window(window->mlx, window->window);
 	put_anm_to_img(window, index);
 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0, 0);
 	if (window->shoot == true)
 		index++;
-	if (index > 12)
+	if (index >= 19)
 		index = 0;
 	else if (index != 0)
 		index++;
@@ -127,6 +103,9 @@ double	get_spawninig_orientation(orientation ori)
 
 void	init_data(t_window *window, int width, int height)
 {
+	window->wall_wigth = 1;
+	window->window_width = 1400;
+	window->window_hight = 900;
 	window->rays = window->window_width / window->wall_wigth;
 	window->move.forward = 0;
 	window->move.backward = 0;
@@ -134,14 +113,16 @@ void	init_data(t_window *window, int width, int height)
 	window->move.right = 0;
 	window->move.rotate_left = 0;
 	window->move.rotate_right = 0;
+	window->mouse_x = 0;
+	window->mouse_y = 0;
 	window->shoot = false;
 	window->mlx = mlx_init();
 	window->window = mlx_new_window(window->mlx, window->window_width,
 			window->window_hight, "cub3D");
 	window->ray = malloc(sizeof(*(window->ray)) * window->rays);
 	window->img = malloc(sizeof(*(window->img)));
-	window->texture = malloc(sizeof(*(window->img)) * 5);
 	window->anm = malloc(sizeof(*(window->img)) * 4);
+	window->texture = malloc(sizeof(*(window->img)) * 5);
 	init_texture(window, width, height);
 	init_anm(window);
 }
@@ -191,12 +172,10 @@ void	graphic_management(t_window *window)
 {
 	window->minimap = 0.5;
 	window->pa = get_spawninig_orientation(window->spawning_dir);
-	window->wall_wigth = 1;
-	window->window_width = 1400;
-	window->window_hight = 900;
 	init_data(window, SIZE, SIZE);
 	if (window->img == NULL)
 		exit_error("Failed to allocate memory for img.\n");
+	
 	window->img->img = mlx_new_image(window->mlx, window->window_width,
 			window->window_hight);
 	if (window->img->img == NULL)
@@ -215,5 +194,3 @@ void	graphic_management(t_window *window)
 	mlx_hook(window->window, 03, 1L << 1, key_release, window);	
 	mlx_loop(window->mlx);
 }
-
-	// draw_2D_map(window);
