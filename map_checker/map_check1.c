@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 10:51:13 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:16:03 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 orientation	get_sdir(t_window *window, char c, int i, int j)
 {
-	window->player_x = j * window->TILE_SIZE;
-	window->player_y = i * window->TILE_SIZE;
+	window->player_x = j * window->tile_size;
+	window->player_y = i * window->tile_size;
 	if (c == 'N')
 		return (North);
 	if (c == 'S')

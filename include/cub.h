@@ -6,12 +6,12 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/27 13:36:52 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:17:12 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef CUB_H
+# define CUB_H
 
 # define PI 3.141592
 # define TWO_PI 6.28318530
@@ -31,7 +31,6 @@
 // # include "../minilibx-linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <float.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdint.h>
@@ -106,20 +105,20 @@ typedef struct s_ray
 	int			col_id;
 }				t_ray;
 
-typedef struct
+typedef struct s_cast
 {
 	double		hordis;
 	double		verdis;
-	double		Hwallx;
-	double		Hwally;
-	double		Vwallx;
-	double		Vwally;
+	double		hwallx;
+	double		hwally;
+	double		vwallx;
+	double		vwally;
 	double		nexthorztouchx;
 	double		nexthorztouchy;
 	double		nextvertouchx;
 	double		nextvertouchy;
-	bool		Hwallhit;
-	bool		Vwallhit;
+	bool		hwallhit;
+	bool		vwallhit;
 }				t_cast;
 
 typedef struct s_move
@@ -168,7 +167,7 @@ typedef struct window
 	int			mouse_x;
 	int			mouse_y;
 
-	int			TILE_SIZE;
+	int			tile_size;
 
 	orientation	spawning_dir;
 
@@ -184,9 +183,7 @@ typedef struct window
 void			print_array(char **str);
 void			free_array(char **str);
 void			print_array_in_one_line(char **str);
-void			modify_and_restore(char **map, int rows, int cols);
 void			print_array_of_int(int *color);
-char			**copy_array(char **original, int rows, int cols);
 void			exit_game(t_window *window);
 
 // error
@@ -199,7 +196,6 @@ void			exit_error(char *str);
 
 char			**return_map(int fd, char *ptr, char *str, int i);
 char			**name_check(char *str);
-char			*ft_strjoin3(char const *s1, char c, char const *s2);
 void			the_map_is_invalid(void);
 void			invalid_file_name1(void);
 
@@ -212,19 +208,15 @@ void			is_the_map_surrounded_by_walls(char **map);
 bool			surrounded_with_only_spaces_and_walls(char **map, int x, int y,
 					int lines);
 void			check_map_end(char **map);
-char			**get_map_updated(char **ptr);
 
 // graphic_management
 void			graphic_management(t_window *w);
 int				close_window(t_window *window);
-double			to_rad(double deg);
-double			to_deg(double rad);
 void			rays_3d_cast(t_window *window);
 int				render3d(t_window *window, int ret, int i);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
 unsigned int	get_pixel_color(char *src_addr, int x, int y, int line_length, int bits_per_pixel);
-// unsigned int	git_tpixel(t_window *window, int x, int y);
 int				get_hit_pos(t_window *window, int col_id, char c);
 t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
@@ -239,27 +231,13 @@ void			init_anm(t_window *window);
 // minimap
 int				draw_mini_map(t_window *window);
 
-// 2D
-int				draw_squar(t_window *window, int y, int x, int color);
-int				draw_map(t_window *window);
-void			draw_2D_map(t_window *window);
-void			dda_for_line(double X0, double Y0, double X1, double Y1,
-					t_window *window);
-
 // events
-events			get_event(int keycode);
-int				key_hook(int keycode, t_window *window);
-
 int				handle_door(events event, t_window *window);
 int				handle_rotate(t_window *window);
 int				key_release(int keycode, t_window *window);
 int				key_press(int keycode, t_window *window);
 int				handle_fb_move(t_window *window);
 int				handle_lr_move(t_window *window, double x, double y);
-
-
-int				handle_event(events event, t_window *window);
 int				handle_mouse(t_window *window);
-void	invalid(void);
 
 #endif

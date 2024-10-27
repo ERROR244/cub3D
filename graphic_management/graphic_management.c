@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 13:41:21 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 18:29:10 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ unsigned int get_pixel_color(char *src_addr, int x, int y, int line_length, int 
     char *pixel = src_addr + (y * line_length + x * (bits_per_pixel / 8));
     return *(unsigned int *)pixel;
 }
-
-
-
 
 int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 {
@@ -117,14 +114,14 @@ void	init_data(t_window *window, int width, int height)
 	window->mouse_y = 0;
 	window->shoot = false;
 	window->mlx = mlx_init();
-	window->window = mlx_new_window(window->mlx, window->window_width,
-			window->window_hight, "cub3D");
-	window->ray = malloc(sizeof(*(window->ray)) * window->rays);
-	window->img = malloc(sizeof(*(window->img)));
 	window->anm = malloc(sizeof(*(window->img)) * 4);
 	window->texture = malloc(sizeof(*(window->img)) * 5);
 	init_texture(window, width, height);
 	init_anm(window);
+	window->window = mlx_new_window(window->mlx, window->window_width,
+			window->window_hight, "cub3D");
+	window->ray = malloc(sizeof(*(window->ray)) * window->rays);
+	window->img = malloc(sizeof(*(window->img)));
 }
 
 void init_texture(t_window *window, int width, int height)
@@ -133,10 +130,9 @@ void init_texture(t_window *window, int width, int height)
 	window->texture[1].img = mlx_xpm_file_to_image(window->mlx, window->map->texture_so, &width, &height);
 	window->texture[2].img = mlx_xpm_file_to_image(window->mlx, window->map->texture_we, &width, &height);
 	window->texture[3].img = mlx_xpm_file_to_image(window->mlx, window->map->texture_ea, &width, &height);
-	window->texture[4].img =  mlx_xpm_file_to_image(window->mlx, "./Textures/xpm/egypt/dpp1.xpm", &width, &height);
+	window->texture[4].img =  mlx_xpm_file_to_image(window->mlx, "./Textures/xpm/dpp1.xpm", &width, &height);
 	if (!window->texture[0].img || !window->texture[1].img || !window->texture[2].img || !window->texture[3].img || !window->texture[4].img)
 		the_textures_is_invalid();
-
 	window->texture[0].addr = mlx_get_data_addr(window->texture[0].img, &window->texture[0].bits_per_pixel, &window->texture[0].line_length, &window->texture[0].endian);
 	window->texture[1].addr = mlx_get_data_addr(window->texture[1].img, &window->texture[1].bits_per_pixel, &window->texture[1].line_length, &window->texture[1].endian);
 	window->texture[2].addr = mlx_get_data_addr(window->texture[2].img, &window->texture[2].bits_per_pixel, &window->texture[2].line_length, &window->texture[2].endian);
@@ -153,13 +149,12 @@ void init_anm(t_window *window)
 
 	sizex = 512;
 	sizey = 512;
-	window->anm[0].img = mlx_xpm_file_to_image(window->mlx, "pis-0/pis-0.xpm", &sizex, &sizey);
-	window->anm[1].img = mlx_xpm_file_to_image(window->mlx, "pis-0/pis-1.xpm", &sizex, &sizey);
-	window->anm[2].img = mlx_xpm_file_to_image(window->mlx, "pis-0/pis-2.xpm", &sizex, &sizey);
-	window->anm[3].img = mlx_xpm_file_to_image(window->mlx, "pis-0/pis-3.xpm", &sizex, &sizey);
+	window->anm[0].img = mlx_xpm_file_to_image(window->mlx, "Textures/xpm/pis-0/pis-0.xpm", &sizex, &sizey);
+	window->anm[1].img = mlx_xpm_file_to_image(window->mlx, "Textures/xpm/pis-0/pis-1.xpm", &sizex, &sizey);
+	window->anm[2].img = mlx_xpm_file_to_image(window->mlx, "Textures/xpm/pis-0/pis-2.xpm", &sizex, &sizey);
+	window->anm[3].img = mlx_xpm_file_to_image(window->mlx, "Textures/xpm/pis-0/pis-3.xpm", &sizex, &sizey);
 	if (!window->anm[0].img || !window->anm[1].img || !window->anm[2].img || !window->anm[3].img)
 		the_textures_is_invalid();
-
 	window->anm[0].addr = mlx_get_data_addr(window->anm[0].img, &window->anm[0].bits_per_pixel, &window->anm[0].line_length, &window->anm[0].endian);
 	window->anm[1].addr = mlx_get_data_addr(window->anm[1].img, &window->anm[1].bits_per_pixel, &window->anm[1].line_length, &window->anm[1].endian);
 	window->anm[2].addr = mlx_get_data_addr(window->anm[2].img, &window->anm[2].bits_per_pixel, &window->anm[2].line_length, &window->anm[2].endian);
@@ -175,19 +170,15 @@ void	graphic_management(t_window *window)
 	init_data(window, SIZE, SIZE);
 	if (window->img == NULL)
 		exit_error("Failed to allocate memory for img.\n");
-	
 	window->img->img = mlx_new_image(window->mlx, window->window_width,
 			window->window_hight);
 	if (window->img->img == NULL)
 		exit_error("Failed to create image.\n");
-
 	window->img->addr = mlx_get_data_addr(window->img->img,
 			&window->img->bits_per_pixel, &window->img->line_length,
 			&window->img->endian);
-
 	if (window->img->addr == NULL)
 		exit_error("Failed to get image data address.\n");
-	
 	mlx_hook(window->window, 17, 0L, close_window, window);
 	mlx_hook(window->window, 02, 1L << 0, key_press, window);
 	mlx_loop_hook(window->mlx, put_img, window);

@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 13:29:55 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:16:03 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,15 @@ int render3d(t_window *window, int ret, int i)
         distance = window->ray[i].distance * cos(window->ray[i].ray_a - window->pa);
         distance = fmax(distance, 0.1);
         displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
-        wall3dhight = (window->TILE_SIZE / distance) * displane;
+        wall3dhight = (window->tile_size / distance) * displane;
         max_height = window->window_hight * 2;
         if (wall3dhight > max_height)
             wall3dhight = max_height;
         img = window->ray[i].img;
         if (window->ray[i].washitver)
-            wall_hit_x = fmod(window->ray[i].ray_hit_y, window->TILE_SIZE) / window->TILE_SIZE;
+            wall_hit_x = fmod(window->ray[i].ray_hit_y, window->tile_size) / window->tile_size;
         else
-            wall_hit_x = fmod(window->ray[i].ray_hit_x, window->TILE_SIZE) / window->TILE_SIZE;
+            wall_hit_x = fmod(window->ray[i].ray_hit_x, window->tile_size) / window->tile_size;
         ret = draw_rect(window, 
             round(i * window->wall_wigth),
             round((window->window_hight / 2) - (wall3dhight / 2)),

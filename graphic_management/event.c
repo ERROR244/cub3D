@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 13:43:25 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:16:03 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	handle_door(events event, t_window *window)
 
 	if (event == OpenClose)
 	{
-		j = (int)(window->player_x / window->TILE_SIZE);
-		i = (int)(window->player_y / window->TILE_SIZE);
+		j = (int)(window->player_x / window->tile_size);
+		i = (int)(window->player_y / window->tile_size);
 		if (window->map->map[i + 1][j] && (window->map->map[i + 1][j] == 'D'
 				|| window->map->map[i + 1][j] == 'A'))
 			open_close_d(&window->map->map[i + 1][j]);
