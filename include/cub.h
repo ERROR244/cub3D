@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/26 15:12:49 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/27 14:34:30 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,22 @@ typedef enum
 	escExit,
 	none
 }				events;
+
+typedef struct s_map_bounds
+{
+	int	xx;
+	int	yy;
+	int	x_start;
+	int	y_start;
+	int	x_end;
+	int	y_end;
+}	t_map_bounds;
+
+typedef struct s_draw_pos
+{
+	int	x;
+	int	y;
+}	t_draw_pos;
 
 typedef struct s_map
 {
