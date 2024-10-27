@@ -21,6 +21,10 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			graphic_management/graphic_management.c\
 			graphic_management/event.c\
 			graphic_management/cast_rays.c\
+			graphic_management/wall_check.c\
+			graphic_management/player_move.c\
+			graphic_management/get_hit_pos.c\
+			graphic_management/init_gm_data.c\
 			graphic_management/render3D.c\
 			bonus/minimap.c
 

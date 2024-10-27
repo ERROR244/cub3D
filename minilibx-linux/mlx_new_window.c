@@ -33,7 +33,7 @@ void	*mlx_new_window(t_xvar *xvar,int size_x,int size_y,char *title)
 		KeyPressMask | KeyReleaseMask | StructureNotifyMask;
 	*/
 	/* xswa.event_mask = ExposureMask; */
-	xswa.event_mask = 0xFFFFFF;	/* all events */
+	xswa.event_mask = 0xFFFFFF;	/* all t_events */
 	if (!(new_win = malloc(sizeof(*new_win))))
 		return ((void *)0);
 	new_win->window = XCreateWindow(xvar->display,xvar->root,0,0,size_x,size_y,

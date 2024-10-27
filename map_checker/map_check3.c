@@ -6,7 +6,7 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:42 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/11 19:19:17 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:30:59 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ char	*get_texture(char *str)
 	while (str && *str && *str == ' ')
 		str++;
 	return (ft_strdup(str));
-}
-
-int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
 }
 
 char	**get_map(char **str)
