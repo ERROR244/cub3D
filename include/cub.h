@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/26 15:12:49 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/27 13:36:52 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 2
+# define MSPEED 1
 #define COLLISION_BUFFER 10
 
 
 
-// # include <mlx.h>
+# include <mlx.h>
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
-# include "../minilibx-linux/mlx.h"
+// # include "../minilibx-linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <float.h>
@@ -153,7 +153,6 @@ typedef struct window
 	t_ray		*ray;
 	t_img		*img;
 	t_img		*texture;
-	t_img		*txt;
 	t_img		*anm;
 
 	int			window_width;
