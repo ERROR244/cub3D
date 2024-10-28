@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/28 11:58:59 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:53:49 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	put_img(t_window *window)
 	if (window->move.forward == 1 || window->move.backward == 1)
 		handle_fb_move(window);
 	rays_3d_cast(window);
-	if (render3d(window, 0, -1) != 0)
+	if (render3d(window, 0, -1, NULL) != 0)
 		close_window(window);
 	draw_mini_map(window);
 	handle_mouse(window, 0, 0);

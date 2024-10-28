@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/28 12:01:22 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:11:24 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,35 +90,31 @@ int	draw_rect(t_window *window, int x, int y, int width, int height, t_img *img,
 	return (ret);
 }
 
-int	render3d(t_window *window, int ret, int i)
+int	render3d(t_window *window, int ret, int i, t_img *img)
 {
-	double	wall3dhight;
-	double	displane;
-	double	distance;
-	double	wall_hit_x;
+	double	w_hit_x;
 	double	max_height;
-	t_img	*img;
-
+	
 	while (++i < window->rays && ret == 0)
 	{
-		distance = window->ray[i].distance * cos(window->ray[i].ray_a
+		window->dist = window->ray[i].distance * cos(window->ray[i].ray_a
 				- window->pa);
-		distance = fmax(distance, 0.1);
-		displane = (window->window_width / 2) / tan(FOV_ANGLE / 2);
-		wall3dhight = (window->tile_size / distance) * displane;
+		window->dist = fmax(window->dist, 0.1);
+		window->disp = (window->window_width / 2) / tan(FOV_ANGLE / 2);
+		window->wl3dh = (window->tile_size / window->dist) * window->disp;
 		max_height = window->window_hight * 2;
-		if (wall3dhight > max_height)
-			wall3dhight = max_height;
+		if (window->wl3dh > max_height)
+			window->wl3dh = max_height;
 		img = window->ray[i].img;
 		if (window->ray[i].washitver)
-			wall_hit_x = fmod(window->ray[i].ray_hit_y, window->tile_size)
+			w_hit_x = fmod(window->ray[i].ray_hit_y, window->tile_size)
 				/ window->tile_size;
 		else
-			wall_hit_x = fmod(window->ray[i].ray_hit_x, window->tile_size)
+			w_hit_x = fmod(window->ray[i].ray_hit_x, window->tile_size)
 				/ window->tile_size;
 		ret = draw_rect(window, round(i * window->wall_wigth),
-				round((window->window_hight / 2) - (wall3dhight / 2)),
-				round(window->wall_wigth), round(wall3dhight), img, wall_hit_x);
+				round((window->window_hight / 2) - (window->wl3dh / 2)),
+				round(window->wall_wigth), round(window->wl3dh), img, w_hit_x);
 	}
 	return (ret);
 }

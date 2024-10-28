@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 14:14:15 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/10/27 14:45:11 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:40:20 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,8 @@ int	draw_mini_map(t_window *window)
 	double			player_y;
 	int				i;
 
-	player_x = (double)(window->player_x / window->TILE_SIZE);
-	player_y = (double)(window->player_y / window->TILE_SIZE);
+	player_x = (double)(window->player_x / window->tile_size);
+	player_y = (double)(window->player_y / window->tile_size);
 	init_map_bounds(&bounds, player_x, player_y);
 	player_x -= bounds.xx;
 	player_y -= bounds.yy;
