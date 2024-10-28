@@ -6,12 +6,12 @@
 /*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:55:05 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/08 11:57:24 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/27 18:39:08 by ksohail-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GIT_NEXT_LINE_H
-# define GIT_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include "../Libft/libft.h"
 # include <stdbool.h>
