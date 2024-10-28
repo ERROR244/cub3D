@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/28 13:11:24 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:23:28 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	render3d(t_window *window, int ret, int i, t_img *img)
 {
 	double	w_hit_x;
 	double	max_height;
-	
+
 	while (++i < window->rays && ret == 0)
 	{
 		window->dist = window->ray[i].distance * cos(window->ray[i].ray_a

@@ -6,76 +6,11 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 14:14:15 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/10/28 12:40:20 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:30:09 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-int	draw_mini_squar(t_window *window, double y, double x, int color)
-{
-	int	i;
-	int	j;
-	int	ret;
-
-	i = 0;
-	ret = 0;
-	while (i < 16 && ret == 0)
-	{
-		j = 0;
-		while (j < 16 && ret == 0)
-		{
-			ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
-			j++;
-		}
-		i++;
-	}
-	return (ret);
-}
-
-int	draw_mini_player(t_window *window, double y, double x, int color)
-{
-	int	i;
-	int	j;
-	int	ret;
-
-	i = 0;
-	ret = 0;
-	while (i < 4 && ret == 0)
-	{
-		j = 0;
-		while (j < 4 && ret == 0)
-		{
-			ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
-			j++;
-		}
-		i++;
-	}
-	return (ret);
-}
-
-int	ft_abs(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-int	draw_map_square(t_window *window, int x_pos, int y_pos, int color)
-{
-	return (draw_mini_squar(window, x_pos, y_pos, color));
-}
-
-int	get_square_color(char map_char)
-{
-	if (map_char == '0' || map_char == 'P')
-		return (0x0000FF);
-	else if (map_char == 'D')
-		return (0xFF0000);
-	else if (map_char == 'A')
-		return (0x00FF00);
-	return (0x00FFFF);
-}
 
 void	map_bounds_nor(t_map_bounds *bounds, double player_x, double player_y)
 {

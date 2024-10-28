@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/28 12:59:59 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:35:04 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,13 @@ int				fft_abs(int x);
 
 // minimap
 int				draw_mini_map(t_window *window);
+int				draw_map_square(t_window *window, int x_pos, int y_pos,
+					int color);
+int				draw_mini_squar(t_window *window, double y, double x,
+					int color);
+int				draw_mini_player(t_window *window, double y, double x,
+					int color);
+int				get_square_color(char map_char);
 
 // t_events
 int				handle_door(t_events event, t_window *window);

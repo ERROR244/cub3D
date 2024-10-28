@@ -6,40 +6,11 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/28 12:38:47 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:33:36 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-int	close_window(t_window *window)
-{
-	int	i;
-
-	i = 0;
-	printf("Good game\n");
-	exit_game(window);
-	while (i < 4)
-	{
-		mlx_destroy_image(window->mlx, window->texture[i].img);
-		mlx_destroy_image(window->mlx, window->anm[i++].img);
-	}
-	mlx_destroy_image(window->mlx, window->texture[i].img);
-	mlx_destroy_image(window->mlx, window->img->img);
-	free(window->texture);
-	free(window->anm);
-	free(window->img);
-	free(window->ray);
-	if (window->mlx && window->window)
-		mlx_destroy_window(window->mlx, window->window);
-	if (window->mlx)
-	{
-		mlx_destroy_display(window->mlx);
-		free(window->mlx);
-	}
-	exit(EXIT_SUCCESS);
-	return (0);
-}
 
 int	handle_rotate(t_window *window)
 {
