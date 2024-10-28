@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/27 19:53:30 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:59:59 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ typedef enum s_events
 	escExit,
 	none
 }				t_events;
+
+typedef struct s_map_bounds
+{
+	int	xx;
+	int	yy;
+	int	x_start;
+	int	y_start;
+	int	x_end;
+	int	y_end;
+}	t_map_bounds;
+
+typedef struct s_draw_pos
+{
+	int	x;
+	int	y;
+}	t_draw_pos;
 
 typedef struct s_map
 {
@@ -156,6 +172,9 @@ typedef struct window
 	int				wall_wigth;
 	int				rays;
 
+	double			disp; //displane
+	double			dist; //distance
+	double			wl3dh; //wll3dhight
 	double			xfirststep;
 	double			yfirststep;
 	double			xstep;
@@ -214,7 +233,7 @@ void			init_texture_anm(t_window *window);
 void			init_texture(t_window *window, int width, int height);
 int				close_window(t_window *window);
 void			rays_3d_cast(t_window *window);
-int				render3d(t_window *window, int ret, int i);
+int				render3d(t_window *window, int ret, int i, t_img *img);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
 unsigned int	get_pixel_color(char *src_addr, int x, int y, int line_length,
@@ -245,6 +264,6 @@ int				key_release(int keycode, t_window *window);
 int				key_press(int keycode, t_window *window);
 int				handle_fb_move(t_window *window);
 int				handle_lr_move(t_window *window, double x, double y);
-int				handle_mouse(t_window *window);
+int				handle_mouse(t_window *window, int x, int y);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:42:25 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:38:47 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,26 @@ int	handle_rotate(t_window *window)
 	return (0);
 }
 
-int	handle_mouse(t_window *window)
+void	handle_mouse_2(t_window *window, int x)
 {
-	int	x;
-	int	y;
+	if (x == 0)
+	{
+		window->pa -= 0.04;
+		if (window->pa < 0)
+			window->pa += 2 * PI;
+	}
+	else if (x >= 1919)
+	{
+		window->pa += 0.04;
+		if (window->pa < 0)
+			window->pa -= 2 * PI;
+	}
+}
+
+int	handle_mouse(t_window *window, int x, int y)
+{
 	int	hold;
 
-	x = 0;
-	y = 0;
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
 	if (x > 0 && y > 0 && y < 900)
 	{
@@ -85,18 +97,7 @@ int	handle_mouse(t_window *window)
 				window->pa += 2 * PI;
 		}
 	}
-	if (x == 0)
-	{
-		window->pa -= 0.04;
-		if (window->pa < 0)
-			window->pa += 2 * PI;
-	}
-	else if (x >= 1919)
-	{
-		window->pa += 0.04;
-		if (window->pa < 0)
-			window->pa -= 2 * PI;
-	}
+	handle_mouse_2(window, x);
 	return (0);
 }
 
