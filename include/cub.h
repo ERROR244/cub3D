@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/28 18:35:04 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:12:15 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 1
+# define MSPEED 2
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
-# include <mlx.h>
-// # include "../minilibx-linux/mlx.h"
+// # include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -59,6 +59,15 @@ typedef enum s_events
 	none
 }				t_events;
 
+typedef struct s_img
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_img;
+
 typedef struct s_map_bounds
 {
 	int	xx;
@@ -75,6 +84,25 @@ typedef struct s_draw_pos
 	int	y;
 }	t_draw_pos;
 
+typedef struct s_pixel
+{
+	int		x;
+	int		y;
+	int		line_length;
+	int		bits_per_pixel;
+	char	*src_addr;
+}	t_pixel;
+
+typedef struct s_render
+{
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	double	wall_hit_x;
+	t_img	*img;
+}	t_render;
+
 typedef struct s_map
 {
 	char		*texture_no;
@@ -89,15 +117,6 @@ typedef struct s_map
 
 	char		**map;
 }				t_map;
-
-typedef struct s_img
-{
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_img;
 
 typedef struct s_ray
 {
@@ -233,11 +252,9 @@ void			init_texture_anm(t_window *window);
 void			init_texture(t_window *window, int width, int height);
 int				close_window(t_window *window);
 void			rays_3d_cast(t_window *window);
-int				render3d(t_window *window, int ret, int i, t_img *img);
+int				render3d(t_window *window, int ret, int i);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
-unsigned int	get_pixel_color(char *src_addr, int x, int y, int line_length,
-					int bits_per_pixel);
 int				get_hit_pos(t_window *window, int col_id, char c);
 t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
