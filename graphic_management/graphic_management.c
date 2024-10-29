@@ -16,7 +16,8 @@ unsigned int	get_pixel_color(t_pixel pixel)
 {
 	char	*pixel_to_put;
 
-	pixel_to_put = pixel.src_addr + (pixel.y * pixel.line_length + pixel.x * (pixel.bits_per_pixel / 8));
+	pixel_to_put = pixel.src_addr + (pixel.y * pixel.line_length + pixel.x
+			* (pixel.bits_per_pixel / 8));
 	return (*(unsigned int *)pixel_to_put);
 }
 

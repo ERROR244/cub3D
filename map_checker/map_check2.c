@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:31:03 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:44:49 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	check_map_end(char **map)
 		the_map_is_invalid();
 }
 
-int	create_trgb(int t, int r, int g, int b)
+int	create_trgb(int t, int *nums)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
+	return (t << 24 | nums[0] << 16 | nums[1] << 8 | nums[2]);
 }

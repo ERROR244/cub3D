@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:04 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/29 17:59:03 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/29 18:46:13 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ unsigned int	get_texture_line(t_window *window, t_render render,
 
 int	draw_rect(t_window *window, t_render render)
 {
-	int				ret;
-	int				i;
-	int				j;
+	int	ret;
+	int	i;
+	int	j;
 
 	i = -1;
 	ret = 0;
@@ -61,24 +61,24 @@ int	draw_rect(t_window *window, t_render render)
 	{
 		j = -1;
 		while (++j < render.y && ret == 0)
-			ret = my_mlx_pixel_put(window, render.x + i, j, create_trgb(0, window->map->ceiling_color[0],
-						window->map->ceiling_color[1], window->map->ceiling_color[2]));
+			ret = my_mlx_pixel_put(window, render.x + i, j, create_trgb(0,
+						window->map->ceiling_color));
 		j = -1;
 		while (++j < render.height && ret == 0)
 		{
 			ret = my_mlx_pixel_put(window, render.x + i, render.y + j,
-				get_texture_line(window, render, render.height, j));
+					get_texture_line(window, render, render.height, j));
 		}
 		while (++j < window->window_hight && ret == 0)
-			ret = my_mlx_pixel_put(window, render.x + i, render.y + j, create_trgb(0, window->map->floor_color[0],
-						window->map->floor_color[1], window->map->floor_color[2]));
+			ret = my_mlx_pixel_put(window, render.x + i, render.y + j,
+					create_trgb(0, window->map->floor_color));
 	}
 	return (ret);
 }
 
 int	render3d(t_window *window, int ret, int i)
 {
-	t_render render;
+	t_render	render;
 
 	while (++i < window->rays && ret == 0)
 	{
@@ -90,11 +90,11 @@ int	render3d(t_window *window, int ret, int i)
 		if (window->wl3dh > window->window_hight * 2)
 			window->wl3dh = window->window_hight * 2;
 		if (window->ray[i].washitver)
-			render.wall_hit_x = fmod(window->ray[i].ray_hit_y, window->tile_size)
-				/ window->tile_size;
+			render.wall_hit_x = fmod(window->ray[i].ray_hit_y,
+					window->tile_size) / window->tile_size;
 		else
-			render.wall_hit_x = fmod(window->ray[i].ray_hit_x, window->tile_size)
-				/ window->tile_size;
+			render.wall_hit_x = fmod(window->ray[i].ray_hit_x,
+					window->tile_size) / window->tile_size;
 		render.x = round(i * window->wall_wigth);
 		render.y = round((window->window_hight / 2) - (window->wl3dh / 2));
 		render.width = round(window->wall_wigth);

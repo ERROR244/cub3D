@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/29 18:41:13 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/29 18:53:02 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
-// # include <mlx.h>
-# include "../minilibx-linux/mlx.h"
+# include <mlx.h>
+// # include "../minilibx-linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -260,7 +260,7 @@ t_cast			get_dis(t_window *window, int col_id, t_cast cast);
 t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
 t_cast			find_v_xy_setp(t_window *window, int col_id, t_cast cast);
 double			get_spawninig_orientation(t_orientation ori);
-int				create_trgb(int t, int r, int g, int b);
+int				create_trgb(int t, int *nums);
 void			init_texture(t_window *window, int width, int height);
 void			init_anm(t_window *window);
 t_cast			find_v_xy_wall_hit(t_window *window, int col_id, t_cast cast);
