@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/29 18:53:02 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/30 10:53:49 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ t_cast			find_h_xy_setp(t_window *window, int col_id, t_cast cast);
 double			dis(double x1, double y1, double x2, double y2);
 double			normalize_angle(double angle);
 int				fft_abs(int x);
+int				ft_ft_atoi(char *ptr);
 
 // minimap
 int				draw_mini_map(t_window *window);

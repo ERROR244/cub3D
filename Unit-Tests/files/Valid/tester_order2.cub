@@ -1,9 +1,9 @@
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+WE ./Textures/xpm/egypt/egypt_wall_east.xpm
+SO ./Textures/xpm/egypt/egypt_wall_north.xpm
+EA ./Textures/xpm/egypt/egypt_wall_east.xpm
 
 F 220,100,0
-NO ./path_to_the_north_texture
+NO ./Textures/xpm/egypt/egypt_wall_north.xpm
 C 225,30,0
 
         1111111111111111111111111

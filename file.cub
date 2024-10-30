@@ -3,8 +3,8 @@ WE ./Textures/xpm/egypt/egypt_wall_east.xpm
 SO ./Textures/xpm/egypt/egypt_wall_north.xpm
 EA ./Textures/xpm/egypt/egypt_wall_east.xpm
 
-C 249,207,103
-F 150,75, 0
+F 179,144,96
+C 159,228,245
 
         1111111111111111111111111
         100D000000110000000000001
