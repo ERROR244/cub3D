@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 14:46:49 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:54:42 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	get_tmpx_tmpy_fb(char c, t_window *window, t_events event)
 	int	a;
 	int	b;
 
-	a = 4;
-	b = 7;
+	a = 5;
+	b = 8;
 	if (c == 'x')
 		tmp = -a;
 	else

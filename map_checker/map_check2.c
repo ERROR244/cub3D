@@ -6,15 +6,15 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 10:55:43 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:02:49 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-//		- - -
+//		  -  
 //		- . -
-//		- - -
+//		  -  
 
 //	so this is all the  possible cases
 // (x) (y + 1)
@@ -74,10 +74,7 @@ void	check_map_end(char **map)
 	{
 		size = ft_strlen(map[i]) - 1;
 		if (map[i][size] != '1' && map[i][size] != ' ')
-		{
-			printf(":%c:\n", map[i][size]);
 			flag = false;
-		}
 		i++;
 	}
 	if (flag == false)
