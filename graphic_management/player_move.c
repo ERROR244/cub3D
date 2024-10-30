@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 12:54:07 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/30 14:46:49 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ int	handle_door(t_events event, t_window *window)
 int	get_tmpx_tmpy_fb(char c, t_window *window, t_events event)
 {
 	int	tmp;
-	int a = 4;
-	int b = 7;
+	int	a;
+	int	b;
 
+	a = 4;
+	b = 7;
 	if (c == 'x')
 		tmp = -a;
 	else

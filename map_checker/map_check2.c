@@ -29,9 +29,9 @@
 //		-1 ↑ x ↓ +1
 //		-1 ← y → +1
 
-int ft_ft_atoi(char *ptr)
+int	ft_ft_atoi(char *ptr)
 {
-	int num;
+	int	num;
 
 	num = ft_atoi(ptr);
 	if (num < 0 || num > 255)
