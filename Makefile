@@ -26,12 +26,13 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 			graphic_management/get_hit_pos.c\
 			graphic_management/init_gm_data.c\
 			graphic_management/render3D.c\
-			bonus/minimap.c
+			bonus/minimap.c\
+			bonus/minimap2.c
 
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -ggdb -g3 -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror# -ggdb -g3 -fsanitize=address
 MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}

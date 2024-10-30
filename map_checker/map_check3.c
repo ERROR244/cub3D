@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:42 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:30:59 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:54:26 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	*get_color(char *str)
 	if (j != 2)
 		the_map_is_invalid();
 	ptr = ft_split(str, ',');
-	color[0] = ft_atoi(ptr[0]);
-	color[1] = ft_atoi(ptr[1]);
-	color[2] = ft_atoi(ptr[2]);
+	color[0] = ft_ft_atoi(ptr[0]);
+	color[1] = ft_ft_atoi(ptr[1]);
+	color[2] = ft_ft_atoi(ptr[2]);
 	free_array(ptr);
 	return (color);
 }

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:50:11 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:11:36 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-unsigned int	get_pixel_color(char *src_addr, int x, int y, int line_length,
-		int bits_per_pixel)
+unsigned int	get_pixel_color(t_pixel pixel)
 {
-	char	*pixel;
+	char	*pixel_to_put;
 
-	pixel = src_addr + (y * line_length + x * (bits_per_pixel / 8));
-	return (*(unsigned int *)pixel);
+	pixel_to_put = pixel.src_addr + (pixel.y * pixel.line_length + pixel.x
+			* (pixel.bits_per_pixel / 8));
+	return (*(unsigned int *)pixel_to_put);
 }
 
 int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
@@ -38,25 +38,26 @@ int	my_mlx_pixel_put(t_window *window, int x, int y, int color)
 void	put_anm_to_img(t_window *window, int index)
 {
 	unsigned int	color;
-	int				x;
-	int				y;
+	t_pixel			pixel;
 	int				i;
 
-	x = 0;
-	y = 0;
+	pixel.x = 0;
+	pixel.y = 0;
 	i = index / 5;
-	while (x < 512)
+	while (pixel.x < 512)
 	{
-		y = 0;
-		while (y < 512)
+		pixel.y = 0;
+		while (pixel.y < 512)
 		{
-			color = get_pixel_color(window->anm[i].addr, x, y,
-					window->anm[i].line_length, window->anm[i].bits_per_pixel);
+			pixel.line_length = window->anm[i].line_length;
+			pixel.bits_per_pixel = window->anm[i].bits_per_pixel;
+			pixel.src_addr = window->anm[i].addr;
+			color = get_pixel_color(pixel);
 			if (color != 0x000000)
-				my_mlx_pixel_put(window, x + 410, y + 410, color);
-			y++;
+				my_mlx_pixel_put(window, pixel.x + 410, pixel.y + 410, color);
+			pixel.y++;
 		}
-		x++;
+		pixel.x++;
 	}
 }
 
@@ -74,7 +75,7 @@ int	put_img(t_window *window)
 	if (render3d(window, 0, -1) != 0)
 		close_window(window);
 	draw_mini_map(window);
-	handle_mouse(window);
+	handle_mouse(window, 0, 0);
 	mlx_clear_window(window->mlx, window->window);
 	put_anm_to_img(window, index);
 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0,

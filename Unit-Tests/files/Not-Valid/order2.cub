@@ -9,10 +9,10 @@ C 225,30,0
 111111111011000001110000000000001
 100000000011000001110111111111111
 
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./file
+SO ./file
+WE ./file
+EA ./file
 
 11110111111111011100000010001
 11110111111111011101010010001

@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:42:25 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:33:36 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-int	close_window(t_window *window)
-{
-	int	i;
-
-	i = 0;
-	printf("Good game\n");
-	exit_game(window);
-	while (i < 4)
-	{
-		mlx_destroy_image(window->mlx, window->texture[i].img);
-		mlx_destroy_image(window->mlx, window->anm[i++].img);
-	}
-	mlx_destroy_image(window->mlx, window->texture[i].img);
-	mlx_destroy_image(window->mlx, window->img->img);
-	free(window->texture);
-	free(window->anm);
-	free(window->img);
-	free(window->ray);
-	if (window->mlx && window->window)
-		mlx_destroy_window(window->mlx, window->window);
-	if (window->mlx)
-	{
-		mlx_destroy_display(window->mlx);
-		free(window->mlx);
-	}
-	exit(EXIT_SUCCESS);
-	return (0);
-}
 
 int	handle_rotate(t_window *window)
 {
@@ -58,14 +29,26 @@ int	handle_rotate(t_window *window)
 	return (0);
 }
 
-int	handle_mouse(t_window *window)
+void	handle_mouse_2(t_window *window, int x)
 {
-	int	x;
-	int	y;
+	if (x == 0)
+	{
+		window->pa -= 0.04;
+		if (window->pa < 0)
+			window->pa += 2 * PI;
+	}
+	else if (x >= 1919)
+	{
+		window->pa += 0.04;
+		if (window->pa < 0)
+			window->pa -= 2 * PI;
+	}
+}
+
+int	handle_mouse(t_window *window, int x, int y)
+{
 	int	hold;
 
-	x = 0;
-	y = 0;
 	mlx_mouse_get_pos(window->mlx, window->window, &x, &y);
 	if (x > 0 && y > 0 && y < 900)
 	{
@@ -85,18 +68,7 @@ int	handle_mouse(t_window *window)
 				window->pa += 2 * PI;
 		}
 	}
-	if (x == 0)
-	{
-		window->pa -= 0.04;
-		if (window->pa < 0)
-			window->pa += 2 * PI;
-	}
-	else if (x >= 1919)
-	{
-		window->pa += 0.04;
-		if (window->pa < 0)
-			window->pa -= 2 * PI;
-	}
+	handle_mouse_2(window, x);
 	return (0);
 }
 

@@ -1,0 +1,16 @@
+NO ./Textures/xpm/egypt/egypt_wall_north.xpm
+WE ./Textures/xpm/egypt/egypt_wall_east.xpm
+SO ./Textures/xpm/egypt/egypt_wall_north.xpm
+EA ./Textures/xpm/egypt/egypt_wall_east.xpm
+
+
+C 26,17,9
+F 27,24,22
+
+111 11111
+101110001
+100100001
+101001001
+100000001
+111N00001
+  1111111
