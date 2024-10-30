@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_move.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:44:40 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:54:07 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,21 @@ int	handle_door(t_events event, t_window *window)
 int	get_tmpx_tmpy_fb(char c, t_window *window, t_events event)
 {
 	int	tmp;
+	int a = 4;
+	int b = 7;
 
 	if (c == 'x')
-		tmp = -5;
+		tmp = -a;
 	else
-		tmp = 10;
+		tmp = b;
 	if (c == 'x' && ((window->ray[window->rays / 2].is_ray_looking_right
 				&& event == moveForWard) || (window->ray[window->rays
 					/ 2].is_ray_looking_left && event == moveBackward)))
-		tmp = 10;
+		tmp = b;
 	if (c == 'y' && ((window->ray[window->rays / 2].is_ray_looking_up
 				&& event == moveForWard) || (window->ray[window->rays
 					/ 2].is_ray_looking_down && event == moveBackward)))
-		tmp = -5;
+		tmp = -a;
 	return (tmp);
 }
 

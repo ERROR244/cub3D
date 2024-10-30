@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_gm_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksohail- <ksohail-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/27 19:54:54 by ksohail-         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:52:17 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_data(t_window *window, int width, int height)
 {
 	window->wall_wigth = 1;
-	window->window_width = 1400;
+	window->window_width = 1200;
 	window->window_hight = 900;
 	window->rays = window->window_width / window->wall_wigth;
 	window->move.forward = 0;
@@ -27,6 +27,7 @@ void	init_data(t_window *window, int width, int height)
 	window->mouse_x = 0;
 	window->mouse_y = 0;
 	window->shoot = false;
+	window->change_fov_flag = false;
 	window->mlx = mlx_init();
 	window->anm = malloc(sizeof(*(window->img)) * 4);
 	window->texture = malloc(sizeof(*(window->img)) * 5);

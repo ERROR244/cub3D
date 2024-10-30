@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:01:58 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/28 18:33:36 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:54:51 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,17 @@ int	handle_rotate(t_window *window)
 {
 	if (window->move.rotate_right == 1)
 	{
-		window->pa += 0.05;
+		window->pa += 0.09;
 		if (window->pa > 2 * PI)
 			window->pa -= 2 * PI;
 	}
 	else if (window->move.rotate_left == 1)
 	{
-		window->pa -= 0.05;
+		window->pa -= 0.09;
 		if (window->pa < 0)
 			window->pa += 2 * PI;
 	}
 	return (0);
-}
-
-void	handle_mouse_2(t_window *window, int x)
-{
-	if (x == 0)
-	{
-		window->pa -= 0.04;
-		if (window->pa < 0)
-			window->pa += 2 * PI;
-	}
-	else if (x >= 1919)
-	{
-		window->pa += 0.04;
-		if (window->pa < 0)
-			window->pa -= 2 * PI;
-	}
 }
 
 int	handle_mouse(t_window *window, int x, int y)
@@ -70,6 +54,27 @@ int	handle_mouse(t_window *window, int x, int y)
 	}
 	handle_mouse_2(window, x);
 	return (0);
+}
+
+void	handle_mouse_2(t_window *window, int x)
+{
+	if (x == 0)
+	{
+		window->pa -= 0.04;
+		if (window->pa < 0)
+			window->pa += 2 * PI;
+	}
+	else if (x >= 1919)
+	{
+		window->pa += 0.04;
+		if (window->pa < 0)
+			window->pa -= 2 * PI;
+	}
+	if (window->change_fov_flag == false)
+	{
+		window->change_fov_flag = true;
+		window->pa = get_spawninig_orientation(window->spawning_dir);
+	}
 }
 
 int	key_press(int keycode, t_window *window)

@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/30 10:53:49 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/30 12:47:43 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 2
+# define MSPEED 1
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
@@ -212,6 +212,7 @@ typedef struct window
 	int				k;
 
 	bool			shoot;
+	bool			change_fov_flag;
 }					t_window;
 
 // tmp
@@ -271,6 +272,7 @@ double			dis(double x1, double y1, double x2, double y2);
 double			normalize_angle(double angle);
 int				fft_abs(int x);
 int				ft_ft_atoi(char *ptr);
+void			handle_mouse_2(t_window *window, int x);
 
 // minimap
 int				draw_mini_map(t_window *window);

@@ -6,7 +6,7 @@
 /*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:23 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 11:41:25 by khalil           ###   ########.fr       */
+/*   Updated: 2024/10/30 12:52:39 by khalil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int ac, char **av)
 	}
 	window.i = 0;
 	window.k = 0;
-	window.tile_size = 16;
+	window.tile_size = 9;
 	map_check(&map, str, &window);
 	window.map = &map;
 	graphic_management(&window);
