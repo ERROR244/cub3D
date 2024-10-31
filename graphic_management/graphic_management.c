@@ -63,8 +63,6 @@ void	put_anm_to_img(t_window *window, int index)
 
 int	put_img(t_window *window)
 {
-	static int	index;
-
 	if (window->move.rotate_right == 1 || window->move.rotate_left == 1)
 		handle_rotate(window);
 	if (window->move.right == 1 || window->move.left == 1)
@@ -77,21 +75,22 @@ int	put_img(t_window *window)
 	draw_mini_map(window);
 	handle_mouse(window, 0, 0);
 	mlx_clear_window(window->mlx, window->window);
-	put_anm_to_img(window, index);
+	put_anm_to_img(window, window->anm_index);
 	mlx_put_image_to_window(window->mlx, window->window, window->img->img, 0,
 		0);
 	if (window->shoot == true)
-		index++;
-	if (index >= 19)
-		index = 0;
-	else if (index != 0)
-		index++;
+		window->anm_index = 1;
+	if (window->anm_index >= 19)
+		window->anm_index = 0;
+	else if (window->anm_index != 0)
+		window->anm_index++;
 	return (0);
 }
 
 void	graphic_management(t_window *window)
 {
 	window->minimap = 0.5;
+	window->anm_index = 0;
 	window->pa = get_spawninig_orientation(window->spawning_dir);
 	init_data(window, SIZE, SIZE);
 	if (window->img == NULL)

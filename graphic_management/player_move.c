@@ -89,21 +89,25 @@ int	handle_fb_move(t_window *window)
 		tmpx = get_tmpx_tmpy_fb('x', window, moveBackward);
 		tmpy = get_tmpx_tmpy_fb('y', window, moveBackward);
 	}
-	if (has_wall_at(x + tmpx, window->player_y, window))
+	if (has_wall_at(x + tmpx, window->player_y, window) && has_wall_at(x + tmpx, window->player_y + 2, window) && has_wall_at(x + tmpx, window->player_y - 2, window))
 		window->player_x = x;
-	if (has_wall_at(window->player_x, y + tmpy, window))
+	if (has_wall_at(window->player_x, y + tmpy, window) && has_wall_at(window->player_x + 2, y + tmpy, window) && has_wall_at(window->player_x - 2, y + tmpy, window))
 		window->player_y = y;
 	return (0);
 }
 
 int	handle_lr_move(t_window *window, double x, double y)
 {
+	int t = 5;
 	if (window->move.right == 1)
 	{
 		x = window->player_x + (cos(window->pa - (PI / 2)) * MSPEED);
 		y = window->player_y + (sin(window->pa - (PI / 2)) * MSPEED);
-		if (has_wall_at(x + ((x - window->player_x) * 6), y + ((y
-						- window->player_y) * 6), window))
+		if (has_wall_at(x + ((x - window->player_x) * 6), y + ((y - window->player_y) * 6), window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) + t, y + ((y - window->player_y) * 6) + t, window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) - t, y + ((y - window->player_y) * 6) - t, window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) + t, y + ((y - window->player_y) * 6) - t, window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) - t, y + ((y - window->player_y) * 6) + t, window))
 		{
 			window->player_x = x;
 			window->player_y = y;
@@ -113,8 +117,11 @@ int	handle_lr_move(t_window *window, double x, double y)
 	{
 		x = window->player_x + (cos(window->pa + (PI / 2)) * MSPEED);
 		y = window->player_y + (sin(window->pa + (PI / 2)) * MSPEED);
-		if (has_wall_at(x + ((x - window->player_x) * 6), y + ((y
-						- window->player_y) * 6), window))
+		if (has_wall_at(x + ((x - window->player_x) * 6), y + ((y - window->player_y) * 6), window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) + t, y + ((y - window->player_y) * 6) + t, window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) - t, y + ((y - window->player_y) * 6) - t, window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) + t, y + ((y - window->player_y) * 6) - t, window)
+				&& has_wall_at(x + ((x - window->player_x) * 6) - t, y + ((y - window->player_y) * 6) + t, window))
 		{
 			window->player_x = x;
 			window->player_y = y;

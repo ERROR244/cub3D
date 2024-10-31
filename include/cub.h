@@ -20,7 +20,7 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 1
+# define MSPEED 0.4
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
@@ -210,6 +210,8 @@ typedef struct window
 
 	int				i;
 	int				k;
+
+	int				anm_index;
 
 	bool			shoot;
 	bool			change_fov_flag;
