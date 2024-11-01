@@ -291,7 +291,7 @@ int				handle_door(t_events event, t_window *window);
 int				handle_rotate(t_window *window);
 int				key_release(int keycode, t_window *window);
 int				key_press(int keycode, t_window *window);
-int				handle_fb_move(t_window *window);
+int				handle_fb_move(t_window *window, double y, int tmpx, int tmpy);
 int				handle_lr_move(t_window *window, double x, double y);
 int				handle_mouse(t_window *window, int x, int y);
 

@@ -68,7 +68,7 @@ int	put_img(t_window *window)
 	if (window->move.right == 1 || window->move.left == 1)
 		handle_lr_move(window, 0, 0);
 	if (window->move.forward == 1 || window->move.backward == 1)
-		handle_fb_move(window);
+		handle_fb_move(window, 0, 0, 0);
 	rays_3d_cast(window);
 	if (render3d(window, 0, -1) != 0)
 		close_window(window);
