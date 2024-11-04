@@ -51,8 +51,8 @@ int	get_tmpx_tmpy_fb(char c, t_window *window, t_events event)
 	int	a;
 	int	b;
 
-	a = 5;
-	b = 8;
+	a = 4;
+	b = 7;
 	if (c == 'x')
 		tmp = -a;
 	else

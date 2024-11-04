@@ -20,7 +20,7 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 1
+# define MSPEED 0.8
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
