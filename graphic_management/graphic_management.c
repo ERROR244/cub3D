@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/29 18:11:36 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:27:19 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	put_anm_to_img(t_window *window, int index)
 
 	pixel.x = 0;
 	pixel.y = 0;
-	i = index / 5;
+	i = index / 3;
 	while (pixel.x < 512)
 	{
 		pixel.y = 0;
@@ -80,7 +80,7 @@ int	put_img(t_window *window)
 		0);
 	if (window->shoot == true)
 		window->anm_index = 1;
-	if (window->anm_index >= 19)
+	if (window->anm_index >= 11)
 		window->anm_index = 0;
 	else if (window->anm_index != 0)
 		window->anm_index++;

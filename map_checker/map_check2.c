@@ -3,36 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 17:02:49 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:30:11 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-//		  -  
-//		- . -
-//		  -  
+void	free_array(char **str)
+{
+	int	i;
 
-//	so this is all the  possible cases
-// (x) (y + 1)
-// (x) (y - 1)
-// (x + 1) (y)
-// (x - 1) (y)
-// (x + 1) (y + 1)
-// (x - 1) (y - 1)
-// (x - 1) (y + 1)
-// (x + 1) (y - 1)
-
-//		-1 ↑ x ↓ +1
-//		-1 ← y → +1
+	i = 0;
+	while (str && *str && str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
 
 int	ft_ft_atoi(char *ptr)
 {
 	int	num;
+	int	i;
 
+	i = 0;
+	while (ptr[i])
+	{
+		if (ft_isdigit(ptr[i]) == 0)
+			the_textures_is_invalid();
+		i++;
+	}
 	num = ft_atoi(ptr);
 	if (num < 0 || num > 255)
 		the_textures_is_invalid();
@@ -83,5 +87,7 @@ void	check_map_end(char **map)
 
 int	create_trgb(int t, int *nums)
 {
+	if (!nums)
+		the_textures_is_invalid();
 	return (t << 24 | nums[0] << 16 | nums[1] << 8 | nums[2]);
 }

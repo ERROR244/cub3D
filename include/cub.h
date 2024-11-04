@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/30 12:47:43 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:24:34 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
 # define SIZE 100
-# define MSPEED 0.4
+# define MSPEED 1
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
 # include <mlx.h>
-// # include "../minilibx-linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -191,9 +190,9 @@ typedef struct window
 	int				wall_wigth;
 	int				rays;
 
-	double			disp; //displane
-	double			dist; //distance
-	double			wl3dh; //wll3dhight
+	double			disp;
+	double			dist;
+	double			wl3dh;
 	double			xfirststep;
 	double			yfirststep;
 	double			xstep;
@@ -218,10 +217,7 @@ typedef struct window
 }					t_window;
 
 // tmp
-void			print_array(char **str);
 void			free_array(char **str);
-void			print_array_in_one_line(char **str);
-void			print_array_of_int(int *color);
 void			exit_game(t_window *window);
 
 // error

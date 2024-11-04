@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 17:03:18 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:12:28 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	check_characters(char **map, t_window *window, int i, int k)
 			if ((map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
 					|| map[i][j] == 'W') && ++k >= 0)
 			{
-				map[i][j] = '0';
 				window->spawning_dir = get_sdir(window, map[i][j], i, j);
+				map[i][j] = '0';
 			}
 			j++;
 			if (window->i < j)

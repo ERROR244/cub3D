@@ -87,12 +87,12 @@ int	handle_fb_move(t_window *window, double y, int tmpx, int tmpy)
 		tmpy = get_tmpx_tmpy_fb('y', window, moveBackward);
 	}
 	if (has_wall_at(x + tmpx, window->player_y, window) && has_wall_at(x + tmpx,
-			window->player_y + 2, window) && has_wall_at(x + tmpx,
-			window->player_y - 2, window))
+			window->player_y + 4, window) && has_wall_at(x + tmpx,
+			window->player_y - 4, window))
 		window->player_x = x;
 	if (has_wall_at(window->player_x, y + tmpy, window)
-		&& has_wall_at(window->player_x + 2, y + tmpy, window)
-		&& has_wall_at(window->player_x - 2, y + tmpy, window))
+		&& has_wall_at(window->player_x + 4, y + tmpy, window)
+		&& has_wall_at(window->player_x - 4, y + tmpy, window))
 		window->player_y = y;
 	return (0);
 }

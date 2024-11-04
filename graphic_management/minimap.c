@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 14:14:15 by moer-ret          #+#    #+#             */
-/*   Updated: 2024/10/28 18:30:09 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/11/03 13:29:21 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	draw_map_row(t_window *window, char *row, t_map_bounds *bounds,
 		j++;
 		if (row[j] == '\0' || row[j] == '\n')
 		{
-			while (j <= (window->i + 4) && j <= bounds->x_end)
+			while ((j <= (window->i + 4) && j <= bounds->x_end) || j <= 12)
 			{
 				if (draw_map_square(window, pos->x, y, 0x00FFFF) != 0)
 					return (1);

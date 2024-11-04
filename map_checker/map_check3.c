@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:42 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 10:54:26 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:29:37 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	check_texture_and_color(t_map *map, char **str)
 	i = 0;
 	if (array_size(str) < 9)
 		the_map_is_invalid();
+	map->floor_color = NULL;
+	map->ceiling_color = NULL;
 	while (str[i] && i < 6)
 	{
 		if (ft_strncmp(str[i], "NO ", 3) == 0)
@@ -101,9 +103,9 @@ void	check_texture_and_color(t_map *map, char **str)
 			map->texture_we = get_texture(str[i]);
 		if (ft_strncmp(str[i], "EA ", 3) == 0)
 			map->texture_ea = get_texture(str[i]);
-		if (ft_strncmp(str[i], "F ", 2) == 0)
+		if (ft_strncmp(str[i], "F ", 2) == 0 && !map->floor_color)
 			map->floor_color = get_color(str[i]);
-		if (ft_strncmp(str[i], "C ", 2) == 0)
+		if (ft_strncmp(str[i], "C ", 2) == 0 && !map->ceiling_color)
 			map->ceiling_color = get_color(str[i]);
 		i++;
 	}
