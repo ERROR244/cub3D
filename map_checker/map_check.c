@@ -12,7 +12,7 @@
 
 #include "../include/cub.h"
 
-char *get_line_sized(char *str, int line_size)
+char	*get_line_sized(char *str, int line_size)
 {
 	char	*new;
 	int		i;
@@ -21,7 +21,7 @@ char *get_line_sized(char *str, int line_size)
 	if (!new)
 		return (NULL);
 	i = -1;
-	while (++i >= 0 &&str[i])
+	while (++i >= 0 && str[i])
 		new[i] = str[i];
 	while (i < line_size)
 		new[i++] = ' ';
@@ -30,12 +30,12 @@ char *get_line_sized(char *str, int line_size)
 	return (new);
 }
 
-char **get_lines_sized(t_map *map, char **str)
+char	**get_lines_sized(t_map *map, char **str)
 {
-	int line_size;
-	int size;
-	int i;
-	
+	int	line_size;
+	int	size;
+	int	i;
+
 	i = 0;
 	line_size = -1;
 	while (str[i])
@@ -57,8 +57,6 @@ void	map_check(t_map *map, char **str, t_window *window)
 	char	**lines;
 
 	lines = get_lines_sized(map, str + 6);
-	for (int i = 0; lines[i]; ++i)
-		printf(":%s:\n", lines[i]);
 	check_characters(lines, window, 0, 0);
 	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
