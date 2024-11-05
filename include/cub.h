@@ -112,7 +112,7 @@ typedef struct s_map
 	int			*ceiling_color;
 	int			*floor_color;
 
-	int			*array_length;
+	int			line_size;
 
 	char		**map;
 }				t_map;

@@ -51,7 +51,7 @@ bool	has_wall_at(long x, long y, t_window *window)
 	if (x < 0 || x > window->i * window->tile_size || y < 0 || y > window->k
 		* window->tile_size)
 		return (false);
-	if (window->map->array_length[map_grid_index_y] <= map_grid_index_x)
+	if (window->map->line_size <= map_grid_index_x)
 		return (false);
 	return (window->map->map[map_grid_index_y][map_grid_index_x] == '0'
 		|| window->map->map[map_grid_index_y][map_grid_index_x] == 'A');

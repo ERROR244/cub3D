@@ -87,7 +87,6 @@ void	exit_game(t_window *window)
 	free(map->texture_ea);
 	free(map->floor_color);
 	free(map->ceiling_color);
-	free(map->array_length);
 	free_array(map->map);
 	map->map = NULL;
 	window->map->map = NULL;

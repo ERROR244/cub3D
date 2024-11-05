@@ -12,26 +12,56 @@
 
 #include "../include/cub.h"
 
-// check texture
+char *get_line_sized(char *str, int line_size)
+{
+	char	*new;
+	int		i;
+
+	new = (char *)malloc(sizeof(char ) * (line_size + 1));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i >= 0 &&str[i])
+		new[i] = str[i];
+	while (i < line_size)
+		new[i++] = ' ';
+	new[line_size] = '\0';
+	free(str);
+	return (new);
+}
+
+char **get_lines_sized(t_map *map, char **str)
+{
+	int line_size;
+	int size;
+	int i;
+	
+	i = 0;
+	line_size = -1;
+	while (str[i])
+	{
+		size = ft_strlen(str[i]);
+		if (line_size < size)
+			line_size = size;
+		i++;
+	}
+	map->line_size = line_size;
+	i = -1;
+	while (++i >= 0 && str[i])
+		str[i] = get_line_sized(str[i], line_size);
+	return (str);
+}
 
 void	map_check(t_map *map, char **str, t_window *window)
 {
 	char	**lines;
-	int		length;
-	int		i;
 
-	lines = str + 6;
-	i = 0;
+	lines = get_lines_sized(map, str + 6);
+	for (int i = 0; lines[i]; ++i)
+		printf(":%s:\n", lines[i]);
 	check_characters(lines, window, 0, 0);
 	is_the_map_surrounded_by_walls(lines);
 	check_texture_and_color(map, str);
-	length = array_size(map->map);
-	map->array_length = malloc(sizeof(int ) * length);
-	while (map->map[i])
-	{
-		map->array_length[i] = ft_strlen(map->map[i]);
-		i++;
-	}
 	free_array(str);
 	str = NULL;
 }
