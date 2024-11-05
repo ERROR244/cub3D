@@ -57,12 +57,12 @@ int	draw_rect(t_window *window, t_render render)
 
 	i = -1;
 	ret = 0;
-	while (++i < render.width && ret == 0)
+	while (++i < render.width && i < 1 && ret == 0)
 	{
 		j = -1;
 		while (++j < render.y && ret == 0)
-			ret = my_mlx_pixel_put(window, render.x + i, j, create_trgb(0,
-						window->map->ceiling_color));
+			ret = my_mlx_pixel_put(window, render.x + i, j,
+					create_trgb(0, window->map->ceiling_color));
 		j = -1;
 		while (++j < render.height && ret == 0)
 		{

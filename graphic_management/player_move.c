@@ -52,7 +52,7 @@ int	get_tmpx_tmpy_fb(char c, t_window *window, t_events event)
 	int	b;
 
 	a = 4;
-	b = 7;
+	b = 5;
 	if (c == 'x')
 		tmp = -a;
 	else
