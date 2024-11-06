@@ -48,7 +48,7 @@ void	check_characters(char **map, t_window *window, int i, int k)
 					|| map[i][j] == 'W') && ++k >= 0)
 			{
 				window->spawning_dir = get_sdir(window, map[i][j], i, j);
-				map[i][j] = '0';
+				map[i][j] = 'N';
 			}
 			j++;
 			if (window->i < j)

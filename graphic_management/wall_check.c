@@ -54,7 +54,8 @@ bool	has_wall_at(long x, long y, t_window *window)
 	if (window->map->line_size <= map_grid_index_x)
 		return (false);
 	return (window->map->map[map_grid_index_y][map_grid_index_x] == '0'
-		|| window->map->map[map_grid_index_y][map_grid_index_x] == 'A');
+		|| window->map->map[map_grid_index_y][map_grid_index_x] == 'A'
+		|| window->map->map[map_grid_index_y][map_grid_index_x] == 'N');
 }
 
 double	normalize_angle(double angle)

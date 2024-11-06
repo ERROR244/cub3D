@@ -61,7 +61,7 @@ int	draw_mini_player(t_window *window, double y, double x, int color)
 
 int	get_square_color(char map_char)
 {
-	if (map_char == '0' || map_char == 'P')
+	if (map_char == '0' || map_char == 'N')
 		return (0x0000FF);
 	else if (map_char == 'D')
 		return (0xFF0000);
