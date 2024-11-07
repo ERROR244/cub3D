@@ -107,7 +107,7 @@ int	main(int ac, char **av)
 	}
 	window.i = 0;
 	window.k = 0;
-	window.tile_size = 9;
+	window.tile_size = 32;
 	map_check(&map, str, &window);
 	window.map = &map;
 	graphic_management(&window);
