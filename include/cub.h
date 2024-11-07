@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/11/03 13:24:34 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:14:51 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ void			init_texture_anm(t_window *window);
 void			init_texture(t_window *window, int width, int height);
 int				close_window(t_window *window);
 void			rays_3d_cast(t_window *window);
-int				render3d(t_window *window, int ret, int i);
+int				render3d(t_window *window, int ret, int i, t_render render);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
 int				get_hit_pos(t_window *window, int col_id, char c);

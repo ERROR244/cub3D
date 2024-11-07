@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/11/03 13:27:19 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:13:07 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	put_anm_to_img(t_window *window, int index)
 
 int	put_img(t_window *window)
 {
+	t_render	render;
+
 	if (window->move.rotate_right == 1 || window->move.rotate_left == 1)
 		handle_rotate(window);
 	if (window->move.right == 1 || window->move.left == 1)
@@ -70,7 +72,7 @@ int	put_img(t_window *window)
 	if (window->move.forward == 1 || window->move.backward == 1)
 		handle_fb_move(window, 0, 0, 0);
 	rays_3d_cast(window);
-	if (render3d(window, 0, -1) != 0)
+	if (render3d(window, 0, -1, render) != 0)
 		close_window(window);
 	draw_mini_map(window);
 	handle_mouse(window, 0, 0);
