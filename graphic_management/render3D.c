@@ -31,7 +31,7 @@ unsigned int	git_tpixel(t_img *img, int x, int y)
 	return (ret);
 }
 
-unsigned int	get_texture_line(t_window *window, t_render render,
+unsigned int	get_texture_pixel_color(t_window *window, t_render render,
 	int current_y)
 {
 	unsigned int	color;
@@ -47,7 +47,7 @@ unsigned int	get_texture_line(t_window *window, t_render render,
 	current_y -= (max_height - texture_height) / 2;
 	if (current_y < 0)
 		return (create_trgb(0, window->map->ceiling_color));
-	if (current_y > texture_height - 2)
+	if (current_y > texture_height)
 		return (create_trgb(0, window->map->floor_color));
 	texture_y = ((double)current_y / texture_height) * SIZE;
 	texture_y = fmax(0, fmin(texture_y, SIZE - 1));
@@ -68,7 +68,7 @@ int	draw_rect(t_window *window, t_render render)
 		j = -1;
 		while (++j < render.height && ret == 0)
 			ret = my_mlx_pixel_put(window, render.x + i, render.y + j,
-					get_texture_line(window, render, j));
+					get_texture_pixel_color(window, render, j));
 	}
 	return (ret);
 }
