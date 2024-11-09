@@ -131,5 +131,5 @@ int	draw_mini_map(t_window *window)
 			bounds.y_end - i) != 0)
 		return (1);
 	return (draw_mini_player(window, (player_y * 16),
-			(player_x * 16), 0x00000));
+			(player_x * 16), 0xFFFFFF));
 }

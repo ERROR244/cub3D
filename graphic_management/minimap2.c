@@ -46,10 +46,10 @@ int	draw_mini_player(t_window *window, double y, double x, int color)
 
 	i = 0;
 	ret = 0;
-	while (i < 6 && ret == 0)
+	while (i < 3 && ret == 0)
 	{
 		j = 0;
-		while (j < 6 && ret == 0)
+		while (j < 3 && ret == 0)
 		{
 			ret = my_mlx_pixel_put(window, x + i + 2, y + j + 2, color);
 			j++;

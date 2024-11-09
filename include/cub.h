@@ -19,8 +19,7 @@
 # define MINI_MAP_SIZE 6
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
-# define SIZE 100
-# define MSPEED 3
+# define MSPEED 2.2
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
@@ -65,6 +64,8 @@ typedef struct s_img
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			sizex;
+	int			sizey;
 }				t_img;
 
 typedef struct s_map_bounds
@@ -226,28 +227,27 @@ void			invalid_file_name1(void);
 void			invalid_file(void);
 void			invalid_arg(void);
 void			the_textures_is_invalid(void);
-void			exit_error(char *str);
-
+void			exit_window_with_error(t_window *window, char *str);
+void			the_map_is_cutted_slices(char *ptr, char *str, int fd);
 char			**return_map(int fd, char *ptr, char *str, int i);
 char			**name_check(char *str);
-void			the_map_is_invalid(void);
-void			invalid_file_name1(void);
+int				invalid_color(t_map *map);
 
 // map check
 void			map_check(t_map *map, char **str, t_window *window);
-void			check_texture_and_color(t_map *map, char **str);
-int				array_size(char **str);
-void			check_characters(char **map, t_window *window, int i, int k);
-void			is_the_map_surrounded_by_walls(char **map);
+int				check_characters(char **map, t_window *window, int i, int k);
+int				is_the_map_surrounded_by_walls(char **map);
+int				check_texture_and_color(t_map *map, char **str, int i);
 bool			surrounded_with_only_spaces_and_walls(char **map, int x, int y,
 					int lines);
 void			check_map_end(char **map);
+int				array_size(char **str);
 
 // graphic_management
 void			graphic_management(t_window *w);
 void			init_data(t_window *window, int width, int height);
 void			init_anm(t_window *window);
-void			init_texture_anm(t_window *window);
+void			init_texture_anm(t_window *window, int sizex, int sizey);
 void			init_texture(t_window *window, int width, int height);
 int				close_window(t_window *window);
 void			rays_3d_cast(t_window *window);

@@ -57,9 +57,14 @@ void	map_check(t_map *map, char **str, t_window *window)
 	char	**lines;
 
 	lines = get_lines_sized(map, str + 6);
-	check_characters(lines, window, 0, 0);
-	is_the_map_surrounded_by_walls(lines);
-	check_texture_and_color(map, str);
+	if (check_characters(lines, window, 0, 0) == -1
+		|| is_the_map_surrounded_by_walls(lines) == -1
+		|| check_texture_and_color(map, str, 0) == -1)
+	{
+		if (str)
+			free_array(str);
+		the_map_is_invalid();
+	}
 	free_array(str);
 	str = NULL;
 }

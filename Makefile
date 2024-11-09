@@ -31,7 +31,7 @@ SRCM	=	Get-Next-Line/get_next_line.c\
 OBJM	= ${SRCM:.c=.o}
 
 CC		= cc
-CFLAGS	= -Wall -Wextra 
+CFLAGS	= -Wall -Wextra -Werror
 MLX_LIB	= -L./minilibx-linux -lmlx -lX11 -lXext -lm -lz
 
 all:		${NAME}
@@ -47,5 +47,5 @@ fclean:		clean
 
 re:		fclean all
 
-.SECONDARY : ${OBJM}
+ 
 .PHONY: all clean fclean re

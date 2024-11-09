@@ -6,7 +6,7 @@
 /*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:40 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/11/03 13:30:11 by moer-ret         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:43:08 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,45 @@ void	free_array(char **str)
 	int	i;
 
 	i = 0;
-	while (str && *str && str[i])
+	while (str && str[i])
 	{
 		free(str[i]);
+		str[i] = NULL;
 		i++;
 	}
-	free(str);
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
 }
 
-int	ft_ft_atoi(char *ptr)
+int    ft_ft_atoi(char *ptr)
 {
-	int	num;
-	int	i;
+    int    num;
+    int    i;
 
-	i = 0;
-	while (ptr[i] == ' ')
-		i++;
-	while (ptr[i] && ptr[i] != ' ')
-	{
-		if (ft_isdigit(ptr[i]) == 0)
-			the_textures_is_invalid();
-		i++;
-	}
-	while (ptr[i])
-	{
-		if (ptr[i] != ' ')
-			the_textures_is_invalid();
-		i++;
-	}
-	num = ft_atoi(ptr);
-	if (num < 0 || num > 255)
-		the_textures_is_invalid();
-	return (num);
+    i = 0;
+    while (ptr[i] == ' ')
+        i++;
+    if (!ptr[i])
+        return (-1);
+    while (ptr[i] && ptr[i] != ' ')
+    {
+        if (ft_isdigit(ptr[i]) == 0)
+            return (-1);
+        i++;
+    }
+    while (ptr[i])
+    {
+        if (ptr[i] != ' ')
+            return (-1);
+        i++;
+    }
+    num = ft_atoi(ptr);
+    if (num < 0 || num > 255)
+        return (-1);
+    return (num);
 }
 
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y,

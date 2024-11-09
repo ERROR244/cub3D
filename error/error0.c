@@ -24,20 +24,46 @@ void	the_textures_is_invalid(void)
 	exit(EXIT_FAILURE);
 }
 
-void	invalid_file_name1(void)
+void	exit_window_with_error_norm(t_window *window, int i)
 {
-	printf("Error\n		invalid file name\n");
+	if (window->texture[i].img)
+		mlx_destroy_image(window->mlx, window->texture[i].img);
+	if (window->img && window->img->img)
+		mlx_destroy_image(window->mlx, window->img->img);
+	if (window->texture)
+		free(window->texture);
+	if (window->anm)
+		free(window->anm);
+	if (window->img)
+		free(window->img);
+	if (window->ray)
+		free(window->ray);
+	if (window->window)
+		mlx_destroy_window(window->mlx, window->window);
+	if (window->mlx)
+	{
+		mlx_destroy_display(window->mlx);
+		free(window->mlx);
+	}
 	exit(EXIT_FAILURE);
 }
 
-void	invalid_file(void)
+void	exit_window_with_error(t_window *window, char *str)
 {
-	printf("Error\n		invalid file\n");
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-void	exit_error(char *str)
-{
+	i = 0;
 	printf("%s", str);
-	exit(EXIT_FAILURE);
+	if (!window->mlx)
+		exit(EXIT_FAILURE);
+	exit_game(window);
+	while (i < 4)
+	{
+		if (window->texture[i].img)
+			mlx_destroy_image(window->mlx, window->texture[i].img);
+		if (window->anm && window->anm[i].img)
+			mlx_destroy_image(window->mlx, window->anm[i].img);
+		i++;
+	}
+	exit_window_with_error_norm(window, i);
 }

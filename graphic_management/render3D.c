@@ -22,7 +22,7 @@ unsigned int	git_tpixel(t_img *img, int x, int y)
 		y = 0;
 	if (x < 0)
 		x = 0;
-	if (x >= 0 && x < SIZE && y >= 0 && y < SIZE)
+	if (x >= 0 && x < img->sizex && y >= 0 && y < img->sizey)
 	{
 		dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel
 					/ 8));
@@ -40,7 +40,8 @@ unsigned int	get_texture_pixel_color(t_window *window, t_render render,
 	int				max_height;
 	int				texture_height;
 
-	texture_x = (int)(render.wall_hit_x * SIZE) % SIZE;
+	texture_x = (int)(render.wall_hit_x * render.img->sizex)
+		% render.img->sizex;
 	max_height = window->window_hight;
 	texture_height = (int)
 		((double)max_height / (window->dist / window->tile_size));
@@ -49,8 +50,8 @@ unsigned int	get_texture_pixel_color(t_window *window, t_render render,
 		return (create_trgb(0, window->map->ceiling_color));
 	if (current_y > texture_height)
 		return (create_trgb(0, window->map->floor_color));
-	texture_y = ((double)current_y / texture_height) * SIZE;
-	texture_y = fmax(0, fmin(texture_y, SIZE - 1));
+	texture_y = ((double)current_y / texture_height) * render.img->sizey;
+	texture_y = fmax(1, fmin(texture_y, render.img->sizey - 1));
 	color = git_tpixel(render.img, texture_x, (int)texture_y);
 	return (color);
 }
@@ -77,12 +78,13 @@ int	render3d(t_window *window, int ret, int i, t_render render)
 {
 	while (++i < window->rays && ret == 0)
 	{
-		window->dist = window->ray[i].distance * \
-			cos(window->ray[i].ray_a - window->pa);
-		window->dist = fmax(window->dist, 0.1);
+		window->dist = window->ray[i].distance
+			* cos(window->ray[i].ray_a - window->pa);
+		window->dist = fmax(window->dist, 0.5);
 		window->disp = (window->window_width / 2) / tan(FOV_ANGLE / 2);
-		window->wl3dh = (int)(window->tile_size / \
-				(window->dist / window->tile_size) * window->disp);
+		window->wl3dh = (int)(window->dist * window->disp);
+		if (window->wl3dh < 1000)
+			window->wl3dh = 1000;
 		if (window->wl3dh > window->window_hight)
 			window->wl3dh = window->window_hight;
 		if (window->ray[i].washitver)
@@ -91,9 +93,9 @@ int	render3d(t_window *window, int ret, int i, t_render render)
 		else
 			render.wall_hit_x = fmod(window->ray[i].ray_hit_x,
 					window->tile_size) / window->tile_size;
-		render.x = round(i * window->wall_wigth);
+		render.x = i * window->wall_wigth;
 		render.y = round((window->window_hight / 2) - (window->wl3dh / 2));
-		render.width = round(window->wall_wigth);
+		render.width = window->wall_wigth;
 		render.height = round(window->wl3dh);
 		render.img = window->ray[i].img;
 		ret = draw_rect(window, render);
