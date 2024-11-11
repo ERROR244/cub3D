@@ -18,6 +18,12 @@ void	the_map_is_invalid(void)
 	exit(EXIT_FAILURE);
 }
 
+void	the_file_is_invalid(void)
+{
+	printf("Error\n		The map or the color are invalid\n");
+	exit(EXIT_FAILURE);
+}
+
 void	the_textures_is_invalid(void)
 {
 	printf("Error\n		The Textures is invalid\n");

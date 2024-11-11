@@ -30,32 +30,32 @@ void	free_array(char **str)
 	}
 }
 
-int    ft_ft_atoi(char *ptr)
+int	ft_ft_atoi(char *ptr)
 {
-    int    num;
-    int    i;
+	int	num;
+	int	i;
 
-    i = 0;
-    while (ptr[i] == ' ')
-        i++;
-    if (!ptr[i])
-        return (-1);
-    while (ptr[i] && ptr[i] != ' ')
-    {
-        if (ft_isdigit(ptr[i]) == 0)
-            return (-1);
-        i++;
-    }
-    while (ptr[i])
-    {
-        if (ptr[i] != ' ')
-            return (-1);
-        i++;
-    }
-    num = ft_atoi(ptr);
-    if (num < 0 || num > 255)
-        return (-1);
-    return (num);
+	i = 0;
+	while (ptr[i] == ' ')
+		i++;
+	if (!ptr[i])
+		return (-1);
+	while (ptr[i] && ptr[i] != ' ')
+	{
+		if (ft_isdigit(ptr[i]) == 0)
+			return (-1);
+		i++;
+	}
+	while (ptr[i])
+	{
+		if (ptr[i] != ' ')
+			return (-1);
+		i++;
+	}
+	num = ft_atoi(ptr);
+	if (num < 0 || num > 255)
+		return (-1);
+	return (num);
 }
 
 bool	surrounded_with_only_spaces_and_walls(char **map, int x, int y,
@@ -95,9 +95,12 @@ void	check_map_end(char **map)
 		the_map_is_invalid();
 }
 
-int	create_trgb(int t, int *nums)
+int	array_size(char **str)
 {
-	if (!nums)
-		the_textures_is_invalid();
-	return (t << 24 | nums[0] << 16 | nums[1] << 8 | nums[2]);
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

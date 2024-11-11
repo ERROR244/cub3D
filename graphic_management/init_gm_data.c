@@ -73,7 +73,7 @@ void	init_texture(t_window *window, int width, int height)
 	window->texture[3].sizex = width;
 	window->texture[3].sizey = height;
 	window->texture[4].img = mlx_xpm_file_to_image(window->mlx,
-			"./Textures/xpm/Door.xpm", &width, &height);
+			"./Textures/xpm/dpp1.xpm", &width, &height);
 	window->texture[4].sizex = width;
 	window->texture[4].sizey = height;
 	if (!window->texture[0].img || !window->texture[1].img

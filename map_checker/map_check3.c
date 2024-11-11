@@ -12,16 +12,6 @@
 
 #include "../include/cub.h"
 
-int	array_size(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 char	*get_texture(char *str)
 {
 	int	i;
@@ -55,39 +45,43 @@ char	**get_map(char **str)
 	return (map);
 }
 
+int	*colors(char **ptr, int *color)
+{
+	color[0] = ft_ft_atoi(ptr[0]);
+	color[1] = ft_ft_atoi(ptr[1]);
+	color[2] = ft_ft_atoi(ptr[2]);
+	free_array(ptr);
+	if (color[0] == -1 || color[1] == -1 || color[2] == -1)
+	{
+		free(color);
+		return (NULL);
+	}
+	return (color);
+}
+
 int	*get_color(char *str, int i, int j, int *color)
 {
-    char    **ptr;
+	char	**ptr;
 
-    str++;
-    while (str && *str == ' ')
-        str++;
-    while (str[i])
-    {
-        if (str[i] == ',')
-            j++;
-        i++;
-    }
-    if (j != 2)
-        return (NULL);
-    ptr = ft_split(str, ',');
-    if (array_size(ptr) != 3)
-    {
-        if (ptr)
-            free_array(ptr);
-        return (NULL);
-    }
-    color = malloc(sizeof(int) * 3);
-    color[0] = ft_ft_atoi(ptr[0]);
-    color[1] = ft_ft_atoi(ptr[1]);
-    color[2] = ft_ft_atoi(ptr[2]);
-    free_array(ptr);
-    if (color[0] == -1 || color[1] == -1 || color[2] == -1)
-    {
-        free(color);
-        return (NULL);
-    }
-    return (color);
+	str++;
+	while (str && *str == ' ')
+		str++;
+	while (str[i])
+	{
+		if (str[i] == ',')
+			j++;
+		i++;
+	}
+	if (j != 2)
+		return (NULL);
+	ptr = ft_split(str, ',');
+	if (array_size(ptr) != 3)
+	{
+		free_array(ptr);
+		return (NULL);
+	}
+	color = malloc(sizeof(int) * 3);
+	return (colors(ptr, color));
 }
 
 int	check_texture_and_color(t_map *map, char **str, int i)
@@ -98,13 +92,13 @@ int	check_texture_and_color(t_map *map, char **str, int i)
 	map->ceiling_color = NULL;
 	while (str[i] && i < 6)
 	{
-		if (ft_strncmp(str[i], "NO ", 3) == 0)
+		if (ft_strncmp(str[i], "NO ", 3) == 0 && !map->texture_no)
 			map->texture_no = get_texture(str[i]);
-		if (ft_strncmp(str[i], "SO ", 3) == 0)
+		if (ft_strncmp(str[i], "SO ", 3) == 0 && !map->texture_so)
 			map->texture_so = get_texture(str[i]);
-		if (ft_strncmp(str[i], "WE ", 3) == 0)
+		if (ft_strncmp(str[i], "WE ", 3) == 0 && !map->texture_we)
 			map->texture_we = get_texture(str[i]);
-		if (ft_strncmp(str[i], "EA ", 3) == 0)
+		if (ft_strncmp(str[i], "EA ", 3) == 0 && !map->texture_ea)
 			map->texture_ea = get_texture(str[i]);
 		if (ft_strncmp(str[i], "F ", 2) == 0 && !map->floor_color)
 			map->floor_color = get_color(str[i], 0, 0, 0);

@@ -46,7 +46,9 @@ void	the_map_is_cutted_slices(char *ptr, char *str, int fd)
 
 int	invalid_color(t_map *map)
 {
-	if (!map->ceiling_color || !map->floor_color)
+	if (!map->ceiling_color || !map->floor_color
+		|| !map->texture_no || !map->texture_so
+		|| !map->texture_we || !map->texture_ea)
 	{
 		if (map->ceiling_color)
 			free(map->ceiling_color);

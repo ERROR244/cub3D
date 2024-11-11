@@ -12,6 +12,13 @@
 
 #include "../include/cub.h"
 
+int	create_trgb(int t, int *nums)
+{
+	if (!nums)
+		the_textures_is_invalid();
+	return (t << 24 | nums[0] << 16 | nums[1] << 8 | nums[2]);
+}
+
 char	*get_line_sized(char *str, int line_size)
 {
 	char	*new;
@@ -63,7 +70,7 @@ void	map_check(t_map *map, char **str, t_window *window)
 	{
 		if (str)
 			free_array(str);
-		the_map_is_invalid();
+		the_file_is_invalid();
 	}
 	free_array(str);
 	str = NULL;

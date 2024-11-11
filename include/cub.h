@@ -232,6 +232,7 @@ void			the_map_is_cutted_slices(char *ptr, char *str, int fd);
 char			**return_map(int fd, char *ptr, char *str, int i);
 char			**name_check(char *str);
 int				invalid_color(t_map *map);
+void			the_file_is_invalid(void);
 
 // map check
 void			map_check(t_map *map, char **str, t_window *window);

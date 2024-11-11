@@ -107,9 +107,14 @@ int	main(int ac, char **av)
 		invalid_arg();
 	str = name_check(av[1]);
 	if (str == 0)
-	{
 		the_map_is_invalid();
-	}
+	map.ceiling_color = NULL;
+	map.floor_color = NULL;
+	map.texture_ea = NULL;
+	map.texture_no = NULL;
+	map.texture_so = NULL;
+	map.texture_we = NULL;
+	map.map = NULL;
 	window.i = 0;
 	window.k = 0;
 	window.tile_size = 32;
