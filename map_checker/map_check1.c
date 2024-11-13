@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:19:36 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/30 17:03:18 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:12:28 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ t_orientation	get_sdir(t_window *window, char c, int i, int j)
 	return (None);
 }
 
-void	check_c(char c)
+int	check_c(char c)
 {
 	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W'
 		&& c != ' ' && c != 'D')
-		the_map_is_invalid();
+		return (-1);
+	return (1);
 }
 
-void	check_characters(char **map, t_window *window, int i, int k)
+int	check_characters(char **map, t_window *window, int i, int k)
 {
 	int	j;
 
@@ -43,12 +44,13 @@ void	check_characters(char **map, t_window *window, int i, int k)
 		j = 0;
 		while (map[i][j])
 		{
-			check_c(map[i][j]);
+			if (check_c(map[i][j]) == -1)
+				return (-1);
 			if ((map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
 					|| map[i][j] == 'W') && ++k >= 0)
 			{
-				map[i][j] = '0';
 				window->spawning_dir = get_sdir(window, map[i][j], i, j);
+				map[i][j] = 'N';
 			}
 			j++;
 			if (window->i < j)
@@ -57,11 +59,12 @@ void	check_characters(char **map, t_window *window, int i, int k)
 		i++;
 	}
 	if (k != 1)
-		the_map_is_invalid();
+		return (-1);
 	window->k = i;
+	return (1);
 }
 
-void	is_the_map_surrounded_by_walls(char **ptr)
+int	is_the_map_surrounded_by_walls(char **ptr)
 {
 	char	**map;
 	int		lines;
@@ -79,10 +82,11 @@ void	is_the_map_surrounded_by_walls(char **ptr)
 			if ((map[x][y] == '0' || map[x][y] == 'N' || map[x][y] == 'D')
 				&& surrounded_with_only_spaces_and_walls(map, x, y,
 					lines) == false)
-				the_map_is_invalid();
+				return (-1);
 			y++;
 		}
 		x++;
 	}
 	check_map_end(map);
+	return (1);
 }

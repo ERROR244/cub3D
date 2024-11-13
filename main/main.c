@@ -34,10 +34,7 @@ char	**return_map(int fd, char *ptr, char *str, int i)
 				ptr = get_next_line(fd);
 			}
 			if (ptr)
-			{
-				free(ptr);
-				the_map_is_invalid();
-			}
+				the_map_is_cutted_slices(ptr, str, fd);
 			else
 				break ;
 		}
@@ -81,16 +78,23 @@ void	exit_game(t_window *window)
 	t_map	*map;
 
 	map = window->map;
-	free(map->texture_no);
-	free(map->texture_so);
-	free(map->texture_we);
-	free(map->texture_ea);
-	free(map->floor_color);
-	free(map->ceiling_color);
-	free(map->array_length);
-	free_array(map->map);
+	if (!map)
+		return ;
+	if (map->texture_no)
+		free(map->texture_no);
+	if (map->texture_so)
+		free(map->texture_so);
+	if (map->texture_we)
+		free(map->texture_we);
+	if (map->texture_ea)
+		free(map->texture_ea);
+	if (map->floor_color)
+		free(map->floor_color);
+	if (map->ceiling_color)
+		free(map->ceiling_color);
+	if (map->map)
+		free_array(map->map);
 	map->map = NULL;
-	window->map->map = NULL;
 }
 
 int	main(int ac, char **av)
@@ -103,12 +107,17 @@ int	main(int ac, char **av)
 		invalid_arg();
 	str = name_check(av[1]);
 	if (str == 0)
-	{
 		the_map_is_invalid();
-	}
+	map.ceiling_color = NULL;
+	map.floor_color = NULL;
+	map.texture_ea = NULL;
+	map.texture_no = NULL;
+	map.texture_so = NULL;
+	map.texture_we = NULL;
+	map.map = NULL;
 	window.i = 0;
 	window.k = 0;
-	window.tile_size = 9;
+	window.tile_size = 32;
 	map_check(&map, str, &window);
 	window.map = &map;
 	graphic_management(&window);

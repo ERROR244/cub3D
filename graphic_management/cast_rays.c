@@ -80,13 +80,13 @@ int	get_hit_pos(t_window *window, int col_id, char c)
 
 void	git_ray_img(t_window *window, int i)
 {
-	if (window->ray[i].washitver && window->ray[i].is_ray_looking_right)
-		window->ray[i].img = &window->texture[0];
-	else if (window->ray[i].washitver && window->ray[i].is_ray_looking_left)
-		window->ray[i].img = &window->texture[1];
 	if (!window->ray[i].washitver && window->ray[i].is_ray_looking_up)
-		window->ray[i].img = &window->texture[2];
+		window->ray[i].img = &window->texture[0];
 	else if (!window->ray[i].washitver && window->ray[i].is_ray_looking_down)
+		window->ray[i].img = &window->texture[1];
+	else if (window->ray[i].washitver && window->ray[i].is_ray_looking_left)
+		window->ray[i].img = &window->texture[2];
+	else if (window->ray[i].washitver && window->ray[i].is_ray_looking_right)
 		window->ray[i].img = &window->texture[3];
 	if (window->ray[i].door_hit == true)
 		window->ray[i].img = &window->texture[4];

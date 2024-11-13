@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:59:21 by error01           #+#    #+#             */
-/*   Updated: 2024/10/30 12:47:43 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/07 15:14:51 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@
 # define MINI_MAP_SIZE 6
 # define MAP_HEIGHT 900
 # define MAP_WIDTH 1400
-# define SIZE 100
-# define MSPEED 0.4
+# define MSPEED 2.2
 # define COLLISION_BUFFER 10
 
 # include "../Get-Next-Line/get_next_line.h"
 # include "../Libft/libft.h"
-# include <mlx.h>
-// # include "../minilibx-linux/mlx.h"
+// # include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -66,6 +65,8 @@ typedef struct s_img
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			sizex;
+	int			sizey;
 }				t_img;
 
 typedef struct s_map_bounds
@@ -113,7 +114,7 @@ typedef struct s_map
 	int			*ceiling_color;
 	int			*floor_color;
 
-	int			*array_length;
+	int			line_size;
 
 	char		**map;
 }				t_map;
@@ -191,9 +192,9 @@ typedef struct window
 	int				wall_wigth;
 	int				rays;
 
-	double			disp; //displane
-	double			dist; //distance
-	double			wl3dh; //wll3dhight
+	double			disp;
+	double			dist;
+	double			wl3dh;
 	double			xfirststep;
 	double			yfirststep;
 	double			xstep;
@@ -218,10 +219,7 @@ typedef struct window
 }					t_window;
 
 // tmp
-void			print_array(char **str);
 void			free_array(char **str);
-void			print_array_in_one_line(char **str);
-void			print_array_of_int(int *color);
 void			exit_game(t_window *window);
 
 // error
@@ -230,32 +228,32 @@ void			invalid_file_name1(void);
 void			invalid_file(void);
 void			invalid_arg(void);
 void			the_textures_is_invalid(void);
-void			exit_error(char *str);
-
+void			exit_window_with_error(t_window *window, char *str);
+void			the_map_is_cutted_slices(char *ptr, char *str, int fd);
 char			**return_map(int fd, char *ptr, char *str, int i);
 char			**name_check(char *str);
-void			the_map_is_invalid(void);
-void			invalid_file_name1(void);
+int				invalid_color(t_map *map);
+void			the_file_is_invalid(void);
 
 // map check
 void			map_check(t_map *map, char **str, t_window *window);
-void			check_texture_and_color(t_map *map, char **str);
-int				array_size(char **str);
-void			check_characters(char **map, t_window *window, int i, int k);
-void			is_the_map_surrounded_by_walls(char **map);
+int				check_characters(char **map, t_window *window, int i, int k);
+int				is_the_map_surrounded_by_walls(char **map);
+int				check_texture_and_color(t_map *map, char **str, int i);
 bool			surrounded_with_only_spaces_and_walls(char **map, int x, int y,
 					int lines);
 void			check_map_end(char **map);
+int				array_size(char **str);
 
 // graphic_management
 void			graphic_management(t_window *w);
 void			init_data(t_window *window, int width, int height);
 void			init_anm(t_window *window);
-void			init_texture_anm(t_window *window);
+void			init_texture_anm(t_window *window, int sizex, int sizey);
 void			init_texture(t_window *window, int width, int height);
 int				close_window(t_window *window);
 void			rays_3d_cast(t_window *window);
-int				render3d(t_window *window, int ret, int i);
+int				render3d(t_window *window, int ret, int i, t_render render);
 bool			has_wall_at(long x, long y, t_window *window);
 int				my_mlx_pixel_put(t_window *window, int x, int y, int color);
 int				get_hit_pos(t_window *window, int col_id, char c);

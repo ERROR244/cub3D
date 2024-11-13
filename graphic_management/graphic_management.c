@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khalil <khalil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moer-ret <moer-ret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:02:02 by ksohail-          #+#    #+#             */
-/*   Updated: 2024/10/29 18:11:36 by khalil           ###   ########.fr       */
+/*   Updated: 2024/11/07 15:13:07 by moer-ret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	put_anm_to_img(t_window *window, int index)
 
 	pixel.x = 0;
 	pixel.y = 0;
-	i = index / 5;
+	i = index / 3;
 	while (pixel.x < 512)
 	{
 		pixel.y = 0;
@@ -63,6 +63,8 @@ void	put_anm_to_img(t_window *window, int index)
 
 int	put_img(t_window *window)
 {
+	t_render	render;
+
 	if (window->move.rotate_right == 1 || window->move.rotate_left == 1)
 		handle_rotate(window);
 	if (window->move.right == 1 || window->move.left == 1)
@@ -70,7 +72,7 @@ int	put_img(t_window *window)
 	if (window->move.forward == 1 || window->move.backward == 1)
 		handle_fb_move(window, 0, 0, 0);
 	rays_3d_cast(window);
-	if (render3d(window, 0, -1) != 0)
+	if (render3d(window, 0, -1, render) != 0)
 		close_window(window);
 	draw_mini_map(window);
 	handle_mouse(window, 0, 0);
@@ -80,7 +82,7 @@ int	put_img(t_window *window)
 		0);
 	if (window->shoot == true)
 		window->anm_index = 1;
-	if (window->anm_index >= 19)
+	if (window->anm_index >= 11)
 		window->anm_index = 0;
 	else if (window->anm_index != 0)
 		window->anm_index++;
@@ -92,18 +94,23 @@ void	graphic_management(t_window *window)
 	window->minimap = 0.5;
 	window->anm_index = 0;
 	window->pa = get_spawninig_orientation(window->spawning_dir);
-	init_data(window, SIZE, SIZE);
+	window->texture = NULL;
+	window->anm = NULL;
+	window->ray = NULL;
+	window->img = NULL;
+	window->window = NULL;
+	init_data(window, 0, 0);
 	if (window->img == NULL)
-		exit_error("Failed to allocate memory for img.\n");
+		exit_window_with_error(window, "Failed to allocate memory for img.\n");
 	window->img->img = mlx_new_image(window->mlx, window->window_width,
 			window->window_hight);
 	if (window->img->img == NULL)
-		exit_error("Failed to create image.\n");
+		exit_window_with_error(window, "Failed to create image.\n");
 	window->img->addr = mlx_get_data_addr(window->img->img,
 			&window->img->bits_per_pixel, &window->img->line_length,
 			&window->img->endian);
 	if (window->img->addr == NULL)
-		exit_error("Failed to get image data address.\n");
+		exit_window_with_error(window, "Failed to get image data address.\n");
 	mlx_hook(window->window, 17, 0L, close_window, window);
 	mlx_hook(window->window, 02, 1L << 0, key_press, window);
 	mlx_loop_hook(window->mlx, put_img, window);

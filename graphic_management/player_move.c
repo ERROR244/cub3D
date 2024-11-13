@@ -32,13 +32,13 @@ int	handle_door(t_events event, t_window *window)
 		if (window->map->map[i + 1][j] && (window->map->map[i + 1][j] == 'D'
 				|| window->map->map[i + 1][j] == 'A'))
 			open_close_d(&window->map->map[i + 1][j]);
-		else if (window->map->map[i][j + 1] && (window->map->map[i][j
+		if (window->map->map[i][j + 1] && (window->map->map[i][j
 				+ 1] == 'D' || window->map->map[i][j + 1] == 'A'))
 			open_close_d(&window->map->map[i][j + 1]);
-		else if (i - 1 >= 0 && (window->map->map[i - 1][j] == 'D'
+		if (i - 1 >= 0 && (window->map->map[i - 1][j] == 'D'
 			|| window->map->map[i - 1][j] == 'A'))
 			open_close_d(&window->map->map[i - 1][j]);
-		else if (j - 1 >= 0 && (window->map->map[i][j - 1] == 'D'
+		if (j - 1 >= 0 && (window->map->map[i][j - 1] == 'D'
 			|| window->map->map[i][j - 1] == 'A'))
 			open_close_d(&window->map->map[i][j - 1]);
 	}
@@ -52,7 +52,7 @@ int	get_tmpx_tmpy_fb(char c, t_window *window, t_events event)
 	int	b;
 
 	a = 5;
-	b = 8;
+	b = 10;
 	if (c == 'x')
 		tmp = -a;
 	else
@@ -86,13 +86,9 @@ int	handle_fb_move(t_window *window, double y, int tmpx, int tmpy)
 		tmpx = get_tmpx_tmpy_fb('x', window, moveBackward);
 		tmpy = get_tmpx_tmpy_fb('y', window, moveBackward);
 	}
-	if (has_wall_at(x + tmpx, window->player_y, window) && has_wall_at(x + tmpx,
-			window->player_y + 2, window) && has_wall_at(x + tmpx,
-			window->player_y - 2, window))
+	if (has_wall_at(x + tmpx, window->player_y, window))
 		window->player_x = x;
-	if (has_wall_at(window->player_x, y + tmpy, window)
-		&& has_wall_at(window->player_x + 2, y + tmpy, window)
-		&& has_wall_at(window->player_x - 2, y + tmpy, window))
+	if (has_wall_at(window->player_x, y + tmpy, window))
 		window->player_y = y;
 	return (0);
 }
